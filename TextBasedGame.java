@@ -23,13 +23,13 @@ public class TextBasedGame {
 	public void startGame() {
 		while(true) {
 			generateNewTile();
-			while(!victoryScreen()&&!defeatScreen()) {
+			while(!victoryCheck()&&!defeatCheck()) {
 				generateNewTile();
 				displayBoard();
 				computeMovement();
 			}
 			char cont='z';
-			if(defeatScreen()) {
+			if(defeatCheck()) {
 				System.out.println("Would you like to restart? (y / n)");
 				while(cont!='y'&&cont!='n')
 					cont=getScanner().next().charAt(0);
@@ -47,7 +47,7 @@ public class TextBasedGame {
 				}
 			}
 		
-			if(victoryScreen()) {
+			if(victoryCheck()) {
 				System.out.println("Would you like to continue? (y / n)");
 				while(cont!='y'&&cont!='n')
 					cont=getScanner().next().charAt(0);
@@ -195,13 +195,90 @@ public class TextBasedGame {
 		
 	}
 	//jason
-	public boolean victoryScreen() {
+	public boolean victoryCheck() {
 		return false;
 	}
 	//ammar
-	public boolean defeatScreen() {
+	public boolean defeatCheck() {
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				if (board[i][j] == 0)
+					return false;
+			}
+		}
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				if (equalityCheck(i,j))
+					return false;
+			}
+		}
 		return true;
 	}
+	
+	//following function checks if a tile is equal to an adjacent tile 
+	public boolean equalityCheck(int xPos, int yPos) {
+		if (xPos == 0) {
+			if(checkRight(xPos,yPos))
+				return true;
+			if (yPos > 0) {
+				if(checkUp(xPos,yPos))
+					return true;
+			}
+			if (yPos < 3) {
+				if(checkDown(xPos,yPos))
+					return true;
+			}
+		}
+		else if (xPos == 3) {
+			if(checkLeft(xPos,yPos))
+				return true;
+			if (yPos > 0) {
+				if(checkUp(xPos,yPos))
+					return true;
+			}
+			if (yPos < 3) {
+				if(checkDown(xPos,yPos))
+					return true;
+			}
+		}
+		else {
+			if(checkRight(xPos,yPos))
+				return true;
+			if(checkLeft(xPos,yPos))
+				return true;
+			if (yPos > 0) {
+				if(checkUp(xPos,yPos))
+					return true;
+			}
+			if (yPos < 3) {
+				if(checkDown(xPos,yPos))
+					return true;
+			}
+		}
+		return false;
+	}
+	// these check if adjacent tile in specified direction is equal
+	public boolean checkUp(int xPos, int yPos) {
+		if (board[xPos][yPos] == board[xPos][yPos - 1])
+			return true;
+		return false;
+	}
+	public boolean checkDown(int xPos, int yPos) {
+		if (board[xPos][yPos] == board[xPos][yPos + 1])
+			return true;
+		return false;
+	}
+	public boolean checkLeft(int xPos, int yPos) {
+		if (board[xPos][yPos] == board[xPos - 1][yPos])
+			return true;
+		return false;
+	}
+	public boolean checkRight(int xPos, int yPos) {
+		if (board[xPos][yPos] == board[xPos + 1][yPos])
+			return true;
+		return false;
+	}
+
 
 	public int[][] getBoard() {
 		int[][] temp=new int[4][4];
