@@ -32,7 +32,7 @@ public class TextBasedGame {
 			}
 			char cont='z';
 			if(defeatCheck()) {
-				System.out.println("Would you like to restart? (y / n)");
+				System.out.println("DEFEAT!!!!\n Would you like to restart? (y / n)");
 				while(cont!='y'&&cont!='n')
 					cont=getScanner().next().charAt(0);
 				if(cont=='n')
@@ -50,7 +50,7 @@ public class TextBasedGame {
 			}
 		
 			if(victoryCheck()) {
-				System.out.println("Would you like to continue? (y / n)");
+				System.out.println("VICTORY!!!!\n Would you like to continue in endless mode? (y / n)");
 				while(cont!='y'&&cont!='n')
 					cont=getScanner().next().charAt(0);
 				if(cont=='n') {
