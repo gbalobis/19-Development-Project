@@ -23,10 +23,12 @@ public class TextBasedGame {
 	public void startGame() {
 		while(true) {
 			generateNewTile();
+			generateNewTile();
+			displayBoard();
 			while(!victoryCheck()&&!defeatCheck()) {
+				computeMovement();
 				generateNewTile();
 				displayBoard();
-				computeMovement();
 			}
 			char cont='z';
 			if(defeatCheck()) {
