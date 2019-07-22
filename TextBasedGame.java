@@ -192,10 +192,20 @@ public class TextBasedGame {
 	}
 	//jason
 	public void displayBoard() {
-		
+		for (int positionX = 0; positionX < 4; positionX++) {
+			for (int positionY = 0; positionY < 4; positionY++) {
+				System.out.printLn(getBoard()[positionX][positionY]);
+			}
+		}
 	}
 	//jason
 	public boolean victoryCheck() {
+		for (int positionX = 0; positionX < 4; positionX++) {
+			for (int positionY = 0; positionY < 4; positionY++) {
+				if(board[positionX][positionY] == 2048)
+					return true;
+			}
+		}
 		return false;
 	}
 	//ammar
