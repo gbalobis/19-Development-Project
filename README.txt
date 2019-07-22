@@ -1,4 +1,4 @@
-# How to access our game:
+How to access our game:
 Through github:
 1.	copy and paste this link on your internet browser:
 https://github.com/gbalobis/19-Development-Project.git
