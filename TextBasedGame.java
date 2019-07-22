@@ -23,16 +23,14 @@ public class TextBasedGame {
 	public void startGame() {
 		while(true) {
 			generateNewTile();
-			generateNewTile();
-			displayBoard();
 			while(!victoryCheck()&&!defeatCheck()) {
-				computeMovement();
 				generateNewTile();
 				displayBoard();
+				computeMovement();
 			}
 			char cont='z';
 			if(defeatCheck()) {
-				System.out.println("DEFEAT!!!!\n Would you like to restart? (y / n)");
+				System.out.println("Would you like to restart? (y / n)");
 				while(cont!='y'&&cont!='n')
 					cont=getScanner().next().charAt(0);
 				if(cont=='n')
@@ -50,7 +48,7 @@ public class TextBasedGame {
 			}
 		
 			if(victoryCheck()) {
-				System.out.println("VICTORY!!!!\n Would you like to continue in endless mode? (y / n)");
+				System.out.println("Would you like to continue? (y / n)");
 				while(cont!='y'&&cont!='n')
 					cont=getScanner().next().charAt(0);
 				if(cont=='n') {
@@ -192,17 +190,19 @@ public class TextBasedGame {
 		}
 		return line;
 	}
-	//jason
+	/*
+	 * This method is used to show the current state of the board and is called every time a new change is made to the board
+	 */
 	public void displayBoard() {
 		for (int positionX = 0; positionX < 4; positionX++) {
 			for (int positionY = 0; positionY < 4; positionY++) {
-				System.out.print(getBoard()[positionX][positionY]+"  ");
+				System.out.print(getBoard()[positionX][positionY]+ " ");
 			}
-			System.out.println();
 		}
-		System.out.println();
 	}
-	//jason
+	/*
+	 * This method checks the board if the tile "2048" is present and returns true if it is found and false otherwise.  
+	 */
 	public boolean victoryCheck() {
 		for (int positionX = 0; positionX < 4; positionX++) {
 			for (int positionY = 0; positionY < 4; positionY++) {
