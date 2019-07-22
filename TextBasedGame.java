@@ -216,9 +216,20 @@ public class TextBasedGame {
 	public void displayBoard() {
 		for (int positionX = 0; positionX < 4; positionX++) {
 			for (int positionY = 0; positionY < 4; positionY++) {
-				System.out.print(getBoard()[positionX][positionY]+ " ");
+				int x = getBoard()[positionX][positionY];
+				System.out.print(x + "  ");
+				if (x > 999)
+					System.out.print(" ");
+				if (x < 999)
+					System.out.print(" ");
+				if (x < 99)
+					System.out.print(" ");
+				if (x < 9)
+					System.out.print(" ");
 			}
 			System.out.println();
+			System.out.println();
+
 		}
 		System.out.println();
 	}
