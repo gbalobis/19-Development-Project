@@ -1,5 +1,5 @@
 import java.util.Scanner;
-Import java.util.Random;
+import java.util.Random;
 
 public class TextBasedGame {
 	private int[][] board;
@@ -38,7 +38,7 @@ public class TextBasedGame {
 			char cont='z';
 			//if board is in a defeat state, ask player if they would like to restart
 			if(defeatCheck()) {
-				System.out.println("DEFEAT!!!!\n Would you like to restart? (y / n)");
+				System.out.println("DEFEAT!!!!\nWould you like to restart? (y / n)");
 				//wait for a valid response of y or n
 				while(cont!='y'&&cont!='n')
 					cont=getScanner().next().charAt(0);
@@ -59,7 +59,7 @@ public class TextBasedGame {
 			}
 			//if board is in a victory state, ask player if they would like to continue in endless mode
 			if(victoryCheck()) {
-				System.out.println("VICTORY!!!!\n Would you like to continue? (y / n)");
+				System.out.println("VICTORY!!!!\nWould you like to continue? (y / n)");
 				//wait for a valid response of y or n
 				while(cont!='y'&&cont!='n')
 					cont=getScanner().next().charAt(0);
@@ -84,57 +84,62 @@ public class TextBasedGame {
 	//josh
 	public void generateNewTile() {
 			
-			int count1=0, count2=0;
-			int tileNumber;
-			
-			//random number generator allocates either a 2 or a four to the tile 
-			Random randomGenerator = new Random();
-			  int chance = randomGenerator.nextInt(10);
-			  if (chance == 0) {
-				  tileNumber = 4;
-			  }
-			  else {
-				  tileNumber = 2;
-			  }
+		int count1=0, count2=0;
+		int tileNumber;
+		int[][] temp=getBoard();
+		//random number generator allocates either a 2 or a four to the tile 
+		Random randomGenerator = new Random();
+		int chance = randomGenerator.nextInt(10);
+		if (chance == 0) {
+			tileNumber = 4;
+		}
+		else {
+			tileNumber = 2;
+		}
 			  
-	       //first for loop goes through the board and counts the number of empty spaces
-			for(int i=0;i<4;i++) {
-				for(int j=0;j<4;j++) {
+	    //first for loop goes through the board and counts the number of empty spaces
+		for(int i=0;i<4;i++) {
+			for(int j=0;j<4;j++) {
 					
-					if (board[i][j]==0) {
-						count1++;
-					}
-				}
-			}
-			//the line below picks a random spot to place the new tile
-			chance = randomGenerator.nextInt(count1);
-			
-			//the second for loop places the tile in the randomly generated number created in the above line
-			
-			for(int i=0;i<4;i++) {
-				for(int j=0;j<4;j++) {
-					if (board[i][j]==0) {
-						if(count2==chance)
-							board[i][j]=tileNumber;
-						count2++;
-					}
+				if (temp[i][j]==0) {
+					count1++;
 				}
 			}
 		}
-		//josh
-		public void computeMovement() {
-			char p = 'x';
-			while(p!= 'w'|| p!= 'a' || p!='s' || p!='d')
-			p = scanner.next().charAt(0);
+		//if no empty spaces, do not generate anything
+		if(count1==0) {
+			return;
+		}
+		//the line below picks a random spot to place the new tile
+		chance = randomGenerator.nextInt(count1);
+			
+		//the second for loop places the tile in the randomly generated number created in the above line
+			
+		for(int i=0;i<4;i++) {
+			for(int j=0;j<4;j++) {
+				if (temp[i][j]==0) {
+					if(count2==chance)
+						temp[i][j]=tileNumber;
+					count2++;
+				}
+			}
+		}
+		setBoard(temp);
+	}
+	//josh
+	public void computeMovement() {
+		char p = 'x';
+		while(p!= 'w'&& p!= 'a' && p!='s' && p!='d')
+			p = getScanner().next().charAt(0);
 			 
-			if (p=='w' || p=='s') {
-				moveVertical(p);
-			}
-			if (p=='a'|| p =='d') {
-				moveHorizontal(p);
-				}
-			
+		if (p=='w' || p=='s') {
+			moveVertical(p);
 		}
+		if (p=='a'|| p =='d') {
+			moveHorizontal(p);
+		}
+			
+	}
 	//bennie
 	public void moveVertical(char dir) {
 		//newBoard is flipped version of board, so arrays are grouped by columns
@@ -261,6 +266,7 @@ public class TextBasedGame {
 	 * This method is used to show the current state of the board and is called every time a new change is made to the board
 	 */
 	public void displayBoard() {
+		System.out.println("High Score: "+getHighScore()+"   Current Score: "+getCurrentScore()+"\n");
 		for (int positionX = 0; positionX < 4; positionX++) {
 			for (int positionY = 0; positionY < 4; positionY++) {
 				int x = getBoard()[positionX][positionY];
