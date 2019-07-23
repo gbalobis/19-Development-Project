@@ -81,7 +81,6 @@ public class TextBasedGame {
 			}
 		}
 	}
-	//josh
 	public void generateNewTile() {
 			
 		int count1=0, count2=0;
@@ -126,11 +125,10 @@ public class TextBasedGame {
 		}
 		setBoard(temp);
 	}
-	//josh
 	public void computeMovement() {
 		char p = 'x';
 		while(p!= 'w'&& p!= 'a' && p!='s' && p!='d')
-			p = getScanner().next().charAt(0);
+			p = getScanner().next().toLowerCase().charAt(0);
 			 
 		if (p=='w' || p=='s') {
 			moveVertical(p);
@@ -140,7 +138,6 @@ public class TextBasedGame {
 		}
 			
 	}
-	//bennie
 	public void moveVertical(char dir) {
 		//newBoard is flipped version of board, so arrays are grouped by columns
 		int[][] newBoard=new int[4][4];
@@ -167,7 +164,6 @@ public class TextBasedGame {
 		//update board configuration
 		setBoard(newBoard);
 	}
-	//bennie
 	public void moveHorizontal(char dir) {
 		int[][] newBoard=getBoard();
 		
@@ -180,7 +176,6 @@ public class TextBasedGame {
 		//update board configuration
 		setBoard(newBoard);
 	}
-	//bennie
 	public int[] checkCollisions(int[] line, char dir) {
 		//up/left movements combine in same manner
 		if(dir=='w'||dir=='a') {
@@ -298,14 +293,15 @@ public class TextBasedGame {
 		}
 		return false;
 	}
-	//ammar
 	public boolean defeatCheck() {
+		// check for a 0 anywhere on the board which would denote an empty tile and a possible move
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				if (board[i][j] == 0)
 					return false;
 			}
 		}
+		// check for possible adjacent tiles that can be added, also denoting a possible move
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				if (equalityCheck(i,j))
@@ -317,21 +313,28 @@ public class TextBasedGame {
 	
 	//following function checks if a tile is equal to an adjacent tile 
 	public boolean equalityCheck(int xPos, int yPos) {
+		//go through board column by column
+		
 		if (xPos == 0) {
+			//every tile in the 0th column has an adjacent tile to the right so all of them call checkRight and none call checkLeft
 			if(checkRight(xPos,yPos))
 				return true;
+			//tiles 1 through 3 in 0th column call checkUp
 			if (yPos > 0) {
 				if(checkUp(xPos,yPos))
 					return true;
 			}
+			//tiles 0 through 2 in the 0th column call checkDown
 			if (yPos < 3) {
 				if(checkDown(xPos,yPos))
 					return true;
 			}
 		}
 		else if (xPos == 3) {
+			// 3rd column is similar to 0th except all tiles call checkLeft instead of checkRight
 			if(checkLeft(xPos,yPos))
 				return true;
+			//rest is similar to 0th column
 			if (yPos > 0) {
 				if(checkUp(xPos,yPos))
 					return true;
@@ -342,10 +345,12 @@ public class TextBasedGame {
 			}
 		}
 		else {
+			// if we're in the middle two columns, we can always call both checkUp and checkDown
 			if(checkRight(xPos,yPos))
 				return true;
 			if(checkLeft(xPos,yPos))
 				return true;
+			//rest similar to 0th and 3rd columns
 			if (yPos > 0) {
 				if(checkUp(xPos,yPos))
 					return true;
