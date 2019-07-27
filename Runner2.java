@@ -1,11 +1,14 @@
 
-
-	public class Runner {
-
+public class Runner2 {
+	
+		
 		public static void main(String[] args) {
-			TextBasedGame test=new TextBasedGame();
+			Game test=new Game();
 			test.startGame();
 			System.out.println("Thanks for playing!");
 		}
 
+
 	}
+
+}
