@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 
 
 public class Game {
@@ -6,6 +7,7 @@ public class Game {
 	private int[][] board;
 	private int highScore;
 	private int currentScore;
+	private Scanner scanner;
 	
 	public Game() {
 		//create empty board with no high scores
@@ -336,6 +338,10 @@ public class Game {
 	public void setCurrentScore(int c) {
 		if(c>=0)
 			this.currentScore = c;
+	}
+	
+	public Scanner getScanner() {
+		return scanner;
 	}
 	
 }

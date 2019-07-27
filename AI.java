@@ -1,7 +1,13 @@
-public class AI extends Game {
+import java.util.Timer;
+import java.util.TimerTask;
+
+
+public class AI extends Game{
 	
 	private char difficulty; // h for hard, e for easy etc.
 	private boolean direction; //for alternating directions each turn
+	private Timer timer = new Timer();
+	private TimerTask task;
 	
 	public AI (char difficulty) {
 		super();
@@ -21,7 +27,7 @@ public class AI extends Game {
 					System.out.println("Impossible...\nPlay again? (y / n)");
 				//wait for a valid response of y or n
 				while(cont!='y'&&cont!='n')
-					cont=getScanner().next().charAt(0);
+					cont = super.getScanner().next().charAt(0);
 				//if they do not restart, end the function
 				if(cont=='n')
 					return;
@@ -46,7 +52,7 @@ public class AI extends Game {
 //possibility to automatically switch to easy after this
 				//wait for a valid response of y or n
 				while(cont!='y'&&cont!='n')
-					cont=getScanner().next().charAt(0);
+					cont = super.getScanner().next().charAt(0);
 				//if they do not continue, end the function
 				if(cont=='n') {
 					return;
@@ -66,13 +72,32 @@ public class AI extends Game {
 		}
 		}
 	public void computeMovement() {
-		if (difficulty == 'h') {
-			if (direction)
-				moveVertical('s');
-			else
-				moveHorizontal('d');
-			direction = !direction;
-		}
+		timer.scheduleAtFixedRate(new TimerTask() {
+//			            @Override		not sure whether this line is necessary
+			            public void run() {
+			            	if (difficulty == 'h') {
+				            		hardMovement();
+			            	}
+			            	else
+			            		easyMovement();
+			            	if (defeatCheck() || victoryCheck())
+		            			cancel();
+			            }
+			        },
+			        0, 1000); //starts immediately and repeats every 1 seconds	
+//		if ()
+	}
+	
+	public void hardMovement() {
+		if (direction)
+			moveVertical('s');
+		else
+			moveHorizontal('d');
+		direction = !direction;
+	}
+	
+	public void easyMovement() {
+		
 	}
 
 	public char getDifficulty() {
@@ -84,3 +109,4 @@ public class AI extends Game {
 	}
 	
 }	
+
