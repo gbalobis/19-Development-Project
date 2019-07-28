@@ -9,7 +9,7 @@ public class Player extends Game {
 		scanner=new Scanner(System.in);
 	}
 	
-	public void startGame() {
+	/*public void startGame() {
 		while(true) {
 			super.startGame();
 			char cont='z';
@@ -57,7 +57,7 @@ public class Player extends Game {
 				}
 			}
 		}
-		}
+		}*/
 	//josh
 	public void computeMovement() {
 		char p = 'x';

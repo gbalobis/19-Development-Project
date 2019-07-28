@@ -28,13 +28,13 @@ public class Game {
 	generateNewTile();
 //	displayBoard();
 	//while the board is not in a victory or defeat screen, repeat following functions
-	while(!victoryCheck()&&!defeatCheck()) {
+	/*while(!victoryCheck()&&!defeatCheck()) {
 		//configure board based on movement inputed
 		computeMovement();
 		//create a new tile in an empty space and display board in console
 		generateNewTile();
 //		displayBoard();
-		}
+		}*/
 	}
 	
 	public void computeMovement(){
@@ -65,6 +65,9 @@ public class Game {
 						count1++;
 					}
 				}
+			}
+			if(count1==0) {
+				return;
 			}
 			//the line below picks a random spot to place the new tile
 			chance = randomGenerator.nextInt(count1);

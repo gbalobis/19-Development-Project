@@ -20,7 +20,7 @@ public class AI extends Game{
  * 
  * -jason
  * */	
-	public void startGame() {
+	/*public void startGame() {
 		while(true) {
 			super.startGame();
 			char cont='z';
@@ -76,7 +76,7 @@ public class AI extends Game{
 				}
 			}
 		}
-		}
+		}*/
 	public void computeMovement() {
 		timer.scheduleAtFixedRate(new TimerTask() {
 //			            @Override		not sure whether this line is necessary
