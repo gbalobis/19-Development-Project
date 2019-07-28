@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -13,7 +14,12 @@ public class AI extends Game{
 		super();
 		this.difficulty = difficulty;
 	}
-	
+/*
+ * You should change the defeat check and victory check prompts to make it so that both victory and defeat lead
+ * to the main menu and just have a very simple prompt so that bennie doesn't have to go awol on the GUI
+ * 
+ * -jason
+ * */	
 	public void startGame() {
 		while(true) {
 			super.startGame();
@@ -78,8 +84,12 @@ public class AI extends Game{
 			            	if (difficulty == 'h') {
 				            		hardMovement();
 			            	}
-			            	else
+			            	else if (difficulty == 'e') {
 			            		easyMovement();
+			            	}
+			            	else if (difficulty == 'm') {
+			            		mediumMovement();
+			            	}
 			            	if (defeatCheck() || victoryCheck())
 		            			cancel();
 			            }
@@ -99,6 +109,29 @@ public class AI extends Game{
 	public void easyMovement() {
 		
 	}
+	
+	public void mediumMovement() {
+	//using random class for the movements
+	Random RNG = new Random();	
+	// 80% chance to make a random movement
+	int chance = RNG.nextInt(4);
+	// 20% chance to make a coordinated movement	
+		if (chance == 4) {
+			if (direction)
+				moveVertical('s');
+			else
+				moveHorizontal('d');
+			direction = !direction;
+		}
+		else 
+			moveVertical('w');
+			moveVertical('s');
+			moveHorizontal('a');
+			moveHorizontal('d');
+			
+	
+		
+	}
 
 	public char getDifficulty() {
 		return difficulty;
@@ -109,4 +142,3 @@ public class AI extends Game{
 	}
 	
 }	
-
