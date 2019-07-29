@@ -1,6 +1,17 @@
 import java.util.Random;
 import java.util.Scanner;
 
+/*
+ * 
+ * Group Name: Group 19
+ * Tutorial: T04 Tuesdays & Thursdays
+ * Class Name: Game
+ * What The Class Does: Has the code for the main game "2048". Also is the superClass for the subClasses 
+ * Player and AI. Creates an instance of the game "2048". Creates one instance for single player. 
+ * Two for computer VS CPU.  
+ *  
+ *
+ */
 
 public class Game {
 	

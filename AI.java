@@ -2,6 +2,16 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/*
+ * 
+ * Group Name: Group 19
+ * Tutorial: T04 Tuesdays & Thursdays
+ * Class Name: AI
+ * What The Class Does: Has the algorithms for the levels of difficulty for the CPU. 
+ * Also has the inputs for the CPU to use when controlling it's instance of the board
+ * from Game.   
+ *
+ */
 
 public class AI extends Game{
 	
@@ -132,23 +142,32 @@ public class AI extends Game{
 	//using random class for the movements
 	Random RNG = new Random();	
 	// 80% chance to make a random movement
-	int chance = RNG.nextInt(4);
+	int chance = RNG.nextInt(10);
 	// 20% chance to make a coordinated movement	
-		if (chance == 4) {
+		if (chance == 8 || chance == 9) {
 			if (direction)
 				moveVertical('s');
 			else
 				moveHorizontal('d');
 			direction = !direction;
 		}
-		else 
+		//20% chance for a random movement going up
+		else if (chance == 7 || chance == 6 ){
 			moveVertical('w');
-			moveVertical('s');
+		}
+		//20% chance for a random movement going left
+		else if (chance == 5 || chance == 4 ){
 			moveHorizontal('a');
+		}
+		//20% chance for a random movement going down
+		else if (chance == 3 || chance == 2 ){
+			moveVertical('s');
+		}
+		//20% chance for a random movement going right
+		else if (chance == 1 || chance == 0 ){
 			moveHorizontal('d');
-			
-	
-		
+		}
+						
 	}
 
 	public char getDifficulty() {
