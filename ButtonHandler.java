@@ -44,9 +44,23 @@ public class ButtonHandler implements EventHandler<ActionEvent>{
 		//if Main Menu button was pushed, return to the main menu
 		else if(e.getSource()==window.getButton(5))
 			temp=window.displayMenu();
+		//if Play Again is clicked 
+		else if(e.getSource()==window.getButton(6)) {
+			if (window.getIsSingle()) 		//if singleplayer
+				temp=window.onePlayerScene();
+			else							//if vs AI
+				temp=window.twoPlayerScene();
+		}
+	
+		else if(e.getSource()==window.getButton(7))
+			temp=window.onePlayerScene();
+		
+		else if(e.getSource()==window.getButton(8))
+			temp=window.difficultyScreen();
+			
 		//set the scene to the one decided upon, based on the above if statements
 		window.getStage().setScene(temp);
-		window.getStage().show();	
+		window.getStage().show();
 		
 	}
 }

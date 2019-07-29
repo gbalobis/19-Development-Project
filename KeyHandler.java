@@ -43,10 +43,16 @@ public class KeyHandler implements EventHandler<KeyEvent>{
 		//create a new tile after each movement and update the board so the player can see the changes
 		window.getSingle().generateNewTile();
 		window.updateBoard();
-		//victory/defeat check for player
-		//if player wins, victory scene
-		//Scene temp=victoryScene();
-		//if player loses, defeat scene
+		//defeat check for player
+		if(window.getSingle().defeatCheck()) {
+    		window.getStage().setScene(window.getScene(4));
+    		window.getStage().show();
+    	}
+		//victory check for player
+    	else if (window.getSingle().victoryCheck()) {
+    		window.getStage().setScene(window.getScene(5));
+    		window.getStage().show();
+    	}
 	}
 	
 }

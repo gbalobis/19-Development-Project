@@ -40,14 +40,16 @@ public class GUIWindow extends Application{
 	private Game cpu;
 	//hold highscore when game has been restarted
 	private int highestScore;
+	//boolean where true denotes singleplayer and false AI
+	private boolean isSingle;
 	//timer used to refresh board when cpu moves
 	private Timer timer;
 	@Override
 	public void start(Stage stage) throws Exception {
 		this.stage=stage;
 		//create an array with all buttons used
-		buttons=new Button[] {new Button("Play Alone"), new Button("Play With Computer"), new Button("Easy"), 
-				new Button("Medium"), new Button("Hard"), new Button("Main Menu")};
+		buttons=new Button[] {new Button("Play Alone ( ͡° ͜ʖ ͡°)"), new Button("Play With The Computer ಠ__ಠ "), new Button("Easy"), 
+				new Button("Medium"), new Button("Hard"), new Button("Main Menu"), new Button("Play Again"), new Button("Change Difficulty")};
 		//create button and key handlers, which pass the guiwindow as an argument
 		bhandler=new ButtonHandler(this);
 		khandler=new KeyHandler(this);
@@ -131,6 +133,8 @@ public class GUIWindow extends Application{
 	//creates scene for single player play
 	public Scene onePlayerScene() {
 		
+		//set boolean to true for singleplayer
+		isSingle = true;
 		//if scene doesn't exist, create it from scratch
 		if(scenes[1]==null) {
 			
@@ -269,8 +273,14 @@ public class GUIWindow extends Application{
             	Platform.runLater(()->{
             		updateBoard();
             		//call functions for victory/defeat check for cpu
-            		//if cpu loses, display victory scene
-            		//if cpu wins, display defeat scene
+            		if (cpu.defeatCheck()) {
+            			stage.setScene(scenes[4]);
+            			stage.show();
+            		}
+            		else if (cpu.victoryCheck()) {
+            			stage.setScene(scenes[5]);
+            			stage.show();
+            		}
             	});
             }
         },
@@ -280,6 +290,8 @@ public class GUIWindow extends Application{
 	//create scene for vs cpu mode
 	public Scene twoPlayerScene() {
 
+		//set boolean to false for vs AI
+				isSingle = true;
 		//if scene doesn't exist, create it from scratch
 		if(scenes[3]==null) {
 
@@ -516,13 +528,45 @@ public class GUIWindow extends Application{
 			BorderPane.setAlignment(buttons[5], Pos.CENTER);
 		}
 	}
-	//save into scenes[5]
+	//save into scenes[4]
 	public Scene victoryScene() {
 		return null;
 	}
-	//save into scenes[6]
+	//save into scenes[5]
 	public Scene defeatScene() {
-		return null;
+		//if scene doesn't exist, create it from scratch
+		if(scenes[5]==null) {
+			
+			//root pane to contain everything
+			BorderPane root=new BorderPane();
+			root.setPadding(new Insets(50,0,25,0));
+
+			//set the background theme
+			Image img=new Image("https://opengameart.org/sites/default/files/SpaceBackground1.png");
+			BackgroundImage bimg=new BackgroundImage(img,null,null,null,null);
+			Background bkg=new Background(bimg);
+			root.setBackground(bkg);
+			
+			//defeat message at top of screen
+			Label name=new Label("You just got completely destroyed!");
+			name.setFont(Font.font("Verdana", 20));
+			name.setTextFill(Color.WHITESMOKE);
+			root.setTop(name);
+			BorderPane.setAlignment(name, Pos.BOTTOM_CENTER);
+			
+			//vbox containing buttons for all possible options
+			VBox menu=new VBox();
+			menu.setSpacing(15);
+			menu.setAlignment(Pos.CENTER);		
+		
+			menu.getChildren().addAll(buttons[6], buttons[7], buttons[5]);
+			root.setCenter(menu);
+
+			//create scene with above root pane
+			Scene scene=new Scene(root,600,400);
+			scenes[5]=scene;
+		}
+		return scenes[5];
 	}
 	
 	//return the stage being used
@@ -535,6 +579,11 @@ public class GUIWindow extends Application{
 		return buttons[i];
 	}
 	
+	//return a list of the scenes used
+	public Scene getScene(int i) {
+		return scenes[i];
+	}
+	
 	//return the singleplayer scene
 	public Game getSingle() {
 		return single;
@@ -543,6 +592,10 @@ public class GUIWindow extends Application{
 	//return the twoplayer scene
 	public Game getCPU() {
 		return cpu;
+	}
+	
+	public boolean getIsSingle() {
+		return isSingle;
 	}
 	
 	//main method to launch the application
