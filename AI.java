@@ -111,6 +111,20 @@ public class AI extends Game{
 	}
 	
 	public void easyMovement() {
+
+		Random RNG = new Random();
+		int chance = RNG.nextInt(4);
+
+		if (chance == 0)
+			moveVertical('s');
+		else if (chance == 1)
+			moveVertical('w');
+		else if (chance == 2)
+			moveHorizontal('a');
+		else if (chance == 3)
+			moveHorizontal('d');
+
+
 		
 	}
 	
