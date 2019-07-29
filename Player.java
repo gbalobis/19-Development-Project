@@ -1,5 +1,15 @@
 import java.util.Scanner;
 
+/*
+ * 
+ * Group Name: Group 19
+ * Tutorial: T04 Tuesdays & Thursdays
+ * Class Name: Player
+ * What The Class Does: Controls the inputs that the Player does using 
+ * a Scanner. Returns the input to the superClass.
+ *
+ */
+
 public class Player extends Game {
 	
 	private Scanner scanner;
