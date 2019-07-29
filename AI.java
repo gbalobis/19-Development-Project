@@ -20,7 +20,11 @@ public class AI extends Game{
  * 
  * -jason
  * */	
-	/*public void startGame() {
+	public void startGame() {
+		super.startGame();
+		computeMovement();
+	}/*
+	}
 		while(true) {
 			super.startGame();
 			char cont='z';

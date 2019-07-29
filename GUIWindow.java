@@ -1,4 +1,8 @@
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -28,6 +32,8 @@ public class GUIWindow extends Application{
 	private Game cpu;
 	//hold highscore when game has been restarted
 	private int highestScore;
+	//timer used to refresh board when cpu moves
+	private Timer timer;
 	@Override
 	public void start(Stage stage) throws Exception {
 		this.stage=stage;
@@ -38,6 +44,7 @@ public class GUIWindow extends Application{
 		for(int i=0;i<buttons.length;i++) {
 			buttons[i].setOnAction(bhandler);
 		}
+		timer=new Timer();
 		scenes=new Scene[4];
 		scenes[0]=displayMenu();
 		stage.setTitle("2048 Game");
@@ -88,6 +95,7 @@ public class GUIWindow extends Application{
 		single=new Player();
 		single.setHighScore(highestScore);
 		single.startGame();
+		timer.cancel();
 		return scenes[0];
 	}
 	
@@ -198,22 +206,26 @@ public class GUIWindow extends Application{
 		return scenes[2];
 	}
 
-	public void easyCPU() {
-		cpu=new AI('e');
-		cpu.startGame();
-		
-	}
-	
-	public void mediumCPU() {
-		cpu=new AI('m');
-		cpu.startGame();
-		
-	}
-
-	public void hardCPU() {
-		cpu=new AI('h');
-		cpu.startGame();
-		
+	public void cpuDiff(char difficulty) {
+		cpu=new AI(difficulty);
+		timer=new Timer();
+		timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+        		cpu.startGame();
+            }
+        },
+        0); //starts game immediately
+		timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+            	Platform.runLater(()->{
+            		cpu.generateNewTile();
+            		updateBoard();
+            	});
+            }
+        },
+        0, 1000); //starts updating board every 1 second	
 	}
 
 	public Scene twoPlayerScene() {
@@ -244,16 +256,42 @@ public class GUIWindow extends Application{
 			pboardLabel.setTextFill(Color.WHITESMOKE);
 			cboardLabel.setTextFill(Color.WHITESMOKE);
 			
-			GridPane playerBoard=new GridPane();
-			GridPane cpuBoard=new GridPane();
+			
+			int[][] playerBoard=getSingle().getBoard();
+			int[][] cpuBoard=getCPU().getBoard();
+			GridPane playerGrid=new GridPane();
+			GridPane cpuGrid=new GridPane();
 			for(int i=0;i<4;i++) {
 				for(int j=0;j<4;j++) {
-					Rectangle ptemp=new Rectangle(50,50,Color.DIMGRAY);
-					ptemp.setStroke(Color.WHITESMOKE);
-					Rectangle ctemp=new Rectangle(50,50,Color.DIMGRAY);
-					ctemp.setStroke(Color.WHITESMOKE);
-					playerBoard.add(ptemp, i, j);
-					cpuBoard.add(ctemp, i, j);
+					StackPane ptemp1=new StackPane();
+					
+					Rectangle ptemp2=new Rectangle(50,50,Color.DIMGRAY);
+					ptemp2.setStroke(Color.WHITESMOKE);
+					ptemp1.getChildren().add(ptemp2);
+					
+					if(playerBoard[i][j]!=0) {
+						Label ptemp3=new Label(Integer.toString(playerBoard[i][j]));
+						ptemp3.setTextFill(Color.WHITESMOKE);
+						ptemp1.getChildren().add(ptemp3);
+					}
+					ptemp1.setAlignment(Pos.CENTER);
+					
+					playerGrid.add(ptemp1, j, i);
+
+					StackPane ctemp1=new StackPane();
+					
+					Rectangle ctemp2=new Rectangle(50,50,Color.DIMGRAY);
+					ctemp2.setStroke(Color.WHITESMOKE);
+					ctemp1.getChildren().add(ctemp2);
+					
+					if(cpuBoard[i][j]!=0) {
+						Label ctemp3=new Label(Integer.toString(cpuBoard[i][j]));
+						ctemp3.setTextFill(Color.WHITESMOKE);
+						ctemp1.getChildren().add(ctemp3);
+					}
+					ctemp1.setAlignment(Pos.CENTER);
+					
+					cpuGrid.add(ctemp1, j, i);
 				}
 			}
 			
@@ -266,8 +304,8 @@ public class GUIWindow extends Application{
 			ccscore.setTextFill(Color.WHITESMOKE);
 			spacing.setTextFill(Color.WHITESMOKE);
 			
-			pboard.getChildren().addAll(pboardLabel, playerBoard, pcscore, phscore);
-			cboard.getChildren().addAll(cboardLabel, cpuBoard, ccscore, spacing);
+			pboard.getChildren().addAll(pboardLabel, playerGrid, pcscore, phscore);
+			cboard.getChildren().addAll(cboardLabel, cpuGrid, ccscore, spacing);
 			pboard.setAlignment(Pos.CENTER);
 			cboard.setAlignment(Pos.CENTER);	
 			
@@ -286,6 +324,7 @@ public class GUIWindow extends Application{
 			((BorderPane) scenes[3].getRoot()).setBottom(buttons[5]);
 			BorderPane.setAlignment(buttons[5], Pos.CENTER);
 		}
+		scenes[3].setOnKeyPressed(khandler);
 		return scenes[3];
 	}
 	
@@ -330,7 +369,77 @@ public class GUIWindow extends Application{
 			bottomBar.setSpacing(50);
 		}
 		else if(getStage().getScene().equals(scenes[3])) {
+			HBox boards=new HBox();
+			boards.setPadding(new Insets(20,0,0,0));
+			boards.setSpacing(25);
 			
+			VBox pboard=new VBox();
+			VBox cboard=new VBox();
+			
+			Label pboardLabel=new Label("Your Board");
+			Label cboardLabel=new Label("CPU's Board");
+			pboardLabel.setTextFill(Color.WHITESMOKE);
+			cboardLabel.setTextFill(Color.WHITESMOKE);
+			
+			
+			int[][] playerBoard=getSingle().getBoard();
+			int[][] cpuBoard=getCPU().getBoard();
+			GridPane playerGrid=new GridPane();
+			GridPane cpuGrid=new GridPane();
+			for(int i=0;i<4;i++) {
+				for(int j=0;j<4;j++) {
+					StackPane ptemp1=new StackPane();
+					
+					Rectangle ptemp2=new Rectangle(50,50,Color.DIMGRAY);
+					ptemp2.setStroke(Color.WHITESMOKE);
+					ptemp1.getChildren().add(ptemp2);
+					
+					if(playerBoard[i][j]!=0) {
+						Label ptemp3=new Label(Integer.toString(playerBoard[i][j]));
+						ptemp3.setTextFill(Color.WHITESMOKE);
+						ptemp1.getChildren().add(ptemp3);
+					}
+					ptemp1.setAlignment(Pos.CENTER);
+					
+					playerGrid.add(ptemp1, j, i);
+
+					StackPane ctemp1=new StackPane();
+					
+					Rectangle ctemp2=new Rectangle(50,50,Color.DIMGRAY);
+					ctemp2.setStroke(Color.WHITESMOKE);
+					ctemp1.getChildren().add(ctemp2);
+					
+					if(cpuBoard[i][j]!=0) {
+						Label ctemp3=new Label(Integer.toString(cpuBoard[i][j]));
+						ctemp3.setTextFill(Color.WHITESMOKE);
+						ctemp1.getChildren().add(ctemp3);
+					}
+					ctemp1.setAlignment(Pos.CENTER);
+					
+					cpuGrid.add(ctemp1, j, i);
+				}
+			}
+			
+			Label pcscore=new Label("Current Score: "+getSingle().getCurrentScore());
+			Label phscore=new Label("High Score: "+getSingle().getHighScore());
+			Label ccscore=new Label("Current Score: "+getCPU().getCurrentScore());
+			Label spacing=new Label(" ");
+			pcscore.setTextFill(Color.WHITESMOKE);
+			phscore.setTextFill(Color.WHITESMOKE);
+			ccscore.setTextFill(Color.WHITESMOKE);
+			spacing.setTextFill(Color.WHITESMOKE);
+			
+			pboard.getChildren().addAll(pboardLabel, playerGrid, pcscore, phscore);
+			cboard.getChildren().addAll(cboardLabel, cpuGrid, ccscore, spacing);
+			pboard.setAlignment(Pos.CENTER);
+			cboard.setAlignment(Pos.CENTER);	
+			
+			boards.getChildren().addAll(pboard, cboard);
+			boards.setAlignment(Pos.CENTER);
+			((BorderPane) scenes[3].getRoot()).setCenter(boards);
+			
+			((BorderPane) scenes[3].getRoot()).setBottom(buttons[5]);
+			BorderPane.setAlignment(buttons[5], Pos.CENTER);
 		}
 	}
 	

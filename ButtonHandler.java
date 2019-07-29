@@ -16,15 +16,15 @@ public class ButtonHandler implements EventHandler<ActionEvent>{
 		else if(e.getSource()==window.getButton(1))
 			temp=window.difficultyScreen();
 		else if(e.getSource()==window.getButton(2)) {
-			window.easyCPU();
+			window.cpuDiff('e');
 			temp=window.twoPlayerScene();
 		}
 		else if(e.getSource()==window.getButton(3)) {
-			window.mediumCPU();
+			window.cpuDiff('m');
 			temp=window.twoPlayerScene();
 		}
 		else if(e.getSource()==window.getButton(4)) {
-			window.hardCPU();
+			window.cpuDiff('h');
 			temp=window.twoPlayerScene();
 		}
 		else if(e.getSource()==window.getButton(5))

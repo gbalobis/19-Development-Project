@@ -5,7 +5,7 @@ public class Player extends Game {
 	private Scanner scanner;
 	
 	public Player() {
-		
+		super();
 		scanner=new Scanner(System.in);
 	}
 	
