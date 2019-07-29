@@ -225,7 +225,7 @@ public class GUIWindow extends Application{
             	});
             }
         },
-        0, 1000); //starts updating board every 1 second	
+        0, 100); //starts updating board every 1 second	
 	}
 
 	public Scene twoPlayerScene() {

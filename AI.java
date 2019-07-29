@@ -8,7 +8,6 @@ public class AI extends Game{
 	private char difficulty; // h for hard, e for easy etc.
 	private boolean direction; //for alternating directions each turn
 	private Timer timer = new Timer();
-	private TimerTask task;
 	
 	public AI (char difficulty) {
 		super();
@@ -83,7 +82,7 @@ public class AI extends Game{
 		}*/
 	public void computeMovement() {
 		timer.scheduleAtFixedRate(new TimerTask() {
-//			            @Override		not sure whether this line is necessary
+			            @Override
 			            public void run() {
 			            	if (difficulty == 'h') {
 				            		hardMovement();
@@ -98,7 +97,7 @@ public class AI extends Game{
 		            			cancel();
 			            }
 			        },
-			        0, 1000); //starts immediately and repeats every 1 seconds	
+			        0, 100); //starts immediately and repeats every 1 seconds	
 //		if ()
 	}
 	
