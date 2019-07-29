@@ -2,24 +2,28 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/*
+ * 
+ * Group Name: Group 19
+ * Tutorial: T04 Tuesdays & Thursdays
+ * Class Name: AI
+ * What The Class Does: Has the algorithms for the levels of difficulty for the CPU. 
+ * Also has the inputs for the CPU to use when controlling it's instance of the board
+ * from Game.   
+ *
+ */
 
 public class AI extends Game{
 	
 	private char difficulty; // h for hard, e for easy etc.
 	private boolean direction; //for alternating directions each turn
 	private Timer timer = new Timer();
-	private TimerTask task;
 	
 	public AI (char difficulty) {
 		super();
 		this.difficulty = difficulty;
 	}
-/*
- * You should change the defeat check and victory check prompts to make it so that both victory and defeat lead
- * to the main menu and just have a very simple prompt so that bennie doesn't have to go awol on the GUI
- * 
- * -jason
- * */	
+
 	public void startGame() {
 		super.startGame();
 		computeMovement();
@@ -86,7 +90,7 @@ public class AI extends Game{
 //			            @Override		not sure whether this line is necessary
 			            public void run() {
 			            	if (difficulty == 'h') {
-				            		hardMovement();
+				            	hardMovement();
 			            	}
 			            	else if (difficulty == 'e') {
 			            		easyMovement();
@@ -96,9 +100,10 @@ public class AI extends Game{
 			            	}
 			            	if (defeatCheck() || victoryCheck())
 		            			cancel();
+			            	generateNewTile();
 			            }
 			        },
-			        0, 1000); //starts immediately and repeats every 1 seconds	
+			        0, 500); //starts immediately and repeats every 0.5 seconds	
 //		if ()
 	}
 	
@@ -111,6 +116,20 @@ public class AI extends Game{
 	}
 	
 	public void easyMovement() {
+
+		Random RNG = new Random();
+		int chance = RNG.nextInt(4);
+
+		if (chance == 0)
+			moveVertical('s');
+		else if (chance == 1)
+			moveVertical('w');
+		else if (chance == 2)
+			moveHorizontal('a');
+		else if (chance == 3)
+			moveHorizontal('d');
+
+
 		
 	}
 	
@@ -118,23 +137,32 @@ public class AI extends Game{
 	//using random class for the movements
 	Random RNG = new Random();	
 	// 80% chance to make a random movement
-	int chance = RNG.nextInt(4);
+	int chance = RNG.nextInt(10);
 	// 20% chance to make a coordinated movement	
-		if (chance == 4) {
+		if (chance == 8 || chance == 9) {
 			if (direction)
 				moveVertical('s');
 			else
 				moveHorizontal('d');
 			direction = !direction;
 		}
-		else 
+		//20% chance for a random movement going up
+		else if (chance == 7 || chance == 6 ){
 			moveVertical('w');
-			moveVertical('s');
+		}
+		//20% chance for a random movement going left
+		else if (chance == 5 || chance == 4 ){
 			moveHorizontal('a');
+		}
+		//20% chance for a random movement going down
+		else if (chance == 3 || chance == 2 ){
+			moveVertical('s');
+		}
+		//20% chance for a random movement going right
+		else if (chance == 1 || chance == 0 ){
 			moveHorizontal('d');
-			
-	
-		
+		}
+						
 	}
 
 	public char getDifficulty() {
