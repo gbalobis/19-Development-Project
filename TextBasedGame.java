@@ -26,6 +26,7 @@ public class TextBasedGame {
 		while(true) {
 			//set up board with 2 new tiles and display it in the console
 			generateNewTile();
+			generateNewTile();
 			displayBoard();
 			//while the board is not in a victory or defeat screen, repeat following functions
 			while(!victoryCheck()&&!defeatCheck()) {
@@ -38,7 +39,7 @@ public class TextBasedGame {
 			char cont='z';
 			//if board is in a defeat state, ask player if they would like to restart
 			if(defeatCheck()) {
-				System.out.println("DEFEAT!!!!\n Would you like to restart? (y / n)");
+				System.out.println("DEFEAT!!!!\nWould you like to restart? (y / n)");
 				//wait for a valid response of y or n
 				while(cont!='y'&&cont!='n')
 					cont=getScanner().next().charAt(0);
@@ -59,7 +60,7 @@ public class TextBasedGame {
 			}
 			//if board is in a victory state, ask player if they would like to continue in endless mode
 			if(victoryCheck()) {
-				System.out.println("VICTORY!!!!\n Would you like to continue? (y / n)");
+				System.out.println("VICTORY!!!!\nWould you like to continue? (y / n)");
 				//wait for a valid response of y or n
 				while(cont!='y'&&cont!='n')
 					cont=getScanner().next().charAt(0);
@@ -75,13 +76,13 @@ public class TextBasedGame {
 						computeMovement();
 						//create a new tile in an empty space and display board in console
 						generateNewTile();
-			displayBoard();
+						displayBoard();
 					}
 				}
 			}
 		}
 	}
-	//josh
+	//creates a new tile with value of either 2 or 4
 	public void generateNewTile() {
 			
 			int count1=0, count2=0;
@@ -106,6 +107,12 @@ public class TextBasedGame {
 					}
 				}
 			}
+			
+			//if no empty spaces, do not generate anything
+			if(count1==0) {
+				return;
+			}
+			
 			//the line below picks a random spot to place the new tile
 			chance = randomGenerator.nextInt(count1);
 			
@@ -121,21 +128,23 @@ public class TextBasedGame {
 				}
 			}
 		}
-		//josh
-		public void computeMovement() {
-			char p = 'x';
-			while(p!= 'w'|| p!= 'a' || p!='s' || p!='d')
+		
+	public void computeMovement() {
+		char p = 'x';
+		while(p!= 'w'&& p!= 'a' && p!='s' && p!='d') {
 			p = scanner.next().charAt(0);
-			 
-			if (p=='w' || p=='s') {
-				moveVertical(p);
-			}
-			if (p=='a'|| p =='d') {
-				moveHorizontal(p);
-				}
-			
+			System.out.println(p);
 		}
-	//bennie
+
+		if (p=='w' || p=='s') {
+			moveVertical(p);
+		}
+		if (p=='a'|| p =='d') {
+			moveHorizontal(p);
+		}
+			
+	}
+	//moves board vertically, up or down based on variable dir
 	public void moveVertical(char dir) {
 		//newBoard is flipped version of board, so arrays are grouped by columns
 		int[][] newBoard=new int[4][4];
@@ -162,7 +171,7 @@ public class TextBasedGame {
 		//update board configuration
 		setBoard(newBoard);
 	}
-	//bennie
+	//moves board horizontally, left or right based on variable dir
 	public void moveHorizontal(char dir) {
 		int[][] newBoard=getBoard();
 		
@@ -175,7 +184,7 @@ public class TextBasedGame {
 		//update board configuration
 		setBoard(newBoard);
 	}
-	//bennie
+	//checks for collisions between tiles on the board after a movement
 	public int[] checkCollisions(int[] line, char dir) {
 		//up/left movements combine in same manner
 		if(dir=='w'||dir=='a') {
@@ -292,14 +301,16 @@ public class TextBasedGame {
 		}
 		return false;
 	}
-	//ammar
+	//checks if the board is in a defeat state
 	public boolean defeatCheck() {
+		// check for a 0 anywhere on the board which would denote an empty tile and a possible move
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				if (board[i][j] == 0)
 					return false;
 			}
 		}
+		// check for possible adjacent tiles that can be added, also denoting a possible move
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				if (equalityCheck(i,j))
@@ -312,20 +323,25 @@ public class TextBasedGame {
 	//following function checks if a tile is equal to an adjacent tile 
 	public boolean equalityCheck(int xPos, int yPos) {
 		if (xPos == 0) {
+			//every tile in the 0th column has an adjacent tile to the right so all of them call checkRight and none call checkLeft
 			if(checkRight(xPos,yPos))
+				//tiles 1 through 3 in 0th column call checkUp
 				return true;
 			if (yPos > 0) {
 				if(checkUp(xPos,yPos))
 					return true;
 			}
 			if (yPos < 3) {
+				//tiles 0 through 2 in the 0th column call checkDown
 				if(checkDown(xPos,yPos))
 					return true;
 			}
 		}
 		else if (xPos == 3) {
+			// 3rd column is similar to 0th except all tiles call checkLeft instead of checkRight
 			if(checkLeft(xPos,yPos))
 				return true;
+			//rest is similar to 0th column
 			if (yPos > 0) {
 				if(checkUp(xPos,yPos))
 					return true;
@@ -336,10 +352,12 @@ public class TextBasedGame {
 			}
 		}
 		else {
+			// if we're in the middle two columns, we can always call both checkUp and checkDown
 			if(checkRight(xPos,yPos))
 				return true;
 			if(checkLeft(xPos,yPos))
 				return true;
+			//rest similar to 0th and 3rd columns
 			if (yPos > 0) {
 				if(checkUp(xPos,yPos))
 					return true;

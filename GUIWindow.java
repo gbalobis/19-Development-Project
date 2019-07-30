@@ -6,6 +6,8 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -23,7 +25,10 @@ import javafx.stage.Stage;
  * Uses the ButtonHandler and KeyHandler to deal with different inputs from the user
  *
  */
+
 public class GUIWindow extends Application{
+	//used to determine if running textbasedgame or gui
+	final static boolean gui=true;
 	//stage used to set scenes in the application
 	private Stage stage;
 	//array of all buttons used in the application
@@ -63,6 +68,15 @@ public class GUIWindow extends Application{
 		scenes=new Scene[6];
 		//menu will be the first scene displayed upon running
 		scenes[0]=displayMenu();
+		
+		//popup containing instructions
+		//code adapted from https://code.makery.ch/blog/javafx-dialogs-official/
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Instructions");
+		alert.setHeaderText("Welcome to 2048!");
+		alert.setContentText("Use W, A, S and D to move the board up, left, down and right respectively.");
+		alert.showAndWait();
+
 		//title is 2048 game
 		stage.setTitle("2048 Game");
 		stage.setScene(scenes[0]);
@@ -274,11 +288,11 @@ public class GUIWindow extends Application{
             		updateBoard();
             		//call functions for victory/defeat check for cpu
             		if (cpu.defeatCheck()) {
-            			stage.setScene(scenes[4]);
+                		stage.setScene(victoryScene());
             			stage.show();
             		}
             		else if (cpu.victoryCheck()) {
-            			stage.setScene(scenes[5]);
+                		stage.setScene(defeatScene());
             			stage.show();
             		}
             	});
@@ -531,52 +545,51 @@ public class GUIWindow extends Application{
 	//save into scenes[4]
 	public Scene victoryScene() {
 		//if scene doesn't exist, create it from scratch
-				if(scenes[5]==null) {
+		if(scenes[4]==null) {
 					
-					//root pane to contain everything
-					BorderPane root=new BorderPane();
-					root.setPadding(new Insets(50,0,25,0));
+			//root pane to contain everything
+			BorderPane root=new BorderPane();
+			root.setPadding(new Insets(50,0,25,0));
 
-					//set the background theme
-					Image img=new Image("https://opengameart.org/sites/default/files/SpaceBackground1.png");
-					BackgroundImage bimg=new BackgroundImage(img,null,null,null,null);
-					Background bkg=new Background(bimg);
-					root.setBackground(bkg);
+			//set the background theme
+			Image img=new Image("https://opengameart.org/sites/default/files/SpaceBackground1.png");
+			BackgroundImage bimg=new BackgroundImage(img,null,null,null,null);
+			Background bkg=new Background(bimg);
+			root.setBackground(bkg);
 					
-					//victory message at top of screen
-					Label name=new Label("Well, well, well, look at you go");
-					name.setFont(Font.font("Verdana", 20));
-					name.setTextFill(Color.WHITESMOKE);
-					root.setTop(name);
-					BorderPane.setAlignment(name, Pos.BOTTOM_CENTER);
+			//victory message at top of screen
+			Label name=new Label("Well, well, well, look at you go");
+			name.setFont(Font.font("Verdana", 20));
+			name.setTextFill(Color.WHITESMOKE);
+			root.setTop(name);
+			BorderPane.setAlignment(name, Pos.BOTTOM_CENTER);
 					
-					//vbox containing buttons for all possible options
-					VBox menu=new VBox();
-					menu.setSpacing(15);
-					menu.setAlignment(Pos.CENTER);		
-					if(isSingle)
-						menu.getChildren().addAll(buttons[6], buttons[5]);
-					else
-						menu.getChildren().addAll(buttons[6], buttons[7], buttons[5]);
-					root.setCenter(menu);
+			//vbox containing buttons for all possible options
+			VBox menu=new VBox();
+			menu.setSpacing(15);
+			menu.setAlignment(Pos.CENTER);		
+			if(isSingle)
+				menu.getChildren().addAll(buttons[6], buttons[5]);
+			else
+				menu.getChildren().addAll(buttons[6], buttons[7], buttons[5]);
+			root.setCenter(menu);
 
-					//create scene with above root pane
-					Scene scene=new Scene(root,600,400);
-					scenes[5]=scene;
-				}
-				else {
-					VBox menu=new VBox();
-					menu.setSpacing(15);
-					menu.setAlignment(Pos.CENTER);		
+			//create scene with above root pane
+			Scene scene=new Scene(root,600,400);
+			scenes[4]=scene;
+		}
+		else {
+			VBox menu=new VBox();
+			menu.setSpacing(15);
+			menu.setAlignment(Pos.CENTER);		
 					
-					if(isSingle)
-						menu.getChildren().addAll(buttons[6], buttons[5]);
-					else
-						menu.getChildren().addAll(buttons[6], buttons[7], buttons[5]);
-					((BorderPane)scenes[5].getRoot()).setCenter(menu);
-				}
-				return scenes[5];
-		return null;
+			if(isSingle)
+				menu.getChildren().addAll(buttons[6], buttons[5]);
+			else
+				menu.getChildren().addAll(buttons[6], buttons[7], buttons[5]);
+			((BorderPane)scenes[4].getRoot()).setCenter(menu);
+		}
+		return scenes[4];
 	}
 	//save into scenes[5]
 	public Scene defeatScene() {
@@ -659,6 +672,13 @@ public class GUIWindow extends Application{
 	
 	//main method to launch the application
 	public static void main(String[] args) {
-		launch(args);	
+		if(!gui) {
+			System.out.println("Welcome to 2048!\nUse W, A, S and D to move the board up, left, down and right respectively.");
+			TextBasedGame test=new TextBasedGame();
+			test.startGame();
+		}
+		else {
+			launch(args);	
+		}
 	}
 }
