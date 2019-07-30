@@ -395,7 +395,7 @@ public class GUIWindow extends Application{
 			scenes[3]=scene;
 		}
 		else {
-			//readd button in case it was used in another scene
+			//read button in case it was used in another scene
 			((BorderPane) scenes[3].getRoot()).setBottom(buttons[5]);
 			BorderPane.setAlignment(buttons[5], Pos.CENTER);
 		}
@@ -530,6 +530,52 @@ public class GUIWindow extends Application{
 	}
 	//save into scenes[4]
 	public Scene victoryScene() {
+		//if scene doesn't exist, create it from scratch
+				if(scenes[5]==null) {
+					
+					//root pane to contain everything
+					BorderPane root=new BorderPane();
+					root.setPadding(new Insets(50,0,25,0));
+
+					//set the background theme
+					Image img=new Image("https://opengameart.org/sites/default/files/SpaceBackground1.png");
+					BackgroundImage bimg=new BackgroundImage(img,null,null,null,null);
+					Background bkg=new Background(bimg);
+					root.setBackground(bkg);
+					
+					//victory message at top of screen
+					Label name=new Label("Well, well, well, look at you go");
+					name.setFont(Font.font("Verdana", 20));
+					name.setTextFill(Color.WHITESMOKE);
+					root.setTop(name);
+					BorderPane.setAlignment(name, Pos.BOTTOM_CENTER);
+					
+					//vbox containing buttons for all possible options
+					VBox menu=new VBox();
+					menu.setSpacing(15);
+					menu.setAlignment(Pos.CENTER);		
+					if(isSingle)
+						menu.getChildren().addAll(buttons[6], buttons[5]);
+					else
+						menu.getChildren().addAll(buttons[6], buttons[7], buttons[5]);
+					root.setCenter(menu);
+
+					//create scene with above root pane
+					Scene scene=new Scene(root,600,400);
+					scenes[5]=scene;
+				}
+				else {
+					VBox menu=new VBox();
+					menu.setSpacing(15);
+					menu.setAlignment(Pos.CENTER);		
+					
+					if(isSingle)
+						menu.getChildren().addAll(buttons[6], buttons[5]);
+					else
+						menu.getChildren().addAll(buttons[6], buttons[7], buttons[5]);
+					((BorderPane)scenes[5].getRoot()).setCenter(menu);
+				}
+				return scenes[5];
 		return null;
 	}
 	//save into scenes[5]
