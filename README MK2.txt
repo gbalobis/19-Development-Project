@@ -26,5 +26,15 @@ Usage:
 -	If time permits, add Arcade mode
 Roadmap:
 -	Adding in colors for the tiles and smoother transitioning for the collision of the tiles
+-	Recode victory and defeat checking functions to properly check for victory/defeat when playing against computer:
+-	Instead of immediately winning when the AI runs out of possible moves , the player should have to surpass the AIÕs final score
+-	Improve menu design
+-	Add smoother animations and cleaner collisions between tiles
+-	Design different game modes
+-	Winning by reaching 2048 vs. endless mode
+-	Further modularize GUIWindows class
+-	If time permits, add local multiplayer
+-	If time permits, add Arcade mode
+
 Authors:
 -	Bennie He, Ammar Zakaria, Josh Lewis, Jason Szeto
