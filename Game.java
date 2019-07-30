@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public class Game {
 	
-	private int[][] board;
-	private int highScore;
-	private int currentScore;
-	private Scanner scanner;
+	protected int[][] board;
+	protected int highScore;
+	protected int currentScore;
+	protected Scanner scanner;
 	
 	public Game() {
 		//create empty board with no high scores
@@ -20,7 +20,7 @@ public class Game {
 		setBoard(temp);
 		setHighScore(0);
 		setCurrentScore(0);
-	
+		scanner=new Scanner(System.in);
 	}
 	public void startGame() {
 	//set up board with 2 new tiles and display it in the console

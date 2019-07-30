@@ -1,27 +1,11 @@
-
-import java.util.Scanner;
 import java.util.Random;
 
-public class TextBasedGame {
-	private int[][] board;
-	private int highScore;
-	private int currentScore;
-	private Scanner scanner;
+public class TextBasedGame extends Game {
 	
 	public TextBasedGame() {
-		//create empty board with no high scores
-		int[][] temp=new int[4][4];
-		for(int i=0;i<4;i++) {
-			for(int j=0;j<4;j++) {
-				temp[i][j]=0;
-			}
-		}
-		setBoard(temp);
-		setHighScore(0);
-		setCurrentScore(0);
-		scanner=new Scanner(System.in);
+		super();
 	}
-	
+	@Override
 	public void startGame() {
 		while(true) {
 			//set up board with 2 new tiles and display it in the console
@@ -82,6 +66,7 @@ public class TextBasedGame {
 			}
 		}
 	}
+	/*
 	//creates a new tile with value of either 2 or 4
 	public void generateNewTile() {
 			
@@ -128,12 +113,12 @@ public class TextBasedGame {
 				}
 			}
 		}
-		
+		*/
 	public void computeMovement() {
 		char p = 'x';
 		while(p!= 'w'&& p!= 'a' && p!='s' && p!='d') {
 			p = scanner.next().charAt(0);
-			System.out.println(p);
+			
 		}
 
 		if (p=='w' || p=='s') {
@@ -144,6 +129,7 @@ public class TextBasedGame {
 		}
 			
 	}
+	/*
 	//moves board vertically, up or down based on variable dir
 	public void moveVertical(char dir) {
 		//newBoard is flipped version of board, so arrays are grouped by columns
@@ -266,6 +252,7 @@ public class TextBasedGame {
 		}
 		return line;
 	}
+	*/
 	/*
 	 * This method is used to show the current state of the board and is called every time a new change is made to the board
 	 */
@@ -289,9 +276,11 @@ public class TextBasedGame {
 		}
 		System.out.println();
 	}
+}
 	/*
 	 * This method checks the board if the tile "2048" is present and returns true if it is found and false otherwise.  
 	 */
+/*	
 	public boolean victoryCheck() {
 		for (int positionX = 0; positionX < 4; positionX++) {
 			for (int positionY = 0; positionY < 4; positionY++) {
@@ -433,3 +422,4 @@ public class TextBasedGame {
 			this.currentScore = c;
 	}
 }
+*/

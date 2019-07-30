@@ -53,7 +53,7 @@ public class GUIWindow extends Application{
 	public void start(Stage stage) throws Exception {
 		this.stage=stage;
 		//create an array with all buttons used
-		buttons=new Button[] {new Button("Play Alone ( ͡° ͜ʖ ͡°)"), new Button("Play With The Computer ಠ__ಠ "), new Button("Easy"), 
+		buttons=new Button[] {new Button("Play Alone"), new Button("Play With The Computer"), new Button("Easy"), 
 				new Button("Medium"), new Button("Hard"), new Button("Main Menu"), new Button("Play Again"), new Button("Change Difficulty")};
 		//create button and key handlers, which pass the guiwindow as an argument
 		bhandler=new ButtonHandler(this);
