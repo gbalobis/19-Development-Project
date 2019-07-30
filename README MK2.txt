@@ -16,6 +16,14 @@ Requirements to run the program:
 -	Eclipse IDE
 Usage:
 -	Outputs tiles as two or four and creates higher sum tiles based on those two
+-	Recode victory and defeat checking functions to properly check for victory/defeat when playing against computer:
+-	Instead of immediately winning when the AI runs out of possible moves, the player should have to surpass the AI’s final score
+-	Improve menu design
+-	Design different game modes
+-	Winning by reaching 2048 vs. endless mode
+-	Further modularize GUIWindows class
+-	If time permits, add local multiplayer
+-	If time permits, add Arcade mode
 Roadmap:
 -	Adding in colors for the tiles and smoother transitioning for the collision of the tiles
 Authors:
