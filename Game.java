@@ -37,9 +37,9 @@ public class Game {
 		}*/
 	}
 	
-//	public void computeMovement(){
-//		
-//	}
+	public void computeMovement(){
+		
+	}
 	
 	//josh
 	public void generateNewTile() {

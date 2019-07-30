@@ -607,7 +607,7 @@ public class GUIWindow extends Application{
 			root.setBackground(bkg);
 			
 			//defeat message at top of screen
-			Label name=new Label("You lost. How dissapointing...");
+			Label name=new Label("You just got completely destroyed!");
 			name.setFont(Font.font("Verdana", 20));
 			name.setTextFill(Color.WHITESMOKE);
 			root.setTop(name);

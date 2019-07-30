@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class TextBasedGame extends Game {
 	
 	public TextBasedGame() {
