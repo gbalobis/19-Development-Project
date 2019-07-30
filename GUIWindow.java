@@ -291,7 +291,7 @@ public class GUIWindow extends Application{
 	public Scene twoPlayerScene() {
 
 		//set boolean to false for vs AI
-				isSingle = true;
+				isSingle = false;
 		//if scene doesn't exist, create it from scratch
 		if(scenes[3]==null) {
 
@@ -558,13 +558,26 @@ public class GUIWindow extends Application{
 			VBox menu=new VBox();
 			menu.setSpacing(15);
 			menu.setAlignment(Pos.CENTER);		
-		
-			menu.getChildren().addAll(buttons[6], buttons[7], buttons[5]);
+			if(isSingle)
+				menu.getChildren().addAll(buttons[6], buttons[5]);
+			else
+				menu.getChildren().addAll(buttons[6], buttons[7], buttons[5]);
 			root.setCenter(menu);
 
 			//create scene with above root pane
 			Scene scene=new Scene(root,600,400);
 			scenes[5]=scene;
+		}
+		else {
+			VBox menu=new VBox();
+			menu.setSpacing(15);
+			menu.setAlignment(Pos.CENTER);		
+			
+			if(isSingle)
+				menu.getChildren().addAll(buttons[6], buttons[5]);
+			else
+				menu.getChildren().addAll(buttons[6], buttons[7], buttons[5]);
+			((BorderPane)scenes[5].getRoot()).setCenter(menu);
 		}
 		return scenes[5];
 	}

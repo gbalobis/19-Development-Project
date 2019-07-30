@@ -46,17 +46,20 @@ public class ButtonHandler implements EventHandler<ActionEvent>{
 			temp=window.displayMenu();
 		//if Play Again is clicked 
 		else if(e.getSource()==window.getButton(6)) {
-			if (window.getIsSingle()) 		//if singleplayer
+			//reset the current boards
+			window.getStage().setScene(window.displayMenu());
+			if (window.getIsSingle())		//if singleplayer, start new single player game
 				temp=window.onePlayerScene();
-			else							//if vs AI
+			else {							//if vs AI, reset ai and start new vs cpu game
+				window.cpuDiff(((AI) window.getCPU()).getDifficulty());
 				temp=window.twoPlayerScene();
+			}
 		}
-	
-		else if(e.getSource()==window.getButton(7))
-			temp=window.onePlayerScene();
-		
-		else if(e.getSource()==window.getButton(8))
+		//if Change Difficulty button was pushed, allow player to choose a difficulty
+		else if(e.getSource()==window.getButton(7)) {
+			window.getStage().setScene(window.displayMenu());
 			temp=window.difficultyScreen();
+		}
 			
 		//set the scene to the one decided upon, based on the above if statements
 		window.getStage().setScene(temp);

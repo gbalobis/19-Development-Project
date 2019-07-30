@@ -45,12 +45,12 @@ public class KeyHandler implements EventHandler<KeyEvent>{
 		window.updateBoard();
 		//defeat check for player
 		if(window.getSingle().defeatCheck()) {
-    		window.getStage().setScene(window.getScene(4));
+    		window.getStage().setScene(window.defeatScene());
     		window.getStage().show();
     	}
 		//victory check for player
     	else if (window.getSingle().victoryCheck()) {
-    		window.getStage().setScene(window.getScene(5));
+    		window.getStage().setScene(window.victoryScene());
     		window.getStage().show();
     	}
 	}
