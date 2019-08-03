@@ -11,10 +11,12 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 /*
  * 
@@ -52,8 +54,12 @@ public class GUIWindow extends Application{
 	@Override
 	public void start(Stage stage) throws Exception {
 		this.stage=stage;
+		//creating buttons with images, code adapted from http://tutorials.jenkov.com/javafx/button.html
+		//create icons to put into buttons
+		ImageView user=new ImageView(new Image("https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-128.png",30,30,true,false));
+		ImageView comp=new ImageView(new Image("https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678077-computer-128.png",30,30,true,false));
 		//create an array with all buttons used
-		buttons=new Button[] {new Button("Play Alone"), new Button("Play With The Computer"), new Button("Easy"), 
+		buttons=new Button[] {new Button("Play Alone", user), new Button("Play Against CPU", comp), new Button("Easy"), 
 				new Button("Medium"), new Button("Hard"), new Button("Main Menu"), new Button("Play Again"), new Button("Change Difficulty")};
 		//create button and key handlers, which pass the guiwindow as an argument
 		bhandler=new ButtonHandler(this);
@@ -73,14 +79,18 @@ public class GUIWindow extends Application{
 		//code adapted from https://code.makery.ch/blog/javafx-dialogs-official/
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Instructions");
-		alert.setHeaderText("Welcome to 2048!");
-		alert.setContentText("Use W, A, S and D to move the board up, left, down and right respectively.");
-		alert.showAndWait();
-
+		alert.setGraphic(null);
+		alert.setHeaderText(null);
+		alert.setContentText("Welcome to 2048!\nUse W, A, S and D to move the board up, left, down and right respectively.");
+		alert.initModality(Modality.NONE);
+		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+		
 		//title is 2048 game
 		stage.setTitle("2048 Game");
 		stage.setScene(scenes[0]);
+		stage.setResizable(false);
 		stage.show();
+		alert.showAndWait();
 	}
 	
 	//creates the scene for the menu and returns it
@@ -101,8 +111,9 @@ public class GUIWindow extends Application{
 			
 			//game name on the top of the screen
 			Label name=new Label("2048 Game");
-			name.setFont(Font.font("Verdana", 20));
-			name.setTextFill(Color.WHITESMOKE);
+			/*name.setFont(Font.font("Verdana", 20));
+			name.setTextFill(Color.WHITESMOKE);*/
+			name.setId("name");
 			root.setTop(name);
 			BorderPane.setAlignment(name, Pos.BOTTOM_CENTER);
 			
@@ -113,13 +124,14 @@ public class GUIWindow extends Application{
 		
 			menu.getChildren().addAll(buttons[0], buttons[1]);
 			root.setCenter(menu);
+			menu.setId("main");
 			
 			//vbox for group and our names
 			VBox credits=new VBox();
 			Label group=new Label("Group 19");
 			Label members=new Label("Ammar, Bennie, Jason, Josh");
-			group.setTextFill(Color.WHITESMOKE);
-			members.setTextFill(Color.WHITESMOKE);
+			/*group.setTextFill(Color.WHITESMOKE);
+			members.setTextFill(Color.WHITESMOKE);*/
 		
 			credits.getChildren().addAll(group, members);
 			root.setBottom(credits);
@@ -141,6 +153,7 @@ public class GUIWindow extends Application{
 		single.startGame();
 		//stop timer to ensure cpu isn't running
 		timer.cancel();
+		scenes[0].getStylesheets().add("Style.css");
 		return scenes[0];
 	}
 	
@@ -164,9 +177,10 @@ public class GUIWindow extends Application{
 
 			//game mode on the top of the screen
 			Label name=new Label("Single Player Mode");
-			name.setFont(Font.font("Verdana", 20));
-			name.setTextFill(Color.WHITESMOKE);
+			/*name.setFont(Font.font("Verdana", 20));
+			name.setTextFill(Color.WHITESMOKE);*/
 			root.setTop(name);
+			name.setId("name");
 			BorderPane.setAlignment(name, Pos.BOTTOM_CENTER);
 			
 			//display current board state, rectangles with numbers on top of them, 0s are not displayed
@@ -182,7 +196,7 @@ public class GUIWindow extends Application{
 					//if number isn't a zero, create new label to be displayed
 					if(gameBoard[i][j]!=0) {
 						Label temp3=new Label(Integer.toString(gameBoard[i][j]));
-						temp3.setTextFill(Color.WHITESMOKE);
+						/*temp3.setTextFill(Color.WHITESMOKE);*/
 						temp1.getChildren().add(temp3);
 					}
 					temp1.setAlignment(Pos.CENTER);
@@ -200,8 +214,8 @@ public class GUIWindow extends Application{
 			VBox scores=new VBox();
 			Label cscore=new Label("Current Score: "+getSingle().getCurrentScore());
 			Label hscore=new Label("High Score: "+getSingle().getHighScore());
-			cscore.setTextFill(Color.WHITESMOKE);
-			hscore.setTextFill(Color.WHITESMOKE);
+			/*cscore.setTextFill(Color.WHITESMOKE);
+			hscore.setTextFill(Color.WHITESMOKE);*/
 			scores.getChildren().addAll(cscore, hscore);
 			
 			//button is displayed to the right of the scores
@@ -222,8 +236,8 @@ public class GUIWindow extends Application{
 			VBox scores=new VBox();
 			Label cscore=new Label("Current Score: "+getSingle().getCurrentScore());
 			Label hscore=new Label("High Score: "+getSingle().getHighScore());
-			cscore.setTextFill(Color.WHITESMOKE);
-			hscore.setTextFill(Color.WHITESMOKE);
+			/*cscore.setTextFill(Color.WHITESMOKE);
+			hscore.setTextFill(Color.WHITESMOKE);*/
 			scores.getChildren().addAll(cscore, hscore);
 			
 			bottomBar.getChildren().addAll(buttons[5], scores);
@@ -234,6 +248,7 @@ public class GUIWindow extends Application{
 		}
 		//when keyboard keys are pressed, let key handler deal with it
 		scenes[1].setOnKeyPressed(khandler);
+		scenes[1].getStylesheets().add("Style.css");
 		return scenes[1];
 	}
 	
@@ -255,9 +270,10 @@ public class GUIWindow extends Application{
 
 			//prompt on the top of the screen
 			Label name=new Label("Choose A Difficulty");
-			name.setFont(Font.font("Verdana", 20));
-			name.setTextFill(Color.WHITESMOKE);
+			/*name.setFont(Font.font("Verdana", 20));
+			name.setTextFill(Color.WHITESMOKE);*/
 			root.setTop(name);
+			name.setId("name");
 			BorderPane.setAlignment(name, Pos.BOTTOM_CENTER);
 			
 			//vbox containing buttons for all possible difficulties
@@ -267,11 +283,13 @@ public class GUIWindow extends Application{
 		
 			menu.getChildren().addAll(buttons[2], buttons[3], buttons[4]);
 			root.setCenter(menu);
+			menu.setId("diff");
 
 			//create scene with above root pane
 			Scene scene=new Scene(root,600,400);
 			scenes[2]=scene;
 		}
+		scenes[2].getStylesheets().add("Style.css");
 		return scenes[2];
 	}
 
@@ -321,9 +339,10 @@ public class GUIWindow extends Application{
 
 			//game mode on the top of the screen
 			Label name=new Label("Versus CPU");
-			name.setFont(Font.font("Verdana", 20));
-			name.setTextFill(Color.WHITESMOKE);
+			/*name.setFont(Font.font("Verdana", 20));
+			name.setTextFill(Color.WHITESMOKE);*/
 			root.setTop(name);
+			name.setId("name");
 			BorderPane.setAlignment(name, Pos.BOTTOM_CENTER);
 			
 			//hbox to contain the below vboxes
@@ -338,8 +357,8 @@ public class GUIWindow extends Application{
 			
 			Label pboardLabel=new Label("Your Board");
 			Label cboardLabel=new Label("CPU's Board");
-			pboardLabel.setTextFill(Color.WHITESMOKE);
-			cboardLabel.setTextFill(Color.WHITESMOKE);
+			/*pboardLabel.setTextFill(Color.WHITESMOKE);
+			cboardLabel.setTextFill(Color.WHITESMOKE);*/
 			
 			//use same method as singlePlayer scene to reflect each player's board
 			int[][] playerBoard=getSingle().getBoard();
@@ -356,7 +375,7 @@ public class GUIWindow extends Application{
 					
 					if(playerBoard[i][j]!=0) {
 						Label ptemp3=new Label(Integer.toString(playerBoard[i][j]));
-						ptemp3.setTextFill(Color.WHITESMOKE);
+						/*ptemp3.setTextFill(Color.WHITESMOKE);*/
 						ptemp1.getChildren().add(ptemp3);
 					}
 					ptemp1.setAlignment(Pos.CENTER);
@@ -371,7 +390,7 @@ public class GUIWindow extends Application{
 					
 					if(cpuBoard[i][j]!=0) {
 						Label ctemp3=new Label(Integer.toString(cpuBoard[i][j]));
-						ctemp3.setTextFill(Color.WHITESMOKE);
+						/*ctemp3.setTextFill(Color.WHITESMOKE);*/
 						ctemp1.getChildren().add(ctemp3);
 					}
 					ctemp1.setAlignment(Pos.CENTER);
@@ -384,10 +403,10 @@ public class GUIWindow extends Application{
 			Label phscore=new Label("High Score: "+getSingle().getHighScore());
 			Label ccscore=new Label("Current Score: "+getCPU().getCurrentScore());
 			Label spacing=new Label(" ");
-			pcscore.setTextFill(Color.WHITESMOKE);
+			/*pcscore.setTextFill(Color.WHITESMOKE);
 			phscore.setTextFill(Color.WHITESMOKE);
 			ccscore.setTextFill(Color.WHITESMOKE);
-			spacing.setTextFill(Color.WHITESMOKE);
+			spacing.setTextFill(Color.WHITESMOKE);*/
 			
 			//put the created boards and score labels into the above vboxes
 			pboard.getChildren().addAll(pboardLabel, playerGrid, pcscore, phscore);
@@ -415,6 +434,7 @@ public class GUIWindow extends Application{
 		}
 		//when keyboard keys are pressed, let key handler deal with it
 		scenes[3].setOnKeyPressed(khandler);
+		scenes[3].getStylesheets().add("Style.css");
 		return scenes[3];
 	}
 	
@@ -436,7 +456,7 @@ public class GUIWindow extends Application{
 					
 					if(gameBoard[i][j]!=0) {
 						Label temp3=new Label(Integer.toString(gameBoard[i][j]));
-						temp3.setTextFill(Color.WHITESMOKE);
+						/*temp3.setTextFill(Color.WHITESMOKE);*/
 						temp1.getChildren().add(temp3);
 					}
 					temp1.setAlignment(Pos.CENTER);
@@ -453,8 +473,8 @@ public class GUIWindow extends Application{
 			VBox scores=new VBox();
 			Label cscore=new Label("Current Score: "+getSingle().getCurrentScore());
 			Label hscore=new Label("High Score: "+getSingle().getHighScore());
-			cscore.setTextFill(Color.WHITESMOKE);
-			hscore.setTextFill(Color.WHITESMOKE);
+			/*cscore.setTextFill(Color.WHITESMOKE);
+			hscore.setTextFill(Color.WHITESMOKE);*/
 			scores.getChildren().addAll(cscore, hscore);
 			
 			bottomBar.getChildren().addAll(buttons[5], scores);
@@ -477,9 +497,8 @@ public class GUIWindow extends Application{
 			
 			Label pboardLabel=new Label("Your Board");
 			Label cboardLabel=new Label("CPU's Board");
-			pboardLabel.setTextFill(Color.WHITESMOKE);
-			cboardLabel.setTextFill(Color.WHITESMOKE);
-			
+			/*pboardLabel.setTextFill(Color.WHITESMOKE);
+			cboardLabel.setTextFill(Color.WHITESMOKE);*/
 			
 			int[][] playerBoard=getSingle().getBoard();
 			int[][] cpuBoard=getCPU().getBoard();
@@ -496,7 +515,7 @@ public class GUIWindow extends Application{
 					
 					if(playerBoard[i][j]!=0) {
 						Label ptemp3=new Label(Integer.toString(playerBoard[i][j]));
-						ptemp3.setTextFill(Color.WHITESMOKE);
+						/*ptemp3.setTextFill(Color.WHITESMOKE);*/
 						ptemp1.getChildren().add(ptemp3);
 					}
 					ptemp1.setAlignment(Pos.CENTER);
@@ -511,7 +530,7 @@ public class GUIWindow extends Application{
 					
 					if(cpuBoard[i][j]!=0) {
 						Label ctemp3=new Label(Integer.toString(cpuBoard[i][j]));
-						ctemp3.setTextFill(Color.WHITESMOKE);
+						/*ctemp3.setTextFill(Color.WHITESMOKE);*/
 						ctemp1.getChildren().add(ctemp3);
 					}
 					ctemp1.setAlignment(Pos.CENTER);
@@ -524,10 +543,10 @@ public class GUIWindow extends Application{
 			Label phscore=new Label("High Score: "+getSingle().getHighScore());
 			Label ccscore=new Label("Current Score: "+getCPU().getCurrentScore());
 			Label spacing=new Label(" ");
-			pcscore.setTextFill(Color.WHITESMOKE);
+			/*pcscore.setTextFill(Color.WHITESMOKE);
 			phscore.setTextFill(Color.WHITESMOKE);
 			ccscore.setTextFill(Color.WHITESMOKE);
-			spacing.setTextFill(Color.WHITESMOKE);
+			spacing.setTextFill(Color.WHITESMOKE);*/
 			
 			pboard.getChildren().addAll(pboardLabel, playerGrid, pcscore, phscore);
 			cboard.getChildren().addAll(cboardLabel, cpuGrid, ccscore, spacing);
@@ -558,10 +577,17 @@ public class GUIWindow extends Application{
 			root.setBackground(bkg);
 					
 			//victory message at top of screen
+			VBox message=new VBox();
+			Label vict=new Label("VICTORY!");
 			Label name=new Label("Well, well, well, look at you go");
-			name.setFont(Font.font("Verdana", 20));
-			name.setTextFill(Color.WHITESMOKE);
-			root.setTop(name);
+			/*name.setFont(Font.font("Verdana", 20));
+			name.setTextFill(Color.WHITESMOKE);*/
+			message.getChildren().addAll(vict,name);
+			message.setAlignment(Pos.CENTER);
+			
+			root.setTop(message);
+			vict.setId("name");
+			name.setId("result");
 			BorderPane.setAlignment(name, Pos.BOTTOM_CENTER);
 					
 			//vbox containing buttons for all possible options
@@ -573,6 +599,7 @@ public class GUIWindow extends Application{
 			else
 				menu.getChildren().addAll(buttons[6], buttons[7], buttons[5]);
 			root.setCenter(menu);
+			menu.setId("victory");
 
 			//create scene with above root pane
 			Scene scene=new Scene(root,600,400);
@@ -588,7 +615,9 @@ public class GUIWindow extends Application{
 			else
 				menu.getChildren().addAll(buttons[6], buttons[7], buttons[5]);
 			((BorderPane)scenes[4].getRoot()).setCenter(menu);
+			menu.setId("victory");
 		}
+		scenes[4].getStylesheets().add("Style.css");
 		return scenes[4];
 	}
 	//save into scenes[5]
@@ -607,10 +636,17 @@ public class GUIWindow extends Application{
 			root.setBackground(bkg);
 			
 			//defeat message at top of screen
+			VBox message=new VBox();
+			Label def=new Label("DEFEAT!");
 			Label name=new Label("You just got completely destroyed!");
-			name.setFont(Font.font("Verdana", 20));
-			name.setTextFill(Color.WHITESMOKE);
-			root.setTop(name);
+			/*name.setFont(Font.font("Verdana", 20));
+			name.setTextFill(Color.WHITESMOKE);*/
+			message.getChildren().addAll(def,name);
+			message.setAlignment(Pos.CENTER);
+
+			root.setTop(message);
+			def.setId("name");
+			name.setId("result");
 			BorderPane.setAlignment(name, Pos.BOTTOM_CENTER);
 			
 			//vbox containing buttons for all possible options
@@ -622,6 +658,7 @@ public class GUIWindow extends Application{
 			else
 				menu.getChildren().addAll(buttons[6], buttons[7], buttons[5]);
 			root.setCenter(menu);
+			menu.setId("defeat");
 
 			//create scene with above root pane
 			Scene scene=new Scene(root,600,400);
@@ -636,8 +673,10 @@ public class GUIWindow extends Application{
 				menu.getChildren().addAll(buttons[6], buttons[5]);
 			else
 				menu.getChildren().addAll(buttons[6], buttons[7], buttons[5]);
+			menu.setId("defeat");
 			((BorderPane)scenes[5].getRoot()).setCenter(menu);
 		}
+		scenes[5].getStylesheets().add("Style.css");
 		return scenes[5];
 	}
 	

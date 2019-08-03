@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
+
+
+.button{
+	-fx-font: 15px 'Press Start 2P', cursive;
+	-fx-min-width: 150px;
+	-fx-border-color: #F5F5F5;
+	-fx-border-radius: 2em;
+	-fx-background-color: transparent;
+	-fx-text-fill: #F5F5F5;
+}
+
+#main>.button{
+	-fx-font: 20px 'Brush Script MT';
+	-fx-min-width: 250px;
+}
+
+#defeat>.button,#victory>.button{
+	-fx-min-width: 280px;
+}
+
+.label{
+	-fx-font: 15px 'Impact';
+	-fx-text-fill: #F5F5F5;
+}
+
+#name{
+	-fx-font: 20px 'Press Start 2P', cursive;
+}
+
+#result{
+	-fx-font: 10px 'Press Start 2P', cursive
+}
