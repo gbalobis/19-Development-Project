@@ -57,8 +57,7 @@ public class GUIWindow extends Application{
 	private Timer timer;
 	//an array of colors 
 	private Color[] colors;
-	//the music will keep playing until stop is invoked
-	static int INDEFINITE;
+	
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -67,7 +66,7 @@ public class GUIWindow extends Application{
 		//initializes the music chosen
 		AudioClip note = new AudioClip(this.getClass().getResource("04. Mii Plaza.wav").toString());
 		//the music will play 5000 times
-		note.setCycleCount(INDEFINITE);
+		note.setCycleCount(5000);
 		//plays the music
 		note.play();
 		
