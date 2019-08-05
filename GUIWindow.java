@@ -1,6 +1,6 @@
+
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -15,9 +15,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.media.AudioClip;
+
+
+
+
 /*
  * 
  * Group Name: Group 19
@@ -51,9 +55,26 @@ public class GUIWindow extends Application{
 	private boolean isSingle;
 	//timer used to refresh board when cpu moves
 	private Timer timer;
+	//an array of colors 
+	private Color[] colors;
+	//the music will keep playing until stop is invoked
+	static int INDEFINITE;
+
 	@Override
 	public void start(Stage stage) throws Exception {
 		this.stage=stage;
+		
+		//initializes the music chosen
+		AudioClip note = new AudioClip(this.getClass().getResource("04. Mii Plaza.wav").toString());
+		//the music will play 5000 times
+		note.setCycleCount(INDEFINITE);
+		//plays the music
+		note.play();
+		
+		//Array of Colors for all the tiles of 2048
+		colors = new Color[] {Color.DARKSALMON, Color.GREEN, Color.ORANGE,Color.YELLOWGREEN,Color.BLUE,Color.INDIGO,Color.VIOLET,
+				Color.CADETBLUE,Color.BLACK,Color.BROWN,Color.DARKSALMON};
+		
 		//creating buttons with images, code adapted from http://tutorials.jenkov.com/javafx/button.html
 		//create icons to put into buttons
 		ImageView user=new ImageView(new Image("https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-128.png",30,30,true,false));
@@ -68,12 +89,16 @@ public class GUIWindow extends Application{
 		for(int i=0;i<buttons.length;i++) {
 			buttons[i].setOnAction(bhandler);
 		}
+		
+	
+	
 		//create timer for ai movement
 		timer=new Timer();
 		//create create an array of scenes so some scenes wont have to be recreated every time you visit them
 		scenes=new Scene[6];
 		//menu will be the first scene displayed upon running
 		scenes[0]=displayMenu();
+	
 		
 		//popup containing instructions
 		//code adapted from https://code.makery.ch/blog/javafx-dialogs-official/
@@ -91,10 +116,16 @@ public class GUIWindow extends Application{
 		stage.setResizable(false);
 		stage.show();
 		alert.showAndWait();
+			
+	
+		
 	}
+	
+	
 	
 	//creates the scene for the menu and returns it
 	public Scene displayMenu() {
+		
 		
 		//if menu scene does not exist, create it from scratch
 		if(scenes[0]==null) {
@@ -137,10 +168,18 @@ public class GUIWindow extends Application{
 			root.setBottom(credits);
 			credits.setAlignment(Pos.BOTTOM_CENTER);
 			
+		
+			
 			//create scene with above root pane
 			Scene scene=new Scene(root,600,400);
 			scenes[0]=scene;
+
+			
+			
+			
+			
 		}
+	
 		//when you return to menu screen, reset 1p and vs cpu screens
 		scenes[1]=null;
 		scenes[3]=null;
@@ -155,6 +194,8 @@ public class GUIWindow extends Application{
 		timer.cancel();
 		scenes[0].getStylesheets().add("Style.css");
 		return scenes[0];
+		
+		
 	}
 	
 	//creates scene for single player play
@@ -189,8 +230,20 @@ public class GUIWindow extends Application{
 			for(int i=0;i<4;i++) {
 				for(int j=0;j<4;j++) {
 					StackPane temp1=new StackPane();
-					
-					Rectangle temp2=new Rectangle(50,50,Color.DIMGRAY);
+					//checks the board for a number and assigns a color to it
+					Color color  = Color.DIMGRAY;
+					int tileNumber = gameBoard[i][j];
+					int counter = 0;
+					while (tileNumber != 0) {
+						tileNumber /= 2;
+						if (tileNumber == 1) {
+							color = colors[counter];
+							break;
+						}
+						counter++;
+						 
+					}
+					Rectangle temp2=new Rectangle(50,50,color);
 					temp2.setStroke(Color.WHITESMOKE);
 					temp1.getChildren().add(temp2);
 					//if number isn't a zero, create new label to be displayed
@@ -368,8 +421,20 @@ public class GUIWindow extends Application{
 			for(int i=0;i<4;i++) {
 				for(int j=0;j<4;j++) {
 					StackPane ptemp1=new StackPane();
-					
-					Rectangle ptemp2=new Rectangle(50,50,Color.DIMGRAY);
+					//checks the board for a number and assigns a color to it
+					Color color  = Color.DIMGRAY;
+					int tileNumber = playerBoard[i][j];
+					int counter = 0;
+					while (tileNumber != 0) {
+						tileNumber /= 2;
+						if (tileNumber == 1) {
+							color = colors[counter];
+							break;
+						}
+						counter++;
+						 
+					}
+					Rectangle ptemp2=new Rectangle(50,50,color);
 					ptemp2.setStroke(Color.WHITESMOKE);
 					ptemp1.getChildren().add(ptemp2);
 					
@@ -383,8 +448,20 @@ public class GUIWindow extends Application{
 					playerGrid.add(ptemp1, j, i);
 
 					StackPane ctemp1=new StackPane();
-					
-					Rectangle ctemp2=new Rectangle(50,50,Color.DIMGRAY);
+					//checks the board for a number and assigns a color to it
+					Color color1  = Color.DIMGRAY;
+					int tileNumber1 = cpuBoard[i][j];
+					int counter1 = 0;
+					while (tileNumber1 != 0) {
+						tileNumber1 /= 2;
+						if (tileNumber1 == 1) {
+							color = colors[counter1];
+							break;
+						}
+						counter1++;
+						 
+					}
+					Rectangle ctemp2=new Rectangle(50,50,color1);
 					ctemp2.setStroke(Color.WHITESMOKE);
 					ctemp1.getChildren().add(ctemp2);
 					
@@ -449,8 +526,21 @@ public class GUIWindow extends Application{
 			for(int i=0;i<4;i++) {
 				for(int j=0;j<4;j++) {
 					StackPane temp1=new StackPane();
-					
-					Rectangle temp2=new Rectangle(50,50,Color.DIMGRAY);
+					//checks the board for a number and assigns a color to it
+					Color color  = Color.DIMGRAY;
+					int tileNumber = gameBoard[i][j];
+					int counter = 0;
+					while (tileNumber != 0) {
+						tileNumber /= 2;
+						if (tileNumber == 1) {
+							color = colors[counter];
+							break;
+						}
+						counter++;
+						 
+					}
+						
+					Rectangle temp2=new Rectangle(50,50,color);
 					temp2.setStroke(Color.WHITESMOKE);
 					temp1.getChildren().add(temp2);
 					
@@ -508,8 +598,22 @@ public class GUIWindow extends Application{
 			for(int i=0;i<4;i++) {
 				for(int j=0;j<4;j++) {
 					StackPane ptemp1=new StackPane();
-					
-					Rectangle ptemp2=new Rectangle(50,50,Color.DIMGRAY);
+					//checks the board for a number and assigns a color to it
+					Color color1  = Color.DIMGRAY;
+					int tileNumber1 = playerBoard[i][j];
+					int counter1 = 0;
+					while (tileNumber1 != 0) {
+						tileNumber1 /= 2;
+						if (tileNumber1 == 1) {
+							color1 = colors[counter1];
+							break;
+						}
+						counter1++;
+						 
+					}
+						
+			
+					Rectangle ptemp2=new Rectangle(50,50,color1);
 					ptemp2.setStroke(Color.WHITESMOKE);
 					ptemp1.getChildren().add(ptemp2);
 					
@@ -523,8 +627,20 @@ public class GUIWindow extends Application{
 					playerGrid.add(ptemp1, j, i);
 
 					StackPane ctemp1=new StackPane();
-					
-					Rectangle ctemp2=new Rectangle(50,50,Color.DIMGRAY);
+					//checks the board for a number and assigns a color to it
+					Color color2  = Color.DIMGRAY;
+					int tileNumber2 = cpuBoard[i][j];
+					int counter2 = 0;
+					while (tileNumber2 != 0) {
+						tileNumber2 /= 2;
+						if (tileNumber2 == 1) {
+							color2 = colors[counter2];
+							break;
+						}
+						counter2++;
+						 
+					}
+					Rectangle ctemp2=new Rectangle(50,50,color2);
 					ctemp2.setStroke(Color.WHITESMOKE);
 					ctemp1.getChildren().add(ctemp2);
 					
@@ -679,7 +795,8 @@ public class GUIWindow extends Application{
 		scenes[5].getStylesheets().add("Style.css");
 		return scenes[5];
 	}
-	
+
+
 	//return the stage being used
 	public Stage getStage() {
 		return stage;
