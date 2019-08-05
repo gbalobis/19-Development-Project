@@ -33,8 +33,6 @@ import javafx.scene.media.AudioClip;
  */
 
 public class GUIWindow extends Application{
-	//used to determine if running textbasedgame or gui
-	final static boolean gui=true;
 	//stage used to set scenes in the application
 	private Stage stage;
 	//array of all buttons used in the application
@@ -62,13 +60,6 @@ public class GUIWindow extends Application{
 	@Override
 	public void start(Stage stage) throws Exception {
 		this.stage=stage;
-		
-		//initializes the music chosen
-		AudioClip note = new AudioClip(this.getClass().getResource("04. Mii Plaza.wav").toString());
-		//the music will play 5000 times
-		note.setCycleCount(5000);
-		//plays the music
-		note.play();
 		
 		//Array of Colors for all the tiles of 2048
 		colors = new Color[] {Color.DARKSALMON, Color.GREEN, Color.ORANGE,Color.YELLOWGREEN,Color.BLUE,Color.INDIGO,Color.VIOLET,
@@ -113,11 +104,20 @@ public class GUIWindow extends Application{
 		stage.setTitle("2048 Game");
 		stage.setScene(scenes[0]);
 		stage.setResizable(false);
+		//exit the program when gui is closed
+		stage.setOnCloseRequest(e->{
+			Platform.exit();
+			System.exit(0);
+		});
+
 		stage.show();
 		alert.showAndWait();
-			
-	
-		
+		//initializes the music chosen
+		AudioClip note = new AudioClip(this.getClass().getResource("04. Mii Plaza.wav").toString());
+		//the music will play 5000 times
+		note.setCycleCount(5000);
+		//plays the music
+		note.play();
 	}
 	
 	
@@ -827,13 +827,6 @@ public class GUIWindow extends Application{
 	
 	//main method to launch the application
 	public static void main(String[] args) {
-		if(!gui) {
-			System.out.println("Welcome to 2048!\nUse W, A, S and D to move the board up, left, down and right respectively.");
-			TextBasedGame test=new TextBasedGame();
-			test.startGame();
-		}
-		else {
-			launch(args);	
-		}
+			launch(args);
 	}
 }

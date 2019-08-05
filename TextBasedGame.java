@@ -276,6 +276,13 @@ public class TextBasedGame extends Game {
 		}
 		System.out.println();
 	}
+
+	public static void main(String[] args) {
+		System.out.println("Welcome to 2048!\nUse W, A, S and D to move the board up, left, down and right respectively.");
+		TextBasedGame test=new TextBasedGame();
+		test.startGame();
+		System.out.println("Thanks for playing!");
+	}
 }
 	/*
 	 * This method checks the board if the tile "2048" is present and returns true if it is found and false otherwise.  
