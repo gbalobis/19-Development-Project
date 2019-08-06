@@ -1,4 +1,3 @@
-
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Application;
@@ -18,6 +17,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.media.AudioClip;
+import javafx.animation.FadeTransition;
+import javafx.util.Duration;
 
 
 
@@ -243,8 +244,11 @@ public class GUIWindow extends Application{
 						 
 					}
 					Rectangle temp2=new Rectangle(50,50,color);
+			
 					temp2.setStroke(Color.WHITESMOKE);
 					temp1.getChildren().add(temp2);
+					
+					
 					//if number isn't a zero, create new label to be displayed
 					if(gameBoard[i][j]!=0) {
 						Label temp3=new Label(Integer.toString(gameBoard[i][j]));
@@ -437,6 +441,7 @@ public class GUIWindow extends Application{
 					ptemp2.setStroke(Color.WHITESMOKE);
 					ptemp1.getChildren().add(ptemp2);
 					
+					
 					if(playerBoard[i][j]!=0) {
 						Label ptemp3=new Label(Integer.toString(playerBoard[i][j]));
 						/*ptemp3.setTextFill(Color.WHITESMOKE);*/
@@ -540,8 +545,19 @@ public class GUIWindow extends Application{
 					}
 						
 					Rectangle temp2=new Rectangle(50,50,color);
+					
 					temp2.setStroke(Color.WHITESMOKE);
 					temp1.getChildren().add(temp2);
+					
+				
+					FadeTransition fadeTransition = new FadeTransition();
+					fadeTransition.setDuration(Duration.millis(100));
+					fadeTransition.setNode(temp2);;
+					fadeTransition.setFromValue(0.3);
+					fadeTransition.setToValue(1.0);
+					fadeTransition.setCycleCount(1);
+					fadeTransition.setAutoReverse(false);
+					fadeTransition.play();
 					
 					if(gameBoard[i][j]!=0) {
 						Label temp3=new Label(Integer.toString(gameBoard[i][j]));
@@ -615,6 +631,14 @@ public class GUIWindow extends Application{
 					Rectangle ptemp2=new Rectangle(50,50,color1);
 					ptemp2.setStroke(Color.WHITESMOKE);
 					ptemp1.getChildren().add(ptemp2);
+					FadeTransition fadeTransition = new FadeTransition();
+					fadeTransition.setDuration(Duration.millis(100));
+					fadeTransition.setNode(ptemp2);;
+					fadeTransition.setFromValue(0.3);
+					fadeTransition.setToValue(1.0);
+					fadeTransition.setCycleCount(1);
+					fadeTransition.setAutoReverse(false);
+					fadeTransition.play();
 					
 					if(playerBoard[i][j]!=0) {
 						Label ptemp3=new Label(Integer.toString(playerBoard[i][j]));
@@ -642,6 +666,14 @@ public class GUIWindow extends Application{
 					Rectangle ctemp2=new Rectangle(50,50,color2);
 					ctemp2.setStroke(Color.WHITESMOKE);
 					ctemp1.getChildren().add(ctemp2);
+					FadeTransition fadeTransition2 = new FadeTransition();
+					fadeTransition2.setDuration(Duration.millis(100));
+					fadeTransition2.setNode(ctemp2);
+					fadeTransition2.setFromValue(0.3);
+					fadeTransition2.setToValue(1.0);
+					fadeTransition2.setCycleCount(1);
+					fadeTransition2.setAutoReverse(false);
+					fadeTransition2.play();
 					
 					if(cpuBoard[i][j]!=0) {
 						Label ctemp3=new Label(Integer.toString(cpuBoard[i][j]));
