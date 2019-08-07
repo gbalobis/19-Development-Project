@@ -5,7 +5,7 @@
 	-fx-font: 15px 'Press Start 2P', cursive;
 	-fx-min-width: 150px;
 	-fx-border-color: #F5F5F5;
-	-fx-border-radius: 2em;
+	-fx-border-radius: 10%;
 	-fx-background-color: transparent;
 	-fx-text-fill: #F5F5F5;
 }
@@ -19,6 +19,13 @@
 	-fx-min-width: 280px;
 }
 
+.button:hover{
+	-fx-border-radius: 10%;
+	-fx-background-color: #F5F5F5;
+	-fx-text-fill: #000000;
+	-fx-rotate: -2;
+}
+
 .label{
 	-fx-font: 15px 'Impact';
 	-fx-text-fill: #F5F5F5;
@@ -29,5 +36,5 @@
 }
 
 #result{
-	-fx-font: 10px 'Press Start 2P', cursive
+	-fx-font: 10px 'Press Start 2P', cursive;
 }

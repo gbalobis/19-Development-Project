@@ -362,10 +362,12 @@ public class GUIWindow extends Application{
             		updateBoard();
             		//call functions for victory/defeat check for cpu
             		if (cpu.defeatCheck()) {
+            			timer.cancel();
                 		stage.setScene(victoryScene());
             			stage.show();
             		}
             		else if (cpu.victoryCheck()) {
+            			timer.cancel();
                 		stage.setScene(defeatScene());
             			stage.show();
             		}
