@@ -44,9 +44,9 @@ public class GUIWindow extends Application{
 	private ButtonHandler bhandler;
 	//handler used for all KeyEvents caused by key presses
 	private KeyHandler khandler;
-	//instance of textbasedgame used by player
+	//instance of game used by player
 	private Game single;
-	//instance of textbasedgame used by cpu
+	//instance of game used by cpu
 	private Game cpu;
 	//hold highscore when game has been restarted
 	private int highestScore;
@@ -551,22 +551,25 @@ public class GUIWindow extends Application{
 					temp2.setStroke(Color.WHITESMOKE);
 					temp1.getChildren().add(temp2);
 					
-				
-					FadeTransition fadeTransition = new FadeTransition();
-					fadeTransition.setDuration(Duration.millis(100));
-					fadeTransition.setNode(temp2);;
-					fadeTransition.setFromValue(0.3);
-					fadeTransition.setToValue(1.0);
-					fadeTransition.setCycleCount(1);
-					fadeTransition.setAutoReverse(false);
-					fadeTransition.play();
-					
 					if(gameBoard[i][j]!=0) {
 						Label temp3=new Label(Integer.toString(gameBoard[i][j]));
 						/*temp3.setTextFill(Color.WHITESMOKE);*/
 						temp1.getChildren().add(temp3);
 					}
 					temp1.setAlignment(Pos.CENTER);
+					/*int x=Character.getNumericValue(getSingle().getLastGenerated().charAt(0));
+					int y=Character.getNumericValue(getSingle().getLastGenerated().charAt(1));
+					System.out.println(x+" "+y);*/
+					if((Character.getNumericValue(getSingle().getLastGenerated().charAt(0))==i)&&(Character.getNumericValue(getSingle().getLastGenerated().charAt(1))==j)) {			
+						FadeTransition fadeTransition = new FadeTransition();
+						fadeTransition.setDuration(Duration.millis(100));
+						fadeTransition.setNode(temp2);
+						fadeTransition.setFromValue(0.3);
+						fadeTransition.setToValue(1.0);
+						fadeTransition.setCycleCount(1);
+						fadeTransition.setAutoReverse(false);
+						fadeTransition.play();
+					}
 					
 					board.add(temp1, j, i);
 				}
@@ -633,19 +636,22 @@ public class GUIWindow extends Application{
 					Rectangle ptemp2=new Rectangle(50,50,color1);
 					ptemp2.setStroke(Color.WHITESMOKE);
 					ptemp1.getChildren().add(ptemp2);
-					FadeTransition fadeTransition = new FadeTransition();
-					fadeTransition.setDuration(Duration.millis(100));
-					fadeTransition.setNode(ptemp2);;
-					fadeTransition.setFromValue(0.3);
-					fadeTransition.setToValue(1.0);
-					fadeTransition.setCycleCount(1);
-					fadeTransition.setAutoReverse(false);
-					fadeTransition.play();
 					
 					if(playerBoard[i][j]!=0) {
 						Label ptemp3=new Label(Integer.toString(playerBoard[i][j]));
 						/*ptemp3.setTextFill(Color.WHITESMOKE);*/
 						ptemp1.getChildren().add(ptemp3);
+					}
+					if((Character.getNumericValue(getSingle().getLastGenerated().charAt(0))==i)&&(Character.getNumericValue(getSingle().getLastGenerated().charAt(1))==j)) {			
+						getSingle().setLastGenerated("55");
+						FadeTransition fadeTransition = new FadeTransition();
+						fadeTransition.setDuration(Duration.millis(100));
+						fadeTransition.setNode(ptemp2);
+						fadeTransition.setFromValue(0.3);
+						fadeTransition.setToValue(1.0);
+						fadeTransition.setCycleCount(1);
+						fadeTransition.setAutoReverse(false);
+						fadeTransition.play();
 					}
 					ptemp1.setAlignment(Pos.CENTER);
 					
@@ -668,14 +674,6 @@ public class GUIWindow extends Application{
 					Rectangle ctemp2=new Rectangle(50,50,color2);
 					ctemp2.setStroke(Color.WHITESMOKE);
 					ctemp1.getChildren().add(ctemp2);
-					FadeTransition fadeTransition2 = new FadeTransition();
-					fadeTransition2.setDuration(Duration.millis(100));
-					fadeTransition2.setNode(ctemp2);
-					fadeTransition2.setFromValue(0.3);
-					fadeTransition2.setToValue(1.0);
-					fadeTransition2.setCycleCount(1);
-					fadeTransition2.setAutoReverse(false);
-					fadeTransition2.play();
 					
 					if(cpuBoard[i][j]!=0) {
 						Label ctemp3=new Label(Integer.toString(cpuBoard[i][j]));
@@ -683,7 +681,17 @@ public class GUIWindow extends Application{
 						ctemp1.getChildren().add(ctemp3);
 					}
 					ctemp1.setAlignment(Pos.CENTER);
-					
+					if((Character.getNumericValue(getCPU().getLastGenerated().charAt(0))==i)&&(Character.getNumericValue(getCPU().getLastGenerated().charAt(1))==j)) {			
+						getCPU().setLastGenerated("55");
+						FadeTransition fadeTransition = new FadeTransition();
+						fadeTransition.setDuration(Duration.millis(100));
+						fadeTransition.setNode(ctemp2);
+						fadeTransition.setFromValue(0.3);
+						fadeTransition.setToValue(1.0);
+						fadeTransition.setCycleCount(1);
+						fadeTransition.setAutoReverse(false);
+						fadeTransition.play();
+					}
 					cpuGrid.add(ctemp1, j, i);
 				}
 			}

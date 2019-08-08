@@ -89,7 +89,7 @@ public class AI extends Game{
 		}*/
 	public void computeMovement() {
 		timer.scheduleAtFixedRate(new TimerTask() {
-//			            @Override		not sure whether this line is necessary
+			            @Override
 			            public void run() {
 			            	if (difficulty == 'h') {
 			            		AIsimulation();

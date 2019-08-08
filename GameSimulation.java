@@ -18,7 +18,7 @@ public class GameSimulation extends Game {
 				savedBoard[i][j]=board[i][j];
 			}
 		}
-		currentScore = savedCurrentScore;
+		savedCurrentScore = currentScore;
 		
 		double highest;
 		double avgScoreUp = sim('w');

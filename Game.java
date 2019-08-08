@@ -8,6 +8,7 @@ public class Game {
 	protected int highScore;
 	protected int currentScore;
 	protected Scanner scanner;
+	protected String lastGenerated;
 	
 	public Game() {
 		//create empty board with no high scores
@@ -67,6 +68,7 @@ public class Game {
 				}
 			}
 			if(count1==0) {
+				setLastGenerated("55");
 				return;
 			}
 			//the line below picks a random spot to place the new tile
@@ -77,12 +79,16 @@ public class Game {
 			for(int i=0;i<4;i++) {
 				for(int j=0;j<4;j++) {
 					if (board[i][j]==0) {
-						if(count2==chance)
+						if(count2==chance) {
 							board[i][j]=tileNumber;
+							setLastGenerated(Integer.toString(i)+Integer.toString(j));
+							return;
+						}
 						count2++;
 					}
 				}
 			}
+			setLastGenerated("55");
 		}
 	
 	//bennie
@@ -348,7 +354,9 @@ public class Game {
 		return currentScore;
 	}
 
-	
+	public String getLastGenerated() {
+		return lastGenerated;
+	}
 
 	public void setBoard(int[][] b) {
 		board=new int[4][4];
@@ -359,6 +367,10 @@ public class Game {
 		}
 	}
 
+	public void setLastGenerated(String gen) {
+		lastGenerated=gen;
+	}
+	
 	public void setHighScore(int h) {
 		if(h>=0&&h>=getCurrentScore())
 			this.highScore = h;
