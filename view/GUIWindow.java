@@ -368,12 +368,12 @@ public class GUIWindow extends Application{
             	Platform.runLater(()->{
             		updateBoard();
             		//call functions for victory/defeat check for cpu
-            		if (cpu.defeatCheck()) {
+            		if (cpu.defeatCheck() && single.getCurrentScore() > cpu.getCurrentScore()) {
             			timer.cancel();
                 		stage.setScene(victoryScene());
             			stage.show();
             		}
-            		else if (cpu.victoryCheck()) {
+            		else if (cpu.victoryCheck() || (cpu.defeatCheck()) && single.defeatCheck() && cpu.getCurrentScore() > single.getCurrentScore() ) {
             			timer.cancel();
                 		stage.setScene(defeatScene());
             			stage.show();

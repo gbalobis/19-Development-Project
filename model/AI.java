@@ -1,5 +1,5 @@
 package model;
-import java.util.Random;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -17,10 +17,10 @@ import java.util.TimerTask;
 public class AI extends Game{
 	
 	private char difficulty; // h for hard, e for easy etc.
-	private boolean direction; //for alternating directions each turn
+//	private boolean direction; //for alternating directions each turn
 	private Timer timer = new Timer();
 	
-	private GameSimulation simulation = new GameSimulation(10);
+//	private GameSimulation simulation = new GameSimulation(100);
 	
 	public AI (char difficulty) {
 		super();
@@ -93,7 +93,7 @@ public class AI extends Game{
 			            @Override
 			            public void run() {
 			            	if (difficulty == 'h') {
-			            		AIsimulation();
+			            		hardMovement();
 			            	}
 			            	else if (difficulty == 'e') {
 			            		easyMovement();
@@ -110,55 +110,60 @@ public class AI extends Game{
 //		if ()
 	}
 	
-	public void hardMovement() {
-		if (direction)
-			moveVertical('s');
-		else
-			moveHorizontal('d');
-		direction = !direction;
-	}
+//	public void hardMovement() {
+//		if (direction)
+//			moveVertical('s');
+//		else
+//			moveHorizontal('d');
+//		direction = !direction;
+//	}
 	
-	public void AIsimulation() {
-		
-		simulation.startSim(board, currentScore);
-		move(simulation.getChosenDir());
+	public void hardMovement() {
+		GameSimulation hardSimulation = new GameSimulation(500);
+		hardSimulation.startSim(board, currentScore);
+		move(hardSimulation.getChosenDir());
 		
 	}
 	
 	public void easyMovement() {
-		randomMove();
+		GameSimulation easySimulation = new GameSimulation(10);
+		easySimulation.startSim(board, currentScore);
+		move(easySimulation.getChosenDir());
 	}
 	
 	public void mediumMovement() {
-	//using random class for the movements
-	Random RNG = new Random();	
-	// 80% chance to make a random movement
-	int chance = RNG.nextInt(10);
-	// 20% chance to make a coordinated movement	
-		if (chance == 8 || chance == 9) {
-			if (direction)
-				moveVertical('s');
-			else
-				moveHorizontal('d');
-			direction = !direction;
-		}
-		//20% chance for a random movement going up
-		else if (chance == 7 || chance == 6 ){
-			moveVertical('w');
-		}
-		//20% chance for a random movement going left
-		else if (chance == 5 || chance == 4 ){
-			moveHorizontal('a');
-		}
-		//20% chance for a random movement going down
-		else if (chance == 3 || chance == 2 ){
-			moveVertical('s');
-		}
-		//20% chance for a random movement going right
-		else if (chance == 1 || chance == 0 ){
-			moveHorizontal('d');
-		}
-						
+		GameSimulation mediumSimulation = new GameSimulation(50);
+		mediumSimulation.startSim(board, currentScore);
+		move(mediumSimulation.getChosenDir());
+//	//using random class for the movements
+//	Random RNG = new Random();	
+//	// 80% chance to make a random movement
+//	int chance = RNG.nextInt(10);
+//	// 20% chance to make a coordinated movement	
+//		if (chance == 8 || chance == 9) {
+//			if (direction)
+//				moveVertical('s');
+//			else
+//				moveHorizontal('d');
+//			direction = !direction;
+//		}
+//		//20% chance for a random movement going up
+//		else if (chance == 7 || chance == 6 ){
+//			moveVertical('w');
+//		}
+//		//20% chance for a random movement going left
+//		else if (chance == 5 || chance == 4 ){
+//			moveHorizontal('a');
+//		}
+//		//20% chance for a random movement going down
+//		else if (chance == 3 || chance == 2 ){
+//			moveVertical('s');
+//		}
+//		//20% chance for a random movement going right
+//		else if (chance == 1 || chance == 0 ){
+//			moveHorizontal('d');
+//		}
+//						
 	}
 
 	public char getDifficulty() {

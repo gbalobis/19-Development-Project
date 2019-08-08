@@ -46,7 +46,7 @@ public class KeyHandler implements EventHandler<KeyEvent>{
 		window.getSingle().generateNewTile();
 		window.updateBoard();
 		//defeat check for player
-		if(window.getSingle().defeatCheck()) {
+		if(window.getSingle().defeatCheck() && window.getCPU().getCurrentScore() > window.getSingle().getCurrentScore()) {
     		window.getStage().setScene(window.defeatScene());
     		window.getStage().show();
     	}
