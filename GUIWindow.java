@@ -63,8 +63,8 @@ public class GUIWindow extends Application{
 		this.stage=stage;
 		
 		//Array of Colors for all the tiles of 2048
-		colors = new Color[] {Color.DARKSALMON, Color.GREEN, Color.ORANGE,Color.YELLOWGREEN,Color.BLUE,Color.INDIGO,Color.VIOLET,
-				Color.CADETBLUE,Color.BLACK,Color.BROWN,Color.DARKSALMON};
+		colors = new Color[] {Color.DARKSLATEBLUE, Color.GREEN, Color.DARKORANGE,Color.YELLOWGREEN,Color.BLUE,Color.INDIGO,Color.VIOLET,
+				Color.CADETBLUE,Color.DARKSEAGREEN,Color.BROWN,Color.DARKCYAN};
 		
 		//creating buttons with images, code adapted from http://tutorials.jenkov.com/javafx/button.html
 		//create icons to put into buttons
@@ -562,9 +562,9 @@ public class GUIWindow extends Application{
 					System.out.println(x+" "+y);*/
 					if((Character.getNumericValue(getSingle().getLastGenerated().charAt(0))==i)&&(Character.getNumericValue(getSingle().getLastGenerated().charAt(1))==j)) {			
 						FadeTransition fadeTransition = new FadeTransition();
-						fadeTransition.setDuration(Duration.millis(100));
+						fadeTransition.setDuration(Duration.millis(750));
 						fadeTransition.setNode(temp2);
-						fadeTransition.setFromValue(0.3);
+						fadeTransition.setFromValue(0.2);
 						fadeTransition.setToValue(1.0);
 						fadeTransition.setCycleCount(1);
 						fadeTransition.setAutoReverse(false);
@@ -645,9 +645,9 @@ public class GUIWindow extends Application{
 					if((Character.getNumericValue(getSingle().getLastGenerated().charAt(0))==i)&&(Character.getNumericValue(getSingle().getLastGenerated().charAt(1))==j)) {			
 						getSingle().setLastGenerated("55");
 						FadeTransition fadeTransition = new FadeTransition();
-						fadeTransition.setDuration(Duration.millis(100));
+						fadeTransition.setDuration(Duration.millis(750));
 						fadeTransition.setNode(ptemp2);
-						fadeTransition.setFromValue(0.3);
+						fadeTransition.setFromValue(0.2);
 						fadeTransition.setToValue(1.0);
 						fadeTransition.setCycleCount(1);
 						fadeTransition.setAutoReverse(false);
@@ -684,9 +684,9 @@ public class GUIWindow extends Application{
 					if((Character.getNumericValue(getCPU().getLastGenerated().charAt(0))==i)&&(Character.getNumericValue(getCPU().getLastGenerated().charAt(1))==j)) {			
 						getCPU().setLastGenerated("55");
 						FadeTransition fadeTransition = new FadeTransition();
-						fadeTransition.setDuration(Duration.millis(100));
+						fadeTransition.setDuration(Duration.millis(750));
 						fadeTransition.setNode(ctemp2);
-						fadeTransition.setFromValue(0.3);
+						fadeTransition.setFromValue(0.2);
 						fadeTransition.setToValue(1.0);
 						fadeTransition.setCycleCount(1);
 						fadeTransition.setAutoReverse(false);
