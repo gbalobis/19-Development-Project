@@ -1,6 +1,9 @@
+package controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import model.AI;
+import view.GUIWindow;
 /*
  * 
  * Group Name: Group 19

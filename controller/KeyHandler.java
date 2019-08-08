@@ -1,6 +1,8 @@
+package controller;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import view.GUIWindow;
 /*
  * 
  * Group Name: Group 19

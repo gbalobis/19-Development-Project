@@ -1,5 +1,9 @@
+package view;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import controller.ButtonHandler;
+import controller.KeyHandler;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -19,6 +23,9 @@ import javafx.stage.Stage;
 import javafx.scene.media.AudioClip;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
+import model.AI;
+import model.Game;
+import model.Player;
 
 
 
@@ -114,7 +121,7 @@ public class GUIWindow extends Application{
 		stage.show();
 		alert.showAndWait();
 		//initializes the music chosen
-		AudioClip note = new AudioClip(this.getClass().getResource("04. Mii Plaza.wav").toString());
+		AudioClip note = new AudioClip(this.getClass().getResource("/04. Mii Plaza.wav").toString());
 		//the music will play 5000 times
 		note.setCycleCount(5000);
 		//plays the music
