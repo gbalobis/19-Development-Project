@@ -28,19 +28,6 @@ public class Game {
 	//set up board with 2 new tiles and display it in the console
 	generateNewTile();
 	generateNewTile();
-//	displayBoard();
-	//while the board is not in a victory or defeat screen, repeat following functions
-	/*while(!victoryCheck()&&!defeatCheck()) {
-		//configure board based on movement inputed
-		computeMovement();
-		//create a new tile in an empty space and display board in console
-		generateNewTile();
-//		displayBoard();
-		}*/
-	}
-	
-	public void computeMovement(){
-		
 	}
 	
 	//josh

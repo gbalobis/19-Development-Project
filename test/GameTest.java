@@ -42,24 +42,13 @@ class GameTest {
 	}
 
 	@Test
-	void testGame() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testStartGame() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testComputeMovement() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	void testGenerateNewTile() {
-		fail("Not yet implemented");
+		int[][] testBoard = new int[][] { { 2, 4, 2, 0 }, { 4, 0, 4, 2 }, { 2, 4, 2, 2 }, { 4, 0, 4, 2 } };
+		test.setBoard(testBoard);
+
+		assertTrue("Was able to detect a new tile on the board", test.victoryCheck());
 	}
+	
 
 
 	@Test
@@ -69,7 +58,10 @@ class GameTest {
 
 	@Test
 	void testEqualityCheck() {
-		fail("Not yet implemented");
+		int[][] testBoard = new int[][] { { 2, 4, 2, 0 }, { 4, 0, 4, 2 }, { 2, 4, 2, 0 }, { 4, 0, 4, 2 } };
+		test.setBoard(testBoard);
+
+		assertTrue("Was able to detect a tile was equal to an adjacent tile", test.victoryCheck());
 	}
 
 	@Test
