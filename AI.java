@@ -19,6 +19,8 @@ public class AI extends Game{
 	private boolean direction; //for alternating directions each turn
 	private Timer timer = new Timer();
 	
+	private GameSimulation simulation = new GameSimulation(10);
+	
 	public AI (char difficulty) {
 		super();
 		this.difficulty = difficulty;
@@ -90,7 +92,7 @@ public class AI extends Game{
 //			            @Override		not sure whether this line is necessary
 			            public void run() {
 			            	if (difficulty == 'h') {
-				            	hardMovement();
+			            		AIsimulation();
 			            	}
 			            	else if (difficulty == 'e') {
 			            		easyMovement();
@@ -115,22 +117,15 @@ public class AI extends Game{
 		direction = !direction;
 	}
 	
-	public void easyMovement() {
-
-		Random RNG = new Random();
-		int chance = RNG.nextInt(4);
-
-		if (chance == 0)
-			moveVertical('s');
-		else if (chance == 1)
-			moveVertical('w');
-		else if (chance == 2)
-			moveHorizontal('a');
-		else if (chance == 3)
-			moveHorizontal('d');
-
-
+	public void AIsimulation() {
 		
+		simulation.startSim(board, currentScore);
+		move(simulation.getChosenDir());
+		
+	}
+	
+	public void easyMovement() {
+		randomMove();
 	}
 	
 	public void mediumMovement() {

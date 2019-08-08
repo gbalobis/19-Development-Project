@@ -125,6 +125,34 @@ public class Game {
 		//update board configuration
 		setBoard(newBoard);
 	}
+	
+	public void move(char dir) {
+		switch (dir) {
+		case 'w':
+		case 's':
+			moveVertical(dir);
+			break;
+		case 'a':
+		case 'd':
+			moveHorizontal(dir);
+			break;
+		}
+	}
+	
+	public void randomMove() {
+		Random RNG = new Random();
+		int chance = RNG.nextInt(4);
+		
+		if (chance == 0)
+			moveVertical('s');
+		else if (chance == 1)
+			moveVertical('w');
+		else if (chance == 2)
+			moveHorizontal('a');
+		else if (chance == 3)
+			moveHorizontal('d');
+	}
+
 	//bennie
 	public int[] checkCollisions(int[] line, char dir) {
 		//up/left movements combine in same manner
@@ -300,8 +328,6 @@ public class Game {
 			return true;
 		return false;
 	}
-	
-	
 	
 	
 	public int[][] getBoard() {
