@@ -1,4 +1,8 @@
 package controller;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -46,9 +50,27 @@ public class KeyHandler implements EventHandler<KeyEvent>{
 		window.getSingle().generateNewTile();
 		window.updateBoard();
 		//defeat check for player
-		if(window.getSingle().defeatCheck() && window.getCPU().getCurrentScore() > window.getSingle().getCurrentScore()) {
+		if(window.getSingle().defeatCheck()) {
+			if(!window.getIsSingle()) {
+				Timer waiting=new Timer();
+				waiting.scheduleAtFixedRate(new TimerTask() {
+		            @Override
+		            public void run() {
+		            	Platform.runLater(()->{
+		            		if(window.getSingle().getCurrentScore() < window.getCPU().getCurrentScore()) {
+		            			waiting.cancel();
+		            			window.getStage().setScene(window.defeatScene());
+		                		window.getStage().show();
+		            		}
+		            	});
+		            }
+		        },
+		        0, 500); //starts updating board every 0.5 second
+			}
+		else {
     		window.getStage().setScene(window.defeatScene());
     		window.getStage().show();
+		}
     	}
 		//victory check for player
     	else if (window.getSingle().victoryCheck()) {
