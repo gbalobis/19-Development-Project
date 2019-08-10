@@ -74,9 +74,10 @@ public class ButtonHandler implements EventHandler<ActionEvent>{
 			window.getScene(3).removeEventHandler(KeyEvent.KEY_PRESSED, window.getKHandler());
 			HBox bottomBar=new HBox();
 			bottomBar.getChildren().addAll(window.getButton(9), window.getButton(5));
+			bottomBar.setAlignment(Pos.CENTER);
+			bottomBar.setSpacing(50);
 			
 			((BorderPane) window.getScene(3).getRoot()).setBottom(bottomBar);
-			bottomBar.setAlignment(Pos.CENTER);
 			temp=window.getScene(3);
 		}
 		//if Change Difficulty button was pushed, allow player to choose a difficulty
@@ -85,9 +86,10 @@ public class ButtonHandler implements EventHandler<ActionEvent>{
 			window.scheduleTimerTasks();
 			HBox bottomBar=new HBox();
 			bottomBar.getChildren().addAll(window.getButton(8), window.getButton(5));
+			bottomBar.setAlignment(Pos.CENTER);
+			bottomBar.setSpacing(50);
 			
 			((BorderPane) window.getScene(3).getRoot()).setBottom(bottomBar);
-			bottomBar.setAlignment(Pos.CENTER);
 			temp=window.getScene(3);
 		}
 			

@@ -494,6 +494,8 @@ public class GUIWindow extends Application{
 			HBox bottomBar=new HBox();
 			bottomBar.getChildren().addAll(buttons[8], buttons[5]);
 			bottomBar.setAlignment(Pos.CENTER);
+			bottomBar.setSpacing(50);
+			
 			root.setBottom(bottomBar);
 			
 
@@ -508,6 +510,7 @@ public class GUIWindow extends Application{
 			
 			((BorderPane) scenes[3].getRoot()).setBottom(bottomBar);
 			bottomBar.setAlignment(Pos.CENTER);
+			bottomBar.setSpacing(50);
 		}
 		//when keyboard keys are pressed, let key handler deal with it
 		scenes[3].setOnKeyPressed(khandler);
@@ -711,9 +714,10 @@ public class GUIWindow extends Application{
 			
 			HBox bottomBar=new HBox();
 			bottomBar.getChildren().addAll(buttons[8], buttons[5]);
+			bottomBar.setAlignment(Pos.CENTER);
+			bottomBar.setSpacing(50);
 			
 			((BorderPane) scenes[3].getRoot()).setBottom(bottomBar);
-			bottomBar.setAlignment(Pos.CENTER);
 		}
 	}
 	//save into scenes[4]
