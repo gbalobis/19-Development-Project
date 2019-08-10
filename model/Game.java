@@ -43,8 +43,6 @@ public class Game {
 		
 	}
 	
-	public void computeMovement() {}
-	
 	//josh
 	public void generateNewTile() {
 			
@@ -91,7 +89,6 @@ public class Game {
 					}
 				}
 			}
-			setLastGenerated("55");
 		}
 	
 	//bennie

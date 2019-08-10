@@ -25,6 +25,9 @@ public class KeyHandler implements EventHandler<KeyEvent>{
 	}
 	@Override
 	public void handle(KeyEvent e) {
+		//if paused, do nothing
+		if(window.getPaused())
+			return;	
 		//find out which button was pressed
 		KeyCode key=e.getCode();
 		//if w was pressed, move board up
@@ -67,11 +70,11 @@ public class KeyHandler implements EventHandler<KeyEvent>{
 		        },
 		        0, 500); //starts updating board every 0.5 second
 			}
-		else {
-    		window.getStage().setScene(window.defeatScene());
-    		window.getStage().show();
+			else {
+				window.getStage().setScene(window.defeatScene());
+				window.getStage().show();
+			}
 		}
-    	}
 		//victory check for player
     	else if (window.getSingle().victoryCheck()) {
     		window.getStage().setScene(window.victoryScene());

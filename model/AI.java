@@ -89,25 +89,17 @@ public class AI extends Game{
 		}
 		}*/
 	public void computeMovement() {
-		timer.scheduleAtFixedRate(new TimerTask() {
-			            @Override
-			            public void run() {
-			            	if (difficulty == 'h') {
-			            		hardMovement();
-			            	}
-			            	else if (difficulty == 'e') {
-			            		easyMovement();
-			            	}
-			            	else if (difficulty == 'm') {
-			            		mediumMovement();
-			            	}
-			            	if (defeatCheck() || victoryCheck())
-		            			cancel();
-			            	generateNewTile();
-			            }
-			        },
-			        0, 500); //starts immediately and repeats every 0.5 seconds	
-//		if ()
+		if (difficulty == 'h') {
+			hardMovement();
+		}
+		else if (difficulty == 'e') {
+			easyMovement();
+		}
+		else if (difficulty == 'm') {
+			mediumMovement();
+		}
+		generateNewTile();
+		System.out.println(lastGenerated);
 	}
 	
 //	public void hardMovement() {
@@ -174,4 +166,7 @@ public class AI extends Game{
 		this.difficulty = difficulty;
 	}
 	
+	public Timer getTimer() {
+		return timer;
+	}
 }	

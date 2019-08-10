@@ -1,7 +1,11 @@
 package controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import model.AI;
 import view.GUIWindow;
 /*
@@ -62,6 +66,29 @@ public class ButtonHandler implements EventHandler<ActionEvent>{
 		else if(e.getSource()==window.getButton(7)) {
 			window.getStage().setScene(window.displayMenu());
 			temp=window.difficultyScreen();
+		}
+		//if Change Difficulty button was pushed, allow player to choose a difficulty
+		else if(e.getSource()==window.getButton(8)) {
+			window.setPaused(true);
+			window.getTimer().cancel();
+			window.getScene(3).removeEventHandler(KeyEvent.KEY_PRESSED, window.getKHandler());
+			HBox bottomBar=new HBox();
+			bottomBar.getChildren().addAll(window.getButton(9), window.getButton(5));
+			
+			((BorderPane) window.getScene(3).getRoot()).setBottom(bottomBar);
+			bottomBar.setAlignment(Pos.CENTER);
+			temp=window.getScene(3);
+		}
+		//if Change Difficulty button was pushed, allow player to choose a difficulty
+		else if(e.getSource()==window.getButton(9)) {
+			window.setPaused(false);
+			window.scheduleTimerTasks();
+			HBox bottomBar=new HBox();
+			bottomBar.getChildren().addAll(window.getButton(8), window.getButton(5));
+			
+			((BorderPane) window.getScene(3).getRoot()).setBottom(bottomBar);
+			bottomBar.setAlignment(Pos.CENTER);
+			temp=window.getScene(3);
 		}
 			
 		//set the scene to the one decided upon, based on the above if statements

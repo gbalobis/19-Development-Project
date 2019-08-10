@@ -63,7 +63,8 @@ public class GUIWindow extends Application{
 	private Timer timer;
 	//an array of colors 
 	private Color[] colors;
-	
+	//determines if game is paused
+	private boolean paused;
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -79,7 +80,8 @@ public class GUIWindow extends Application{
 		ImageView comp=new ImageView(new Image("https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678077-computer-128.png",30,30,true,false));
 		//create an array with all buttons used
 		buttons=new Button[] {new Button("Play Alone", user), new Button("Play Against CPU", comp), new Button("Easy"), 
-				new Button("Medium"), new Button("Hard"), new Button("Main Menu"), new Button("Play Again"), new Button("Change Difficulty")};
+				new Button("Medium"), new Button("Hard"), new Button("Main Menu"), new Button("Play Again"), new Button("Change Difficulty"),
+				new Button("Pause"), new Button("Play")};
 		//create button and key handlers, which pass the guiwindow as an argument
 		bhandler=new ButtonHandler(this);
 		khandler=new KeyHandler(this);
@@ -361,29 +363,9 @@ public class GUIWindow extends Application{
 		cpu=new AI(difficulty);
         cpu.startGame();
 		//timer so board updates when cpu moves
-		timer=new Timer();
-		timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-            	Platform.runLater(()->{
-            		updateBoard();
-            		//call functions for victory/defeat check for cpu
-            		if (cpu.defeatCheck() && single.getCurrentScore() > cpu.getCurrentScore()) {
-            			timer.cancel();
-                		stage.setScene(victoryScene());
-            			stage.show();
-            		}
-            		else if (cpu.victoryCheck() || (cpu.defeatCheck()) && single.defeatCheck() && cpu.getCurrentScore() > single.getCurrentScore() ) {
-            			timer.cancel();
-                		stage.setScene(defeatScene());
-            			stage.show();
-            		}
-            	});
-            }
-        },
-        0, 500); //starts updating board every 0.5 second	
+		scheduleTimerTasks();
 	}
-	
+
 	//create scene for vs cpu mode
 	public Scene twoPlayerScene() {
 
@@ -509,8 +491,10 @@ public class GUIWindow extends Application{
 			boards.setAlignment(Pos.CENTER);
 			root.setCenter(boards);
 			
-			root.setBottom(buttons[5]);
-			BorderPane.setAlignment(buttons[5], Pos.CENTER);
+			HBox bottomBar=new HBox();
+			bottomBar.getChildren().addAll(buttons[8], buttons[5]);
+			bottomBar.setAlignment(Pos.CENTER);
+			root.setBottom(bottomBar);
 			
 
 			//create scene with above root pane
@@ -518,9 +502,12 @@ public class GUIWindow extends Application{
 			scenes[3]=scene;
 		}
 		else {
-			//read button in case it was used in another scene
-			((BorderPane) scenes[3].getRoot()).setBottom(buttons[5]);
-			BorderPane.setAlignment(buttons[5], Pos.CENTER);
+			//readd button in case it was used in another scene
+			HBox bottomBar=new HBox();
+			bottomBar.getChildren().addAll(buttons[8], buttons[5]);
+			
+			((BorderPane) scenes[3].getRoot()).setBottom(bottomBar);
+			bottomBar.setAlignment(Pos.CENTER);
 		}
 		//when keyboard keys are pressed, let key handler deal with it
 		scenes[3].setOnKeyPressed(khandler);
@@ -721,8 +708,12 @@ public class GUIWindow extends Application{
 			boards.setAlignment(Pos.CENTER);
 			((BorderPane) scenes[3].getRoot()).setCenter(boards);
 			
-			((BorderPane) scenes[3].getRoot()).setBottom(buttons[5]);
-			BorderPane.setAlignment(buttons[5], Pos.CENTER);
+			
+			HBox bottomBar=new HBox();
+			bottomBar.getChildren().addAll(buttons[8], buttons[5]);
+			
+			((BorderPane) scenes[3].getRoot()).setBottom(bottomBar);
+			bottomBar.setAlignment(Pos.CENTER);
 		}
 	}
 	//save into scenes[4]
@@ -844,6 +835,39 @@ public class GUIWindow extends Application{
 		return scenes[5];
 	}
 
+	public void scheduleTimerTasks() {
+		timer=new Timer();
+		timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+            	Platform.runLater(()->{
+            		getCPU().computeMovement();
+            	});
+            }
+        },
+        50, 500); //starts generating cpu movements every 0.5 seconds after waiting 0.05 seconds
+		timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+            	Platform.runLater(()->{
+            		updateBoard();
+            		//call functions for victory/defeat check for cpu
+            		if (cpu.defeatCheck() && single.getCurrentScore() > cpu.getCurrentScore()) {
+            			timer.cancel();
+                		stage.setScene(victoryScene());
+            			stage.show();
+            		}
+            		else if (cpu.victoryCheck() || (cpu.defeatCheck()) && single.defeatCheck() && cpu.getCurrentScore() > single.getCurrentScore() ) {
+            			timer.cancel();
+                		stage.setScene(defeatScene());
+            			stage.show();
+            		}
+            	});
+            }
+        },
+        0, 500); //starts updating board every 0.5 second	
+	}
+	
 
 	//return the stage being used
 	public Stage getStage() {
@@ -872,6 +896,22 @@ public class GUIWindow extends Application{
 	
 	public boolean getIsSingle() {
 		return isSingle;
+	}
+	
+	public Timer getTimer() {
+		return timer;
+	}
+	
+	public KeyHandler getKHandler() {
+		return khandler;
+	}
+	
+	public boolean getPaused() {
+		return paused;
+	}
+	
+	public void setPaused(boolean x) {
+		paused=x;
 	}
 	
 	//main method to launch the application
