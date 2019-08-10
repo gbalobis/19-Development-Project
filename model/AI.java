@@ -1,8 +1,5 @@
 package model;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 /*
  * 
  * Group Name: Group 19
@@ -18,7 +15,6 @@ public class AI extends Game{
 	
 	private char difficulty; // h for hard, e for easy etc.
 //	private boolean direction; //for alternating directions each turn
-	private Timer timer = new Timer();
 	
 //	private GameSimulation simulation = new GameSimulation(100);
 	
@@ -111,7 +107,7 @@ public class AI extends Game{
 //	}
 	
 	public void hardMovement() {
-		GameSimulation hardSimulation = new GameSimulation(500);
+		GameSimulation hardSimulation = new GameSimulation(1000);
 		hardSimulation.startSim(board, currentScore);
 		move(hardSimulation.getChosenDir());
 		
@@ -124,7 +120,7 @@ public class AI extends Game{
 	}
 	
 	public void mediumMovement() {
-		GameSimulation mediumSimulation = new GameSimulation(50);
+		GameSimulation mediumSimulation = new GameSimulation(100);
 		mediumSimulation.startSim(board, currentScore);
 		move(mediumSimulation.getChosenDir());
 //	//using random class for the movements
@@ -164,9 +160,5 @@ public class AI extends Game{
 
 	public void setDifficulty(char difficulty) {
 		this.difficulty = difficulty;
-	}
-	
-	public Timer getTimer() {
-		return timer;
 	}
 }	

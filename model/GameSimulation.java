@@ -4,14 +4,12 @@ public class GameSimulation extends Game {
 
 	private char chosenDir;
 	private int numOfRuns;
-	private int difficultyModifier;
 	private int [][] savedBoard = new int [4][4];
 	private int savedCurrentScore;
 
 	public GameSimulation(int num) {
 		super();
 		numOfRuns = num;
-		difficultyModifier = num;
 	}
 
 	public void startSim(int[][] board, int currentScore) {
@@ -73,11 +71,12 @@ public class GameSimulation extends Game {
 
 	public void individualSim(char dir) {
 		move (dir);
-		int i = 0;
-		while (!defeatCheck() && i < difficultyModifier) {
+//		int i = 0;
+		while (!defeatCheck()) {
 //			System.out.println(dir);
 			randomMove();
-			i++;
+        	generateNewTile();
+//			i++;
 		}
 
 	}

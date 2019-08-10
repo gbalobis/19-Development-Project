@@ -5,7 +5,7 @@ import org.junit.*;
 
 import model.Game;
 
-class GameTest {
+public class GameTest {
 
 	Game test = new Game();
 
@@ -41,90 +41,90 @@ class GameTest {
 		assertFalse("Was able to detect the board was not a victory state", test.victoryCheck());
 	}
 
-	@Test
-	void testGame() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testStartGame() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testComputeMovement() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGenerateNewTile() {
-		fail("Not yet implemented");
-	}
-
-
-	@Test
-	void testCheckCollisions() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testEqualityCheck() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testCheckUp() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testCheckDown() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testCheckLeft() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testCheckRight() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGetBoard() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGetHighScore() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGetCurrentScore() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testSetBoard() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testSetHighScore() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testSetCurrentScore() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGetScanner() {
-		fail("Not yet implemented");
-	}
+//	@Test
+//	public void testGame() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testStartGame() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testComputeMovement() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testGenerateNewTile() {
+//		fail("Not yet implemented");
+//	}
+//
+//
+//	@Test
+//	public void testCheckCollisions() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testEqualityCheck() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testCheckUp() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testCheckDown() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testCheckLeft() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testCheckRight() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testGetBoard() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testGetHighScore() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testGetCurrentScore() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testSetBoard() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testSetHighScore() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testSetCurrentScore() {
+//		fail("Not yet implemented");
+//	}
+//
+//	@Test
+//	public void testGetScanner() {
+//		fail("Not yet implemented");
+//	}
 
 }

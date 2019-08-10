@@ -38,12 +38,6 @@ public class Game {
 //		displayBoard();
 		}*/
 	}
-	
-	public void computeMovement(){
-		
-	}
-	
-	//josh
 	public void generateNewTile() {
 			
 			int count1=0, count2=0;
@@ -91,7 +85,6 @@ public class Game {
 			}
 		}
 	
-	//bennie
 	public void moveVertical(char dir) {
 		//newBoard is flipped version of board, so arrays are grouped by columns
 		int[][] newBoard=new int[4][4];
@@ -118,7 +111,6 @@ public class Game {
 		//update board configuration
 		setBoard(newBoard);
 	}
-	//bennie
 	public void moveHorizontal(char dir) {
 		int[][] newBoard=getBoard();
 		
@@ -159,7 +151,6 @@ public class Game {
 			moveHorizontal('d');
 	}
 
-	//bennie
 	public int[] checkCollisions(int[] line, char dir) {
 		//up/left movements combine in same manner
 		if(dir=='w'||dir=='a') {
@@ -254,7 +245,6 @@ public class Game {
 		}
 		return false;
 	}
-	//ammar
 	public boolean defeatCheck() {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
@@ -383,6 +373,9 @@ public class Game {
 	
 	public Scanner getScanner() {
 		return scanner;
+	}
+	public void computeMovement() {
+		
 	}
 	
 }

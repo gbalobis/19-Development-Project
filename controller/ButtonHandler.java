@@ -73,7 +73,8 @@ public class ButtonHandler implements EventHandler<ActionEvent>{
 			window.getTimer().cancel();
 			window.getScene(3).removeEventHandler(KeyEvent.KEY_PRESSED, window.getKHandler());
 			HBox bottomBar=new HBox();
-			bottomBar.getChildren().addAll(window.getButton(9), window.getButton(5));
+			bottomBar.setSpacing(80);
+			bottomBar.getChildren().addAll(window.getButton(5), window.getButton(9));
 			
 			((BorderPane) window.getScene(3).getRoot()).setBottom(bottomBar);
 			bottomBar.setAlignment(Pos.CENTER);
@@ -84,7 +85,8 @@ public class ButtonHandler implements EventHandler<ActionEvent>{
 			window.setPaused(false);
 			window.scheduleTimerTasks();
 			HBox bottomBar=new HBox();
-			bottomBar.getChildren().addAll(window.getButton(8), window.getButton(5));
+			bottomBar.setSpacing(80);
+			bottomBar.getChildren().addAll(window.getButton(5), window.getButton(8));
 			
 			((BorderPane) window.getScene(3).getRoot()).setBottom(bottomBar);
 			bottomBar.setAlignment(Pos.CENTER);

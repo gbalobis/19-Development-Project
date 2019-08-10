@@ -9,8 +9,6 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -18,7 +16,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.media.AudioClip;
 import javafx.animation.FadeTransition;
@@ -102,13 +99,13 @@ public class GUIWindow extends Application{
 		
 		//popup containing instructions
 		//code adapted from https://code.makery.ch/blog/javafx-dialogs-official/
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Instructions");
-		alert.setGraphic(null);
-		alert.setHeaderText(null);
-		alert.setContentText("Welcome to 2048!\nUse W, A, S and D to move the board up, left, down and right respectively.");
-		alert.initModality(Modality.NONE);
-		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+//		Alert alert = new Alert(AlertType.INFORMATION);
+//		alert.setTitle("Instructions");
+//		alert.setGraphic(null);
+//		alert.setHeaderText(null);
+//		alert.setContentText("Welcome to 2048!\nUse W, A, S and D to move the board up, left, down and right respectively.");
+//		alert.initModality(Modality.NONE);
+//		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 		
 		//title is 2048 game
 		stage.setTitle("2048 Game");
@@ -121,7 +118,7 @@ public class GUIWindow extends Application{
 		});
 
 		stage.show();
-		alert.showAndWait();
+//		alert.showAndWait();
 		//initializes the music chosen
 		AudioClip note = new AudioClip(this.getClass().getResource("/04. Mii Plaza.wav").toString());
 		//the music will play 5000 times
@@ -492,8 +489,9 @@ public class GUIWindow extends Application{
 			root.setCenter(boards);
 			
 			HBox bottomBar=new HBox();
-			bottomBar.getChildren().addAll(buttons[8], buttons[5]);
+			bottomBar.getChildren().addAll(buttons[5], buttons[8]);
 			bottomBar.setAlignment(Pos.CENTER);
+			bottomBar.setSpacing(80);
 			root.setBottom(bottomBar);
 			
 
@@ -504,7 +502,9 @@ public class GUIWindow extends Application{
 		else {
 			//readd button in case it was used in another scene
 			HBox bottomBar=new HBox();
-			bottomBar.getChildren().addAll(buttons[8], buttons[5]);
+			bottomBar.getChildren().addAll(buttons[5], buttons[8]);
+			bottomBar.setSpacing(80);
+
 			
 			((BorderPane) scenes[3].getRoot()).setBottom(bottomBar);
 			bottomBar.setAlignment(Pos.CENTER);
@@ -710,7 +710,8 @@ public class GUIWindow extends Application{
 			
 			
 			HBox bottomBar=new HBox();
-			bottomBar.getChildren().addAll(buttons[8], buttons[5]);
+			bottomBar.getChildren().addAll(buttons[5], buttons[8]);
+			bottomBar.setSpacing(80);
 			
 			((BorderPane) scenes[3].getRoot()).setBottom(bottomBar);
 			bottomBar.setAlignment(Pos.CENTER);
