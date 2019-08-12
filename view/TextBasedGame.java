@@ -287,7 +287,17 @@ public class TextBasedGame extends Game {
 	 * every time a new change is made to the board
 	 */
 	public void displayBoard(Game game) {
-
+		if(game==comp) {
+			System.out.println("CPU's Board");
+			System.out.println("Current Score: "+game.getCurrentScore());
+			System.out.println();
+		}
+		else if(game==player){
+			System.out.println("Your Board");
+			System.out.println("Current Score: "+game.getCurrentScore());
+			System.out.println("High Score: "+game.getHighScore());
+			System.out.println();
+		}
 		for (int positionX = 0; positionX < 4; positionX++) {
 			for (int positionY = 0; positionY < 4; positionY++) {
 				int x = game.getBoard()[positionX][positionY];

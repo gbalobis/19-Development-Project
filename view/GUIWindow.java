@@ -311,6 +311,8 @@ public class GUIWindow extends Application{
 			bottomBar.setAlignment(Pos.TOP_CENTER);
 			bottomBar.setSpacing(50);
 		}
+		//unpause if game was previously paused
+		paused=false;
 		//when keyboard keys are pressed, let key handler deal with it
 		scenes[1].setOnKeyPressed(khandler);
 		scenes[1].getStylesheets().add("Style.css");
@@ -512,6 +514,8 @@ public class GUIWindow extends Application{
 			((BorderPane) scenes[3].getRoot()).setBottom(bottomBar);
 			bottomBar.setAlignment(Pos.CENTER);
 		}
+		//unpause if game was previously paused
+		paused=false;
 		//when keyboard keys are pressed, let key handler deal with it
 		scenes[3].setOnKeyPressed(khandler);
 		scenes[3].getStylesheets().add("Style.css");
