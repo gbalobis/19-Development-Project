@@ -95,7 +95,6 @@ public class AI extends Game{
 			mediumMovement();
 		}
 		generateNewTile();
-		System.out.println(lastGenerated);
 	}
 	
 //	public void hardMovement() {

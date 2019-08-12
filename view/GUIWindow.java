@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.media.AudioClip;
 import javafx.animation.FadeTransition;
@@ -75,10 +76,12 @@ public class GUIWindow extends Application{
 		//create icons to put into buttons
 		ImageView user=new ImageView(new Image("https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-128.png",30,30,true,false));
 		ImageView comp=new ImageView(new Image("https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678077-computer-128.png",30,30,true,false));
+		ImageView instr=new ImageView(new Image("https://cdn3.iconfinder.com/data/icons/contact-us-set-3/256/97-128.png",30,30,true,false));
+		ImageView cred=new ImageView(new Image("https://image.flaticon.com/icons/png/128/148/148723.png",30,30,true,false));
 		//create an array with all buttons used
 		buttons=new Button[] {new Button("Play Alone", user), new Button("Play Against CPU", comp), new Button("Easy"), 
 				new Button("Medium"), new Button("Hard"), new Button("Main Menu"), new Button("Play Again"), new Button("Change Difficulty"),
-				new Button("Pause"), new Button("Play"), new Button ("Credits"), new Button ("Instructions")};
+				new Button("Pause"), new Button("Play"), new Button ("Credits", cred), new Button ("Instructions", instr)};
 		//create button and key handlers, which pass the guiwindow as an argument
 		bhandler=new ButtonHandler(this);
 		khandler=new KeyHandler(this);
@@ -159,20 +162,20 @@ public class GUIWindow extends Application{
 			menu.setSpacing(15);
 			menu.setAlignment(Pos.CENTER);		
 		
-			menu.getChildren().addAll(buttons[0], buttons[1]);
+			menu.getChildren().addAll(buttons[0], buttons[1], buttons[11], buttons[10]);
 			root.setCenter(menu);
 			menu.setId("main");
 			
 			//vbox for group and our names
-			VBox credits=new VBox();
+			/*VBox credits=new VBox();
 			Label group=new Label("Group 19");
-			Label members=new Label("Ammar, Bennie, Jason, Josh");
+			Label members=new Label("Ammar, Bennie, Jason, Josh");*/
 			/*group.setTextFill(Color.WHITESMOKE);
 			members.setTextFill(Color.WHITESMOKE);*/
 		
-			credits.getChildren().addAll(group, members);
+			/*credits.getChildren().addAll(group, members);
 			root.setBottom(credits);
-			credits.setAlignment(Pos.BOTTOM_CENTER);
+			credits.setAlignment(Pos.BOTTOM_CENTER);*/
 			
 		
 			
@@ -837,61 +840,90 @@ public class GUIWindow extends Application{
 	}
 	
 	public Scene creditScene() {
-		
-		//root pane to contain everything
-		BorderPane root=new BorderPane();
-		root.setPadding(new Insets(50,0,25,0));
+		if(scenes[6]==null) {
+			//root pane to contain everything
+			BorderPane root=new BorderPane();
+			root.setPadding(new Insets(50,0,25,0));
 
-		//set the background theme
-		Image img=new Image("https://opengameart.org/sites/default/files/SpaceBackground1.png");
-		BackgroundImage bimg=new BackgroundImage(img,null,null,null,null);
-		Background bkg=new Background(bimg);
-		root.setBackground(bkg);
+			//set the background theme
+			Image img=new Image("https://opengameart.org/sites/default/files/SpaceBackground1.png");
+			BackgroundImage bimg=new BackgroundImage(img,null,null,null,null);
+			Background bkg=new Background(bimg);
+			root.setBackground(bkg);
 		
-		//defeat message at top of screen
-		VBox message=new VBox();
-		Label def=new Label("Credits");
-		Label name=new Label("Team Lead/ Code Repository Manager");
-		Label name=new Label("Josh Lewis");
-		Label name=new Label("Code Reviewer/ Architect");
-		Label name=new Label("Bennie He");
-		Label name=new Label("Meeting Facilitator/ Technical Writer");
-		Label name=new Label("Jason Szeto");
-		Label name=new Label("Technical Writer/ Coordinator");
-		Label name=new Label("Ammar Zakaria");
-		message.getChildren().addAll(def,name);
-		message.setAlignment(Pos.CENTER);
-		
-		menu.getChildren().addAll(buttons[5]);
-		
+			Label name=new Label("Credits\n");
+			name.setId("name");
+			
+			root.setTop(name);
+			BorderPane.setAlignment(name, Pos.CENTER);
+			
+			//label containing credits
+			Label def=new Label("Team Lead/ Code Repository Manager\n"
+					+ "Josh Lewis\n\n"
+					+ "Code Reviewer/ Architect\n"
+					+ "Bennie He\n\n"
+					+ "Meeting Facilitator/ Technical Writer\n"
+					+ "Jason Szeto\n\n"
+					+ "Technical Writer/ Coordinator\n"
+					+ "Ammar Zakaria");
+			def.setTextAlignment(TextAlignment.CENTER);
+			root.setCenter(def);
+			BorderPane.setAlignment(def, Pos.CENTER);
+			
+			root.setBottom(buttons[5]);
+			BorderPane.setAlignment(buttons[5], Pos.CENTER);
+			
+			Scene scene=new Scene(root,600,400);
+			scenes[6]=scene;
+			
+			scenes[6].getStylesheets().add("Style.css");
+		}
+		else {
+			((BorderPane)scenes[6].getRoot()).setBottom(buttons[5]);
+		}
+		return scenes[6];
 	}
 	
 public Scene instructionScene() {
-		
-		//root pane to contain everything
-		BorderPane root=new BorderPane();
-		root.setPadding(new Insets(50,0,25,0));
+		if(scenes[7]==null) {
+			//root pane to contain everything
+			BorderPane root=new BorderPane();
+			root.setPadding(new Insets(50,0,25,0));
 
-		//set the background theme
-		Image img=new Image("https://opengameart.org/sites/default/files/SpaceBackground1.png");
-		BackgroundImage bimg=new BackgroundImage(img,null,null,null,null);
-		Background bkg=new Background(bimg);
-		root.setBackground(bkg);
+			//set the background theme
+			Image img=new Image("https://opengameart.org/sites/default/files/SpaceBackground1.png");
+			BackgroundImage bimg=new BackgroundImage(img,null,null,null,null);
+			Background bkg=new Background(bimg);
+			root.setBackground(bkg);
+			
+			Label name=new Label("Instructions");
+			name.setId("name");
+			
+			root.setTop(name);
+			BorderPane.setAlignment(name, Pos.CENTER);
+			
+			//label containing instructions
+			Label def=new Label("Welcome to 2048!\n"
+				+ "Use W, A, S and D to move the board up, left, down and right respectively.\n"
+				+ "The goal is to combine tiles with the same number together until you reach 2048.\n"
+				+ "Enjoy!");
+			def.setTextAlignment(TextAlignment.CENTER);
+			root.setCenter(def);
+			def.setAlignment(Pos.CENTER);
+			BorderPane.setAlignment(def, Pos.CENTER);
 		
-		//defeat message at top of screen
-		VBox message=new VBox();
-		Label def=new Label("Instructions");
-		Label name=new Label("'W' is for up");
-		Label name=new Label("'A' is for left");
-		Label name=new Label("'S' is for down");
-		Label name=new Label("'D' is for right");
-		Label name=new Label("The goal is to combine tiles with the same number together until you reach 2048");
-		Label name=new Label("Enjoy");
-		
-		message.getChildren().addAll(def,name);
-		message.setAlignment(Pos.CENTER);
-		
-		menu.getChildren().addAll(buttons[5]);
+			root.setBottom(buttons[5]);
+			BorderPane.setAlignment(buttons[5], Pos.CENTER);
+			
+			Scene scene=new Scene(root,600,400);
+			scenes[7]=scene;
+
+			scenes[7].getStylesheets().add("Style.css");
+		}
+		else {
+			((BorderPane)scenes[7].getRoot()).setBottom(buttons[5]);
+		}
+		return scenes[7];
 		
 	}
 

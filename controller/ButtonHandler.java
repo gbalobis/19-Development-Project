@@ -92,7 +92,10 @@ public class ButtonHandler implements EventHandler<ActionEvent>{
 			bottomBar.setAlignment(Pos.CENTER);
 			temp=window.getScene(3);
 		}
-			
+		else if(e.getSource()==window.getButton(10))
+			temp=window.creditScene();	
+		else if(e.getSource()==window.getButton(11))
+			temp=window.instructionScene();
 		//set the scene to the one decided upon, based on the above if statements
 		window.getStage().setScene(temp);
 		window.getStage().show();
