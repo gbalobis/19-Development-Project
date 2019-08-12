@@ -78,7 +78,7 @@ public class GUIWindow extends Application{
 		//create an array with all buttons used
 		buttons=new Button[] {new Button("Play Alone", user), new Button("Play Against CPU", comp), new Button("Easy"), 
 				new Button("Medium"), new Button("Hard"), new Button("Main Menu"), new Button("Play Again"), new Button("Change Difficulty"),
-				new Button("Pause"), new Button("Play")};
+				new Button("Pause"), new Button("Play"), new Button ("Credits"), new Button ("Instructions")};
 		//create button and key handlers, which pass the guiwindow as an argument
 		bhandler=new ButtonHandler(this);
 		khandler=new KeyHandler(this);
@@ -92,7 +92,7 @@ public class GUIWindow extends Application{
 		//create timer for ai movement
 		timer=new Timer();
 		//create create an array of scenes so some scenes wont have to be recreated every time you visit them
-		scenes=new Scene[6];
+		scenes=new Scene[8];
 		//menu will be the first scene displayed upon running
 		scenes[0]=displayMenu();
 	
@@ -500,7 +500,7 @@ public class GUIWindow extends Application{
 			scenes[3]=scene;
 		}
 		else {
-			//readd button in case it was used in another scene
+			//read button in case it was used in another scene
 			HBox bottomBar=new HBox();
 			bottomBar.getChildren().addAll(buttons[5], buttons[8]);
 			bottomBar.setSpacing(80);
@@ -834,6 +834,65 @@ public class GUIWindow extends Application{
 		}
 		scenes[5].getStylesheets().add("Style.css");
 		return scenes[5];
+	}
+	
+	public Scene creditScene() {
+		
+		//root pane to contain everything
+		BorderPane root=new BorderPane();
+		root.setPadding(new Insets(50,0,25,0));
+
+		//set the background theme
+		Image img=new Image("https://opengameart.org/sites/default/files/SpaceBackground1.png");
+		BackgroundImage bimg=new BackgroundImage(img,null,null,null,null);
+		Background bkg=new Background(bimg);
+		root.setBackground(bkg);
+		
+		//defeat message at top of screen
+		VBox message=new VBox();
+		Label def=new Label("Credits");
+		Label name=new Label("Team Lead/ Code Repository Manager");
+		Label name=new Label("Josh Lewis");
+		Label name=new Label("Code Reviewer/ Architect");
+		Label name=new Label("Bennie He");
+		Label name=new Label("Meeting Facilitator/ Technical Writer");
+		Label name=new Label("Jason Szeto");
+		Label name=new Label("Technical Writer/ Coordinator");
+		Label name=new Label("Ammar Zakaria");
+		message.getChildren().addAll(def,name);
+		message.setAlignment(Pos.CENTER);
+		
+		menu.getChildren().addAll(buttons[5]);
+		
+	}
+	
+public Scene instructionScene() {
+		
+		//root pane to contain everything
+		BorderPane root=new BorderPane();
+		root.setPadding(new Insets(50,0,25,0));
+
+		//set the background theme
+		Image img=new Image("https://opengameart.org/sites/default/files/SpaceBackground1.png");
+		BackgroundImage bimg=new BackgroundImage(img,null,null,null,null);
+		Background bkg=new Background(bimg);
+		root.setBackground(bkg);
+		
+		//defeat message at top of screen
+		VBox message=new VBox();
+		Label def=new Label("Instructions");
+		Label name=new Label("'W' is for up");
+		Label name=new Label("'A' is for left");
+		Label name=new Label("'S' is for down");
+		Label name=new Label("'D' is for right");
+		Label name=new Label("The goal is to combine tiles with the same number together until you reach 2048");
+		Label name=new Label("Enjoy");
+		
+		message.getChildren().addAll(def,name);
+		message.setAlignment(Pos.CENTER);
+		
+		menu.getChildren().addAll(buttons[5]);
+		
 	}
 
 	public void scheduleTimerTasks() {
