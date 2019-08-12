@@ -85,15 +85,18 @@ public class AI extends Game{
 		}
 		}*/
 	public void computeMovement() {
-		if (difficulty == 'h') {
-			hardMovement();
-		}
-		else if (difficulty == 'e') {
-			easyMovement();
-		}
-		else if (difficulty == 'm') {
-			mediumMovement();
-		}
+//		if (difficulty == 'h') {
+//			hardMovement();
+//		}
+//		else if (difficulty == 'e') {
+//			easyMovement();
+//		}
+//		else if (difficulty == 'm') {
+//			mediumMovement();
+//		}
+		GameSimulation sim = new GameSimulation(difficulty);
+		sim.startSim(board, currentScore);
+		move(sim.getChosenDir());
 		generateNewTile();
 	}
 	
@@ -105,23 +108,23 @@ public class AI extends Game{
 //		direction = !direction;
 //	}
 	
-	public void hardMovement() {
-		GameSimulation hardSimulation = new GameSimulation(1000);
-		hardSimulation.startSim(board, currentScore);
-		move(hardSimulation.getChosenDir());
-		
-	}
-	
-	public void easyMovement() {
-		GameSimulation easySimulation = new GameSimulation(10);
-		easySimulation.startSim(board, currentScore);
-		move(easySimulation.getChosenDir());
-	}
-	
-	public void mediumMovement() {
-		GameSimulation mediumSimulation = new GameSimulation(100);
-		mediumSimulation.startSim(board, currentScore);
-		move(mediumSimulation.getChosenDir());
+//	public void hardMovement() {
+//		GameSimulation hardSimulation = new GameSimulation(1000);
+//		hardSimulation.startSim(board, currentScore);
+//		move(hardSimulation.getChosenDir());
+//		
+//	}
+//	
+//	public void easyMovement() {
+//		GameSimulation easySimulation = new GameSimulation(10);
+//		easySimulation.startSim(board, currentScore);
+//		move(easySimulation.getChosenDir());
+//	}
+//	
+//	public void mediumMovement() {
+//		GameSimulation mediumSimulation = new GameSimulation(100);
+//		mediumSimulation.startSim(board, currentScore);
+//		move(mediumSimulation.getChosenDir());
 //	//using random class for the movements
 //	Random RNG = new Random();	
 //	// 80% chance to make a random movement
@@ -151,7 +154,7 @@ public class AI extends Game{
 //			moveHorizontal('d');
 //		}
 //						
-	}
+//	}
 
 	public char getDifficulty() {
 		return difficulty;

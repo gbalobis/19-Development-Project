@@ -2,14 +2,14 @@ package model;
 
 public class GameSimulation extends Game {
 
-	private char chosenDir;
-	private int numOfRuns;
+	private char chosenDir, difficulty;
+	private final int numOfRuns = 1000;
 	private int [][] savedBoard = new int [4][4];
 	private int savedCurrentScore;
 
-	public GameSimulation(int num) {
+	public GameSimulation(char diff) {
 		super();
-		numOfRuns = num;
+		difficulty = diff;
 	}
 
 	public void startSim(int[][] board, int currentScore) {
@@ -21,32 +21,59 @@ public class GameSimulation extends Game {
 		}
 		savedCurrentScore = currentScore;
 		
-		double highest;
+		double highest = 0, secondHighest = 0, thirdHighest = 0, chosen = 0;
 		double avgScoreUp = sim('w');
 		double avgScoreDown = sim('s');
 		double avgScoreLeft = sim('a');
 		double avgScoreRight = sim('d');
+				
+		double [] manta = {avgScoreUp, avgScoreDown, avgScoreLeft, avgScoreRight};
 		
-		highest = Math.max(avgScoreUp, avgScoreDown);
-		highest = Math.max(avgScoreLeft, highest);
-		highest = Math.max(avgScoreRight, highest);
+		int count [] = {0,0,0,0};
+
+//		lowest = manta [0];
+//		
+//		for (int i = 1; i < 4; i++) {
+//			highest = Math.max(highest, manta[i]);
+//			lowest = Math.min(lowest, manta[i]);
+//		}
 		
-//		lowest = Math.min(avgScoreUp, avgScoreDown);
-//		lowest = Math.min(avgScoreLeft, highest);
-//		lowest = Math.min(avgScoreRight, highest);
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				if (manta[i] >= manta[j])
+					count[i]++;
+			}
+		}
+		
+		for (int i = 0; i < 4; i++) {
+			if (count[i] > 3)
+				highest = manta[i];
+			else if (count[i] > 2)
+				secondHighest = manta[i];
+			else if (count[i] > 1)
+				thirdHighest = manta[i];
+		}
+		
+		if (difficulty == 'e')
+			chosen = thirdHighest;
+		else if (difficulty == 'm')
+			chosen = secondHighest;
+		else if  (difficulty == 'h')
+			chosen = highest;
+
 //		System.out.println(avgScoreUp);
 //		System.out.println(avgScoreDown);
 //		System.out.println(avgScoreLeft);
 //		System.out.println(avgScoreRight);
 //		System.out.println(highest);
 		
-		if (highest == avgScoreUp)
+		if (chosen == avgScoreUp)
 			setChosenDir('w');
-		else if (highest == avgScoreDown)
+		else if (chosen == avgScoreDown)
 			setChosenDir('s');
-		else if (highest == avgScoreLeft)
+		else if (chosen == avgScoreLeft)
 			setChosenDir('a');
-		else if (highest == avgScoreRight)
+		else if (chosen == avgScoreRight)
 			setChosenDir('d');
 
 	}

@@ -13,13 +13,7 @@ public class Game {
 	
 	public Game() {
 		//create empty board with no high scores
-		int[][] temp=new int[4][4];
-		for(int i=0;i<4;i++) {
-			for(int j=0;j<4;j++) {
-				temp[i][j]=0;
-			}
-		}
-		setBoard(temp);
+		emptyBoard();
 		setHighScore(0);
 		setCurrentScore(0);
 		scanner=new Scanner(System.in);
@@ -245,6 +239,7 @@ public class Game {
 		}
 		return false;
 	}
+
 	public boolean defeatCheck() {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
@@ -260,6 +255,24 @@ public class Game {
 		}
 		return true;
 	}
+	
+	public boolean victoryCheck(Game cpu) {
+		if (victoryCheck())
+			return true;
+		if (cpu.defeatCheck() && currentScore >= cpu.getCurrentScore())
+			return true;
+		return false;
+		
+	}
+	
+	public boolean defeatCheck(Game cpu) {
+		if (cpu.victoryCheck())
+			return true;
+		if (defeatCheck() && cpu.getCurrentScore() > currentScore)
+			return true;
+		return false;
+	}
+
 	
 	//following function checks if a tile is equal to an adjacent tile 
 	public boolean equalityCheck(int xPos, int yPos) {
@@ -323,6 +336,16 @@ public class Game {
 		if (board[xPos][yPos] == board[xPos + 1][yPos])
 			return true;
 		return false;
+	}
+	
+	public void emptyBoard() {
+		int[][] temp=new int[4][4];
+		for(int i=0;i<4;i++) {
+			for(int j=0;j<4;j++) {
+				temp[i][j]=0;
+			}
+		}
+		setBoard(temp);
 	}
 	
 	
