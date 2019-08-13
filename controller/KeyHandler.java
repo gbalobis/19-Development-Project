@@ -78,10 +78,12 @@ public class KeyHandler implements EventHandler<KeyEvent>{
 		            			window.getStage().setScene(window.defeatScene());
 		                		window.getStage().show();
 		            		}
+		            		if(window.getStage().getScene()==window.getScene(4)||window.getStage().getScene()==window.getScene(5))
+		            			waiting.cancel();
 		            	});
 		            }
 		        },
-		        0, 500); //starts comparing your score to cpu score every 0.5 second
+		        0, 250); //starts comparing your score to cpu score every 0.25 second
 			}
 			//if single player, display defeat screen
 			else {

@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import model.AI;
+import model.Player;
 import view.GUIWindow;
 // TODO: Auto-generated Javadoc
 
@@ -68,6 +69,10 @@ public class ButtonHandler implements EventHandler<ActionEvent>{
 			if (window.getIsSingle())		//if singleplayer, start new single player game
 				temp=window.onePlayerScene();
 			else {							//if vs AI, reset ai and start new vs cpu game
+				window.setHighestScore(window.getSingle().getHighScore());
+				window.setSingle(new Player());
+				window.getSingle().setHighScore(window.getHighestScore());
+				window.getSingle().startGame();
 				window.cpuDiff(((AI) window.getCPU()).getDifficulty());
 				temp=window.twoPlayerScene();
 			}

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Random;
+
 /**
  * The GameSimulation class is a simulation of the game used to compute the AI class' next move.
  *
@@ -77,8 +79,20 @@ public class GameSimulation extends Game {
 				thirdHighest = manta[i];
 		}
 		//easy chooses 3rd best option
-		if (difficulty == 'e')
-			chosen = thirdHighest;
+		if (difficulty == 'e') {
+			Random random=new Random();
+			int i=random.nextInt(14);
+			if(i<10)
+				chosen = thirdHighest;
+			else if(i==10)
+				chosen = avgScoreUp;
+			else if(i==11)
+				chosen = avgScoreDown;
+			else if(i==12)
+				chosen = avgScoreLeft;
+			else if(i==13)
+				chosen = avgScoreRight;
+		}
 		//medium chooses 2nd best option
 		else if (difficulty == 'm')
 			chosen = secondHighest;

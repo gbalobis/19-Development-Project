@@ -180,10 +180,10 @@ public class GUIWindow extends Application{
 		scenes[3]=null;
 		//save high score if player has already played
 		if(single!=null)
-			highestScore=single.getHighScore();
+			setHighestScore(single.getHighScore());
 		//restart the player's game, both 1p and cpu modes use this for the player
 		single=new Player();
-		single.setHighScore(highestScore);
+		single.setHighScore(getHighestScore());
 		single.startGame();
 		//stop timer to ensure cpu isn't running
 		timer.cancel();
@@ -1055,6 +1055,35 @@ public class GUIWindow extends Application{
 		paused=x;
 	}
 	
+	/**
+	 * Sets the instance of the player's game.
+	 * 
+	 * @param single The new instance of the player's game.
+	 */
+	public void setSingle(Game single) {
+		this.single=single;
+	}		
+	/**
+	 * Gets the highest score achieved by the player.
+	 * 
+	 * @return The highest score achieved by the player.
+	 */
+	public int getHighestScore() {
+		return highestScore;
+	}
+
+	/**
+	 * Sets the highest score achieved by the player.
+	 * 
+	 * @return The new highest score achieved by the player.
+	 */
+
+	public void setHighestScore(int highestScore) {
+		this.highestScore = highestScore;
+	}
+
+
+
 	/**
 	 * The main method which starts the GUI version of the game.
 	 *
