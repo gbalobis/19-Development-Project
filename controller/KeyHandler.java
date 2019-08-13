@@ -78,7 +78,7 @@ public class KeyHandler implements EventHandler<KeyEvent>{
 		            			window.getStage().setScene(window.defeatScene());
 		                		window.getStage().show();
 		            		}
-		            		if(window.getStage().getScene()==window.getScene(4)||window.getStage().getScene()==window.getScene(5))
+		            		if(window.getStage().getScene()!=window.getScene(3))
 		            			waiting.cancel();
 		            	});
 		            }
