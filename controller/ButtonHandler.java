@@ -3,27 +3,37 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import model.AI;
 import view.GUIWindow;
-/*
- * 
- * Group Name: Group 19
- * Tutorial: T04 Tuesdays & Thursdays
- * Class Name: ButtonHandler
- * What The Class Does: Deals with all button presses in a GUIWindow
+// TODO: Auto-generated Javadoc
+
+/**
+ * The ButtonHandler class handles all button presses from a GUIWindow.
  *
+ * @author Group 19
+ * @version 3
+ * @since 2019-08-12
  */
 public class ButtonHandler implements EventHandler<ActionEvent>{
-	//the application it is handling inputs for
+	
+	/** The application this handler is handling button inputs for. */
 	private GUIWindow window;
 	
-	//create a new button handler for this guiwindow
+	/**
+	 * Create a new button handler for this GUIWindow.
+	 *
+	 * @param w The application this handler is handling button inputs for.
+	 */
 	public ButtonHandler(GUIWindow w) {
 		window=w;
 	}
+	/**
+	 * Decides on which scene to show depending on the button that was pushed.
+	 * 
+	 * @param e The event that occurred after a button was pushed.
+	 */
 	@Override
 	public void handle(ActionEvent e) {
 		//create a scene, depending on which button was pressed, display different scenes
@@ -67,11 +77,10 @@ public class ButtonHandler implements EventHandler<ActionEvent>{
 			window.getStage().setScene(window.displayMenu());
 			temp=window.difficultyScreen();
 		}
-		//if Change Difficulty button was pushed, allow player to choose a difficulty
+		//if the Pause button was pushed, stop the cpu moves scheduled by the timer and switch Pause button with Play button
 		else if(e.getSource()==window.getButton(8)) {
 			window.setPaused(true);
 			window.getTimer().cancel();
-			window.getScene(3).removeEventHandler(KeyEvent.KEY_PRESSED, window.getKHandler());
 			HBox bottomBar=new HBox();
 			bottomBar.setSpacing(80);
 			bottomBar.getChildren().addAll(window.getButton(5), window.getButton(9));
@@ -80,7 +89,7 @@ public class ButtonHandler implements EventHandler<ActionEvent>{
 			bottomBar.setAlignment(Pos.CENTER);
 			temp=window.getScene(3);
 		}
-		//if Change Difficulty button was pushed, allow player to choose a difficulty
+		//if the Play button was pushed, schedule cpu moves with the timer and switch the Play button with Pause button
 		else if(e.getSource()==window.getButton(9)) {
 			window.setPaused(false);
 			window.scheduleTimerTasks();
@@ -92,8 +101,10 @@ public class ButtonHandler implements EventHandler<ActionEvent>{
 			bottomBar.setAlignment(Pos.CENTER);
 			temp=window.getScene(3);
 		}
+		//if the Credits button was pushed, display the Credits Scene
 		else if(e.getSource()==window.getButton(10))
 			temp=window.creditScene();	
+		//if the Instructions button was pushed, display the Instructions Scene
 		else if(e.getSource()==window.getButton(11))
 			temp=window.instructionScene();
 		//set the scene to the one decided upon, based on the above if statements

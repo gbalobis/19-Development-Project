@@ -25,45 +25,57 @@ import model.AI;
 import model.Game;
 import model.Player;
 
-
-
-
-/*
+/**
+ * The view for the GUI version of the game
  * 
- * Group Name: Group 19
- * Tutorial: T04 Tuesdays & Thursdays
- * Class Name: GUIWindow
- * What The Class Does: Creates all the scenes used in the application with appropriate formatting. 
- * Uses the ButtonHandler and KeyHandler to deal with different inputs from the user
- *
+ * @author Group 19
+ * @version 3
+ * @since 2019-08-12
  */
-
 public class GUIWindow extends Application{
-	//stage used to set scenes in the application
+	
+	/** Stage used to set scenes in the application. */
 	private Stage stage;
-	//array of all buttons used in the application
+	
+	/** Array of all buttons used in the application. */
 	private Button[] buttons;
-	//array of all scenes used in the application
+	
+	/** Array of all scenes used in the application */
 	private Scene[] scenes;
-	//handler used for all ActionEvents caused by buttons
+	
+	/** Handler used for all ActionEvents caused by buttons. */
 	private ButtonHandler bhandler;
-	//handler used for all KeyEvents caused by key presses
+	
+	/** Handler used for all KeyEvents caused by key presses. */
 	private KeyHandler khandler;
-	//instance of game used by player
+	
+	/** Instance of game used by player. */
 	private Game single;
-	//instance of game used by cpu
+	
+	/** Instance of game used by cpu. */
 	private Game cpu;
-	//hold highscore when game has been restarted
+	
+	/** The highest score achieved by the player. */
 	private int highestScore;
-	//boolean where true denotes singleplayer and false AI
+	
+	/** Boolean where true denotes singleplayer and false AI. */
 	private boolean isSingle;
-	//timer used to refresh board when cpu moves
+	
+	/** Timer used to refresh board when cpu moves. */
 	private Timer timer;
-	//an array of colors 
+	
+	/** An array of colors. */
 	private Color[] colors;
-	//determines if game is paused
+	
+	/** Determines if game is paused. */
 	private boolean paused;
 
+	/**
+	 * Starts the application.
+	 *
+	 * @param stage The initial stage to be shown.
+	 * @throws Exception Any exceptions caused by starting this application.
+	 */
 	@Override
 	public void start(Stage stage) throws Exception {
 		this.stage=stage;
@@ -98,17 +110,6 @@ public class GUIWindow extends Application{
 		scenes=new Scene[8];
 		//menu will be the first scene displayed upon running
 		scenes[0]=displayMenu();
-	
-		
-		//popup containing instructions
-		//code adapted from https://code.makery.ch/blog/javafx-dialogs-official/
-//		Alert alert = new Alert(AlertType.INFORMATION);
-//		alert.setTitle("Instructions");
-//		alert.setGraphic(null);
-//		alert.setHeaderText(null);
-//		alert.setContentText("Welcome to 2048!\nUse W, A, S and D to move the board up, left, down and right respectively.");
-//		alert.initModality(Modality.NONE);
-//		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 		
 		//title is 2048 game
 		stage.setTitle("2048 Game");
@@ -132,9 +133,12 @@ public class GUIWindow extends Application{
 	
 	
 	
-	//creates the scene for the menu and returns it
-	public Scene displayMenu() {
-		
+	/**
+	 * Creates the scene for the main menu.
+	 *
+	 * @return The scene for the main menu.
+	 */
+	public Scene displayMenu() {		
 		
 		//if menu scene does not exist, create it from scratch
 		if(scenes[0]==null) {
@@ -165,28 +169,10 @@ public class GUIWindow extends Application{
 			menu.getChildren().addAll(buttons[0], buttons[1], buttons[11], buttons[10]);
 			root.setCenter(menu);
 			menu.setId("main");
-			
-			//vbox for group and our names
-			/*VBox credits=new VBox();
-			Label group=new Label("Group 19");
-			Label members=new Label("Ammar, Bennie, Jason, Josh");*/
-			/*group.setTextFill(Color.WHITESMOKE);
-			members.setTextFill(Color.WHITESMOKE);*/
-		
-			/*credits.getChildren().addAll(group, members);
-			root.setBottom(credits);
-			credits.setAlignment(Pos.BOTTOM_CENTER);*/
-			
-		
-			
+	
 			//create scene with above root pane
 			Scene scene=new Scene(root,600,400);
 			scenes[0]=scene;
-
-			
-			
-			
-			
 		}
 	
 		//when you return to menu screen, reset 1p and vs cpu screens
@@ -207,7 +193,11 @@ public class GUIWindow extends Application{
 		
 	}
 	
-	//creates scene for single player play
+	/**
+	 * Creates the scene for single-player gameplay.
+	 *
+	 * @return The scene for single-player gameplay.
+	 */
 	public Scene onePlayerScene() {
 		
 		//set boolean to true for singleplayer
@@ -227,8 +217,6 @@ public class GUIWindow extends Application{
 
 			//game mode on the top of the screen
 			Label name=new Label("Single Player Mode");
-			/*name.setFont(Font.font("Verdana", 20));
-			name.setTextFill(Color.WHITESMOKE);*/
 			root.setTop(name);
 			name.setId("name");
 			BorderPane.setAlignment(name, Pos.BOTTOM_CENTER);
@@ -279,8 +267,6 @@ public class GUIWindow extends Application{
 			VBox scores=new VBox();
 			Label cscore=new Label("Current Score: "+getSingle().getCurrentScore());
 			Label hscore=new Label("High Score: "+getSingle().getHighScore());
-			/*cscore.setTextFill(Color.WHITESMOKE);
-			hscore.setTextFill(Color.WHITESMOKE);*/
 			scores.getChildren().addAll(cscore, hscore);
 			
 			//button is displayed to the right of the scores
@@ -319,7 +305,11 @@ public class GUIWindow extends Application{
 		return scenes[1];
 	}
 	
-	//screen to choose difficulty when playing vs cpu mode
+	/**
+	 * Creates the scene for the difficulty screen when playing against a CPU.
+	 *
+	 * @return The scene for the difficulty screen.
+	 */
 	public Scene difficultyScreen() {
 		
 		//if scene doesn't exist, create it from scratch
@@ -337,8 +327,6 @@ public class GUIWindow extends Application{
 
 			//prompt on the top of the screen
 			Label name=new Label("Choose A Difficulty");
-			/*name.setFont(Font.font("Verdana", 20));
-			name.setTextFill(Color.WHITESMOKE);*/
 			root.setTop(name);
 			name.setId("name");
 			BorderPane.setAlignment(name, Pos.BOTTOM_CENTER);
@@ -360,7 +348,11 @@ public class GUIWindow extends Application{
 		return scenes[2];
 	}
 
-	//create a cpu with the difficulty chosen by player
+	/**
+	 * Creates a CPU with the selected difficulty and schedules its moves with a timer.
+	 *
+	 * @param difficulty The difficulty level of the CPU.
+	 */
 	public void cpuDiff(char difficulty) {
 		cpu=new AI(difficulty);
         cpu.startGame();
@@ -368,7 +360,11 @@ public class GUIWindow extends Application{
 		scheduleTimerTasks();
 	}
 
-	//create scene for vs cpu mode
+	/**
+	 * Creates the scene for vs CPU gameplay.
+	 *
+	 * @return The scene for vs CPU gameplay.
+	 */
 	public Scene twoPlayerScene() {
 
 		//set boolean to false for vs AI
@@ -388,8 +384,6 @@ public class GUIWindow extends Application{
 
 			//game mode on the top of the screen
 			Label name=new Label("Versus CPU");
-			/*name.setFont(Font.font("Verdana", 20));
-			name.setTextFill(Color.WHITESMOKE);*/
 			root.setTop(name);
 			name.setId("name");
 			BorderPane.setAlignment(name, Pos.BOTTOM_CENTER);
@@ -406,8 +400,6 @@ public class GUIWindow extends Application{
 			
 			Label pboardLabel=new Label("Your Board");
 			Label cboardLabel=new Label("CPU's Board");
-			/*pboardLabel.setTextFill(Color.WHITESMOKE);
-			cboardLabel.setTextFill(Color.WHITESMOKE);*/
 			
 			//use same method as singlePlayer scene to reflect each player's board
 			int[][] playerBoard=getSingle().getBoard();
@@ -437,7 +429,6 @@ public class GUIWindow extends Application{
 					
 					if(playerBoard[i][j]!=0) {
 						Label ptemp3=new Label(Integer.toString(playerBoard[i][j]));
-						/*ptemp3.setTextFill(Color.WHITESMOKE);*/
 						ptemp1.getChildren().add(ptemp3);
 					}
 					ptemp1.setAlignment(Pos.CENTER);
@@ -464,7 +455,6 @@ public class GUIWindow extends Application{
 					
 					if(cpuBoard[i][j]!=0) {
 						Label ctemp3=new Label(Integer.toString(cpuBoard[i][j]));
-						/*ctemp3.setTextFill(Color.WHITESMOKE);*/
 						ctemp1.getChildren().add(ctemp3);
 					}
 					ctemp1.setAlignment(Pos.CENTER);
@@ -477,10 +467,6 @@ public class GUIWindow extends Application{
 			Label phscore=new Label("High Score: "+getSingle().getHighScore());
 			Label ccscore=new Label("Current Score: "+getCPU().getCurrentScore());
 			Label spacing=new Label(" ");
-			/*pcscore.setTextFill(Color.WHITESMOKE);
-			phscore.setTextFill(Color.WHITESMOKE);
-			ccscore.setTextFill(Color.WHITESMOKE);
-			spacing.setTextFill(Color.WHITESMOKE);*/
 			
 			//put the created boards and score labels into the above vboxes
 			pboard.getChildren().addAll(pboardLabel, playerGrid, pcscore, phscore);
@@ -522,7 +508,9 @@ public class GUIWindow extends Application{
 		return scenes[3];
 	}
 	
-	//update what the boards are displaying
+	/**
+	 * Updates the current state of the board. The scene updated depends on which mode is being played.
+	 */
 	public void updateBoard() {
 		
 		//if singleplayer mode update singleplayer scene
@@ -554,13 +542,9 @@ public class GUIWindow extends Application{
 					
 					if(gameBoard[i][j]!=0) {
 						Label temp3=new Label(Integer.toString(gameBoard[i][j]));
-						/*temp3.setTextFill(Color.WHITESMOKE);*/
 						temp1.getChildren().add(temp3);
 					}
 					temp1.setAlignment(Pos.CENTER);
-					/*int x=Character.getNumericValue(getSingle().getLastGenerated().charAt(0));
-					int y=Character.getNumericValue(getSingle().getLastGenerated().charAt(1));
-					System.out.println(x+" "+y);*/
 					if((Character.getNumericValue(getSingle().getLastGenerated().charAt(0))==i)&&(Character.getNumericValue(getSingle().getLastGenerated().charAt(1))==j)) {			
 						FadeTransition fadeTransition = new FadeTransition();
 						fadeTransition.setDuration(Duration.millis(750));
@@ -584,8 +568,6 @@ public class GUIWindow extends Application{
 			VBox scores=new VBox();
 			Label cscore=new Label("Current Score: "+getSingle().getCurrentScore());
 			Label hscore=new Label("High Score: "+getSingle().getHighScore());
-			/*cscore.setTextFill(Color.WHITESMOKE);
-			hscore.setTextFill(Color.WHITESMOKE);*/
 			scores.getChildren().addAll(cscore, hscore);
 			
 			bottomBar.getChildren().addAll(buttons[5], scores);
@@ -608,8 +590,6 @@ public class GUIWindow extends Application{
 			
 			Label pboardLabel=new Label("Your Board");
 			Label cboardLabel=new Label("CPU's Board");
-			/*pboardLabel.setTextFill(Color.WHITESMOKE);
-			cboardLabel.setTextFill(Color.WHITESMOKE);*/
 			
 			int[][] playerBoard=getSingle().getBoard();
 			int[][] cpuBoard=getCPU().getBoard();
@@ -640,7 +620,6 @@ public class GUIWindow extends Application{
 					
 					if(playerBoard[i][j]!=0) {
 						Label ptemp3=new Label(Integer.toString(playerBoard[i][j]));
-						/*ptemp3.setTextFill(Color.WHITESMOKE);*/
 						ptemp1.getChildren().add(ptemp3);
 					}
 					if((Character.getNumericValue(getSingle().getLastGenerated().charAt(0))==i)&&(Character.getNumericValue(getSingle().getLastGenerated().charAt(1))==j)) {			
@@ -678,7 +657,6 @@ public class GUIWindow extends Application{
 					
 					if(cpuBoard[i][j]!=0) {
 						Label ctemp3=new Label(Integer.toString(cpuBoard[i][j]));
-						/*ctemp3.setTextFill(Color.WHITESMOKE);*/
 						ctemp1.getChildren().add(ctemp3);
 					}
 					ctemp1.setAlignment(Pos.CENTER);
@@ -701,10 +679,6 @@ public class GUIWindow extends Application{
 			Label phscore=new Label("High Score: "+getSingle().getHighScore());
 			Label ccscore=new Label("Current Score: "+getCPU().getCurrentScore());
 			Label spacing=new Label(" ");
-			/*pcscore.setTextFill(Color.WHITESMOKE);
-			phscore.setTextFill(Color.WHITESMOKE);
-			ccscore.setTextFill(Color.WHITESMOKE);
-			spacing.setTextFill(Color.WHITESMOKE);*/
 			
 			pboard.getChildren().addAll(pboardLabel, playerGrid, pcscore, phscore);
 			cboard.getChildren().addAll(cboardLabel, cpuGrid, ccscore, spacing);
@@ -724,7 +698,12 @@ public class GUIWindow extends Application{
 			bottomBar.setAlignment(Pos.CENTER);
 		}
 	}
-	//save into scenes[4]
+	
+	/**
+	 * Creates the scene for when the player achieves victory.
+	 *
+	 * @return The scene for when the player achieves victory.
+	 */
 	public Scene victoryScene() {
 		//if scene doesn't exist, create it from scratch
 		if(scenes[4]==null) {
@@ -783,7 +762,12 @@ public class GUIWindow extends Application{
 		scenes[4].getStylesheets().add("Style.css");
 		return scenes[4];
 	}
-	//save into scenes[5]
+	
+	/**
+	 * Creates the scene for when the player is defeated.
+	 *
+	 * @return The scene for when the player is defeated.
+	 */
 	public Scene defeatScene() {
 		//if scene doesn't exist, create it from scratch
 		if(scenes[5]==null) {
@@ -843,6 +827,11 @@ public class GUIWindow extends Application{
 		return scenes[5];
 	}
 	
+	/**
+	 * Creates the credits scene.
+	 *
+	 * @return The credits scene.
+	 */
 	public Scene creditScene() {
 		if(scenes[6]==null) {
 			//root pane to contain everything
@@ -888,7 +877,12 @@ public class GUIWindow extends Application{
 		return scenes[6];
 	}
 	
-public Scene instructionScene() {
+	/**
+	 * Creates the instructions scene.
+	 *
+	 * @return The instructions scene.
+	 */
+	public Scene instructionScene() {
 		if(scenes[7]==null) {
 			//root pane to contain everything
 			BorderPane root=new BorderPane();
@@ -931,6 +925,9 @@ public Scene instructionScene() {
 		
 	}
 
+	/**
+	 * Schedule the CPU's tasks with the timer.
+	 */
 	public void scheduleTimerTasks() {
 		timer=new Timer();
 		timer.scheduleAtFixedRate(new TimerTask() {
@@ -965,51 +962,104 @@ public Scene instructionScene() {
 	}
 	
 
+	/**
+	 * Gets the stage.
+	 *
+	 * @return The stage.
+	 */
 	//return the stage being used
 	public Stage getStage() {
 		return stage;
 	}
 	
-	//return a list of the buttons used
+	/**
+	 * Gets the button selected.
+	 *
+	 * @param i The index of the button to be retrieved.
+	 * @return The button at the specified index.
+	 */
 	public Button getButton(int i) {
 		return buttons[i];
 	}
 	
-	//return a list of the scenes used
+	/**
+	 * Gets the scene selected.
+	 *
+	 * @param i The index of the scene to be retrieved.
+	 * @return The scene at the specified index.
+	 */
 	public Scene getScene(int i) {
 		return scenes[i];
 	}
 	
-	//return the singleplayer scene
+	/**
+	 * Gets the player's instance of the game.
+	 *
+	 * @return The player's instance of the game.
+	 */
 	public Game getSingle() {
 		return single;
 	}
 	
-	//return the twoplayer scene
+	/**
+	 * Gets the CPU's instance of the game.
+	 *
+	 * @return The CPU's instance of the game.
+	 */
 	public Game getCPU() {
 		return cpu;
 	}
 	
+	/**
+	 * Checks if you are playing singleplayer mode.
+	 *
+	 * @return true, if you are playing singleplayer mode.
+	 */
 	public boolean getIsSingle() {
 		return isSingle;
 	}
 	
+	/**
+	 * Gets the timer.
+	 *
+	 * @return The timer.
+	 */
 	public Timer getTimer() {
 		return timer;
 	}
 	
+	/**
+	 * Gets the key handler.
+	 *
+	 * @return The key handler.
+	 */
 	public KeyHandler getKHandler() {
 		return khandler;
 	}
 	
+	/**
+	 * Checks if the game is paused.
+	 *
+	 * @return true, if the game is paused.
+	 */
 	public boolean getPaused() {
 		return paused;
 	}
 	
+	/**
+	 * Pauses or unpauses the game.
+	 *
+	 * @param x True if game is paused, or false if game is unpaused.
+	 */
 	public void setPaused(boolean x) {
 		paused=x;
 	}
 	
+	/**
+	 * The main method which starts the GUI version of the game.
+	 *
+	 * @param args Arguments provided from the command line.
+	 */
 	//main method to launch the application
 	public static void main(String[] args) {
 			launch(args);

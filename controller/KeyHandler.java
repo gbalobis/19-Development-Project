@@ -7,22 +7,34 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import view.GUIWindow;
-/*
- * 
- * Group Name: Group 19
- * Tutorial: T04 Tuesdays & Thursdays
- * Class Name: KeyHandler
- * What The Class Does: Deals with all the keyboard presses from a GUIWindow
+
+
+/**
+ * The KeyHandler class handles all key presses from a GUIWindow.
  *
+ * @author Group 19
+ * @version 3
+ * @since 2019-08-12
  */
 public class KeyHandler implements EventHandler<KeyEvent>{
-	//the application it is handling inputs for
+	
+	/** The application this handler is handling key inputs for. */
 	private GUIWindow window;
 
-	//create a new key handler for this guiwindow
+	/**
+	 * Create a new key handler for this GUIWindow.
+	 *
+	 * @param w The application this handler is handling key inputs for.
+	 */
 	public KeyHandler(GUIWindow w) {
 		window=w;
 	}
+	
+	/**
+	 * Decides which direction to move the board when a key is pushed and checks for defeats or victories.
+	 *
+	 * @param e The event that occurred after a key was pushed.
+	 */
 	@Override
 	public void handle(KeyEvent e) {
 		//if paused, do nothing
@@ -54,6 +66,7 @@ public class KeyHandler implements EventHandler<KeyEvent>{
 		window.updateBoard();
 		//defeat check for player
 		if(window.getSingle().defeatCheck()) {
+			//if vs cpu, don't display defeat screen until cpu beats your score
 			if(!window.getIsSingle()) {
 				Timer waiting=new Timer();
 				waiting.scheduleAtFixedRate(new TimerTask() {
@@ -68,14 +81,15 @@ public class KeyHandler implements EventHandler<KeyEvent>{
 		            	});
 		            }
 		        },
-		        0, 500); //starts updating board every 0.5 second
+		        0, 500); //starts comparing your score to cpu score every 0.5 second
 			}
+			//if single player, display defeat screen
 			else {
 				window.getStage().setScene(window.defeatScene());
 				window.getStage().show();
 			}
 		}
-		//victory check for player
+		//victory check for player, if you have 2048 tile you win
     	else if (window.getSingle().victoryCheck()) {
     		window.getStage().setScene(window.victoryScene());
     		window.getStage().show();

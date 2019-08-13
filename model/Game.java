@@ -2,15 +2,36 @@ package model;
 import java.util.Random;
 import java.util.Scanner;
 
-
+/**
+ * The superclass for the Game that both the player and cpu versions of the game inherit from
+ * 
+ * @author Group 19
+ * @version 3
+ * @since 2019-08-12
+ */
 public class Game {
 	
+	/** The board being played on. */
 	protected int[][] board;
+	
+	/** The high score. */
 	protected int highScore;
+	
+	/** The current score. */
 	protected int currentScore;
+	
+	/** The scanner used to read player inputs. */
 	protected Scanner scanner;
+	
+	/** The position of the tile most recently generated. 
+	 *  It is "55" when no tile has been generated.
+	 */
 	protected String lastGenerated;
 	
+	/**
+	 * Instantiates a new game with an empty board and scores of 0.
+	 * A new scanner is created to read inputs.
+	 */
 	public Game() {
 		//create empty board with no high scores
 		emptyBoard();
@@ -18,20 +39,21 @@ public class Game {
 		setCurrentScore(0);
 		scanner=new Scanner(System.in);
 	}
+	
+	/**
+	 * Starts game by generating 2 new tiles.
+	 */
 	public void startGame() {
 	//set up board with 2 new tiles and display it in the console
 	generateNewTile();
 	generateNewTile();
-//	displayBoard();
-	//while the board is not in a victory or defeat screen, repeat following functions
-	/*while(!victoryCheck()&&!defeatCheck()) {
-		//configure board based on movement inputed
-		computeMovement();
-		//create a new tile in an empty space and display board in console
-		generateNewTile();
-//		displayBoard();
-		}*/
 	}
+	
+	/**
+	 * Generates a new tile on the board of value '2' or '4' in a random empty position.
+	 * If no empty positions exist, no tile is generated.
+	 * The position of the most recently generated tile is stored in lastGenerated.
+	 */
 	public void generateNewTile() {
 			
 			int count1=0, count2=0;
@@ -79,6 +101,11 @@ public class Game {
 			}
 		}
 	
+	/**
+	 * Moves the board in a vertical direction.
+	 *
+	 * @param dir The direction the board is moved in. It must be either 'w' or 's'.
+	 */
 	public void moveVertical(char dir) {
 		//newBoard is flipped version of board, so arrays are grouped by columns
 		int[][] newBoard=new int[4][4];
@@ -105,6 +132,12 @@ public class Game {
 		//update board configuration
 		setBoard(newBoard);
 	}
+	
+	/**
+	 * Moves the board in a horizontal direction.
+	 *
+	 * @param dir The direction the board is moved in. It must be either 'a' or 'd'.
+	 */
 	public void moveHorizontal(char dir) {
 		int[][] newBoard=getBoard();
 		
@@ -118,6 +151,11 @@ public class Game {
 		setBoard(newBoard);
 	}
 	
+	/**
+	 * Calls moveHorizontal or moveVertical depending on the direction input by the user.
+	 *
+	 * @param dir The direction the board is to be moved in. It must be one of: 'w', 'a', 's' or 'd'.
+	 */
 	public void move(char dir) {
 		switch (dir) {
 		case 'w':
@@ -131,6 +169,9 @@ public class Game {
 		}
 	}
 	
+	/**
+	 * A move in a random direction.
+	 */
 	public void randomMove() {
 		Random RNG = new Random();
 		int chance = RNG.nextInt(4);
@@ -145,6 +186,13 @@ public class Game {
 			moveHorizontal('d');
 	}
 
+	/**
+	 * Shifts the row or column provided in the specified direction and combines any tiles that should be combined.
+	 *
+	 * @param line The row or column collisions are being checked for.
+	 * @param dir The direction the row or column must be moved in.
+	 * @return The row or column with its new orientation.
+	 */
 	public int[] checkCollisions(int[] line, char dir) {
 		//up/left movements combine in same manner
 		if(dir=='w'||dir=='a') {
@@ -227,6 +275,11 @@ public class Game {
 		return line;
 	}
 	
+	/**
+	 * Checks for a victory. The player wins when they create a 2048 tile.
+	 *
+	 * @return true, if the player's board is in a victory state.
+	 */
 	/*
 	 * This method checks the board if the tile "2048" is present and returns true if it is found and false otherwise.  
 	 */
@@ -240,13 +293,20 @@ public class Game {
 		return false;
 	}
 
+	/**
+	 * Checks for a defeat. The player is defeated when they fill their board and movement in any direction will create an empty space
+	 *
+	 * @return true, if the player's board is in a defeat state.
+	 */
 	public boolean defeatCheck() {
+		//if any empty spaces exist, return false
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				if (board[i][j] == 0)
 					return false;
 			}
 		}
+		//if any tiles can be combined, return false
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				if (equalityCheck(i,j))
@@ -256,6 +316,13 @@ public class Game {
 		return true;
 	}
 	
+	/**
+	 * Checks for a victory when against a CPU.
+	 * You win if you create a '2048' tile or when the CPU's board is in a defeat state and you have a higher score than it.
+	 *
+	 * @param cpu The CPU opponent.
+	 * @return true, if you have reached the victory conditions.
+	 */
 	public boolean victoryCheck(Game cpu) {
 		if (victoryCheck())
 			return true;
@@ -265,6 +332,13 @@ public class Game {
 		
 	}
 	
+	/**
+	 * Checks for a defeat when against a CPU.
+	 * You lose if the CPU creates a '2048' tile or when your board is in a defeat state and it has a higher score than you.
+	 *
+	 * @param cpu The CPU opponent.
+	 * @return true, if you have reached the defeat conditions.
+	 */
 	public boolean defeatCheck(Game cpu) {
 		if (cpu.victoryCheck())
 			return true;
@@ -274,7 +348,13 @@ public class Game {
 	}
 
 	
-	//following function checks if a tile is equal to an adjacent tile 
+	/**
+	 * Compares the value of a tile with the specified coordinates with the values of neighbouring tiles. 
+	 *
+	 * @param xPos The x coordinate of the tile being checked.
+	 * @param yPos The y coordinate of the tile being checked.
+	 * @return true, if there is a neighbouring tile containing a value equal to the tile in the specified coordinates.
+	 */
 	public boolean equalityCheck(int xPos, int yPos) {
 		if (xPos == 0) {
 			if(checkRight(xPos,yPos))
@@ -316,28 +396,63 @@ public class Game {
 		}
 		return false;
 	}
+	
+	/**
+	 * Checks the tile above the one with the specified coordinates.
+	 *
+	 * @param xPos The x coordinate of the tile being checked.
+	 * @param yPos The y coordinate of the tile being checked.
+	 * @return true, if the tile above contains a value equal to the tile in the specified coordinates.
+	 */
 	// these check if adjacent tile in specified direction is equal
 	public boolean checkUp(int xPos, int yPos) {
 		if (board[xPos][yPos] == board[xPos][yPos - 1])
 			return true;
 		return false;
 	}
+	
+	/**
+	 * Checks the tile below the one with the specified coordinates.
+	 *
+	 * @param xPos The x coordinate of the tile being checked.
+	 * @param yPos The y coordinate of the tile being checked.
+	 * @return true, if the tile below contains a value equal to the tile in the specified coordinates.
+	 */
 	public boolean checkDown(int xPos, int yPos) {
 		if (board[xPos][yPos] == board[xPos][yPos + 1])
 			return true;
 		return false;
 	}
+	
+	/**
+	 * Checks the tile to the left of the one with the specified coordinates.
+	 *
+	 * @param xPos The x coordinate of the tile being checked.
+	 * @param yPos The y coordinate of the tile being checked.
+	 * @return true, if the tile to the left contains a value equal to the tile in the specified coordinates.
+	 */
 	public boolean checkLeft(int xPos, int yPos) {
 		if (board[xPos][yPos] == board[xPos - 1][yPos])
 			return true;
 		return false;
 	}
+	
+	/**
+	 * Checks the tile to the right of the one with the specified coordinates.
+	 *
+	 * @param xPos The x coordinate of the tile being checked.
+	 * @param yPos The y coordinate of the tile being checked.
+	 * @return true, if the tile to the right contains a value equal to the tile in the specified coordinates.
+	 */
 	public boolean checkRight(int xPos, int yPos) {
 		if (board[xPos][yPos] == board[xPos + 1][yPos])
 			return true;
 		return false;
 	}
 	
+	/**
+	 * Empties the board for this game.
+	 */
 	public void emptyBoard() {
 		int[][] temp=new int[4][4];
 		for(int i=0;i<4;i++) {
@@ -349,6 +464,11 @@ public class Game {
 	}
 	
 	
+	/**
+	 * Gets the board.
+	 *
+	 * @return The board.
+	 */
 	public int[][] getBoard() {
 		int[][] temp=new int[4][4];
 		for(int i=0;i<4;i++) {
@@ -359,18 +479,38 @@ public class Game {
 		return temp;
 	}
 
+	/**
+	 * Gets the high score.
+	 *
+	 * @return The high score.
+	 */
 	public int getHighScore() {
 		return highScore;
 	}
 
+	/**
+	 * Gets the current score.
+	 *
+	 * @return The current score.
+	 */
 	public int getCurrentScore() {
 		return currentScore;
 	}
 
+	/**
+	 * Gets the position of the tile last generated.
+	 *
+	 * @return The position of the tile last generated.
+	 */
 	public String getLastGenerated() {
 		return lastGenerated;
 	}
 
+	/**
+	 * Sets the board.
+	 *
+	 * @param b The new board.
+	 */
 	public void setBoard(int[][] b) {
 		board=new int[4][4];
 		for(int i=0;i<4;i++) {
@@ -380,23 +520,47 @@ public class Game {
 		}
 	}
 
+	/**
+	 * Sets the position of the tile last generated.
+	 *
+	 * @param gen the new position of the tile last generated.
+	 */
 	public void setLastGenerated(String gen) {
 		lastGenerated=gen;
 	}
 	
+	/**
+	 * Sets the high score.
+	 *
+	 * @param h The new high score.
+	 */
 	public void setHighScore(int h) {
 		if(h>=0&&h>=getCurrentScore())
 			this.highScore = h;
 	}
 
+	/**
+	 * Sets the current score.
+	 *
+	 * @param c The new current score.
+	 */
 	public void setCurrentScore(int c) {
 		if(c>=0)
 			this.currentScore = c;
 	}
 	
+	/**
+	 * Gets the scanner.
+	 *
+	 * @return The scanner.
+	 */
 	public Scanner getScanner() {
 		return scanner;
 	}
+	
+	/**
+	 * Computes movement.
+	 */
 	public void computeMovement() {
 		
 	}
